@@ -2,11 +2,12 @@ import { Menu } from 'lucide-react';
 import { useCallback, useEffect, useState } from 'react';
 import { content } from '../../data/content';
 import { handleAnchorClick, scrollToSection } from '../../hooks/useLenis';
+import { useScrollSpy } from '../../hooks/useScrollSpy';
 import { Button } from '../ui/Button';
 import { ThemeToggle } from '../ui/ThemeToggle';
 import { Container } from './Container';
 import { MobileMenu } from './MobileMenu';
-import { contactLink, navLinks } from './navLinks';
+import { contactLink, navLinkStateClass, navLinks, sectionIds } from './navLinks';
 
 const SHRINK_AFTER_PX = 40;
 const MENU_ID = 'mobile-menu';
@@ -17,6 +18,7 @@ export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const closeMenu = useCallback(() => setMenuOpen(false), []);
+  const activeId = useScrollSpy(sectionIds);
 
   // Close first so the menu releases scroll and focus, then scroll on the next frame.
   const navigateFromMenu = useCallback((id: string) => {
@@ -79,7 +81,8 @@ export function Navbar() {
                   <a
                     href={`#${link.id}`}
                     onClick={(event) => handleAnchorClick(event, link.id)}
-                    className="inline-flex h-11 items-center px-3 font-medium text-graphite transition-colors duration-150 hover:text-signal motion-reduce:transition-none"
+                    aria-current={activeId === link.id ? 'true' : undefined}
+                    className={`inline-flex h-11 items-center px-3 font-medium transition-colors duration-150 motion-reduce:transition-none ${navLinkStateClass(activeId === link.id)}`}
                   >
                     {link.label}
                   </a>
@@ -89,6 +92,7 @@ export function Navbar() {
             <Button
               href={`#${contactLink.id}`}
               onClick={(event) => handleAnchorClick(event, contactLink.id)}
+              aria-current={activeId === contactLink.id ? 'true' : undefined}
               className="ml-2 max-md:hidden"
             >
               {contactLink.label}
@@ -107,7 +111,13 @@ export function Navbar() {
           </nav>
         </Container>
       </header>
-      <MobileMenu id={MENU_ID} open={menuOpen} onClose={closeMenu} onNavigate={navigateFromMenu} />
+      <MobileMenu
+        id={MENU_ID}
+        open={menuOpen}
+        onClose={closeMenu}
+        onNavigate={navigateFromMenu}
+        activeId={activeId}
+      />
     </>
   );
 }

@@ -5,17 +5,18 @@ import { isModifiedClick, setScrollLocked } from '../../hooks/useLenis';
 import { Button } from '../ui/Button';
 import { ThemeToggle } from '../ui/ThemeToggle';
 import { Container } from './Container';
-import { contactLink, navLinks } from './navLinks';
+import { contactLink, navLinkStateClass, navLinks } from './navLinks';
 
 interface MobileMenuProps {
   id: string;
   open: boolean;
   onClose: () => void;
   onNavigate: (id: string) => void;
+  activeId: string | null;
 }
 
 // Full-screen menu for < 768px: traps focus, closes on Esc, locks page scroll while open.
-export function MobileMenu({ id, open, onClose, onNavigate }: MobileMenuProps) {
+export function MobileMenu({ id, open, onClose, onNavigate, activeId }: MobileMenuProps) {
   const panelRef = useRef<HTMLDivElement>(null);
   const closeRef = useRef<HTMLButtonElement>(null);
 
@@ -105,7 +106,8 @@ export function MobileMenu({ id, open, onClose, onNavigate }: MobileMenuProps) {
                 <a
                   href={`#${link.id}`}
                   onClick={(event) => navigate(event, link.id)}
-                  className="inline-flex min-h-11 items-center py-1 font-display text-h3 font-extrabold text-graphite transition-colors duration-150 hover:text-signal motion-reduce:transition-none"
+                  aria-current={activeId === link.id ? 'true' : undefined}
+                  className={`inline-flex min-h-11 items-center py-1 font-display text-h3 font-extrabold transition-colors duration-150 motion-reduce:transition-none ${navLinkStateClass(activeId === link.id)}`}
                 >
                   {link.label}
                 </a>

@@ -82,7 +82,7 @@ Steps 0.1 and 0.2 are committed locally; they are pushed together in step 0.3 on
   Install `gsap @gsap/react lenis`. Add `src/lib/gsap.ts`, `useReducedMotion`, `useMediaQuery`, `useLenis` per `TRD.md §5`. Nav links use `scrollTo`.
   Commit: `feat: add gsap, lenis and reduced motion support`
 
-- [ ] **2.8 Scroll spy**
+- [x] **2.8 Scroll spy**
   `useScrollSpy` highlights the active nav link (Signal color + underline).
   Commit: `feat: highlight active section in navbar`
 
