@@ -92,7 +92,7 @@ Steps 0.1 and 0.2 are committed locally; they are pushed together in step 0.3 on
   Build the device per `DESIGN.md §6.1` with `size` and `state` props. Show it alone in the hero area to review.
   Commit: `feat: add phone frame component`
 
-- [ ] **3.2 Placeholder screens**
+- [x] **3.2 Placeholder screens**
   `PlaceholderScreen` with the four variants from `DESIGN.md §6.3`.
   Commit: `feat: add placeholder app screens`
 
