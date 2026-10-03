@@ -53,6 +53,7 @@ portfolio/
 │   ├── prerender.mjs              # injects the prerendered home page into dist/index.html
 │   └── render-images.mjs          # regenerates og-image.png and apple-touch-icon.png
 ├── src/
+│   ├── entry.ts                   # page entry: CSS now, app after the first paint
 │   ├── main.tsx
 │   ├── entry-server.tsx           # build-time prerender of the home page
 │   ├── App.tsx
@@ -241,7 +242,7 @@ Rules:
 - Hero LCP element is the name text (not an image) → fast LCP.
 - First hero screenshot `fetchpriority="high"`; all others lazy.
 - Images WebP, explicit `width`/`height` to prevent layout shift (CLS < 0.1).
-- The home page is prerendered at build time: `src/entry-server.tsx` renders `App` with `react-dom/static` and `scripts/prerender.mjs` injects the HTML into `dist/index.html`; `main.tsx` hydrates it. Content paints before any JavaScript runs.
+- The home page is prerendered at build time: `src/entry-server.tsx` renders `App` with `react-dom/static` and `scripts/prerender.mjs` injects the HTML into `dist/index.html`; `main.tsx` hydrates it. Content paints before any JavaScript runs: the HTML entry is `src/entry.ts`, which loads the stylesheets and imports `main.tsx` only after the first paint.
 - Everything below the hero (and the footer) is one `React.lazy` chunk, so the first render and hydration only cover the navbar and hero.
 - Google Fonts load without blocking render (`media="print"` swap); metric-matched `@font-face` fallbacks (Arial with `size-adjust` and ascent/descent overrides measured from the font files) keep CLS at 0 when they swap in.
 - Fonts: only the weights listed in DESIGN.md.
