@@ -124,7 +124,7 @@ Steps 0.1 and 0.2 are committed locally; they are pushed together in step 0.3 on
   `ProjectBlock` showing name, summary, problem, built, role, status, stack tags, links. Mobile/tablet layout with a small phone per project.
   Commit: `feat: add project case study blocks`
 
-- [ ] **5.2 Pinned phone on desktop**
+- [x] **5.2 Pinned phone on desktop**
   Two-column layout ≥ 1024 px; phone pinned with ScrollTrigger via `gsap.matchMedia`; screen swaps to the project in view; side progress indicator. Reduced motion → stacked layout.
   Commit: `feat: pin phone and swap screens while scrolling projects`
 

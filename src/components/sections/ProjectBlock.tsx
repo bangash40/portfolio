@@ -13,11 +13,13 @@ const statusLabels: Record<ProjectStatus, string> = {
 
 interface ProjectBlockProps {
   project: Project;
+  /** Off when the shared pinned phone shows this project instead (desktop). */
+  showPhone?: boolean;
   className?: string;
 }
 
 // One case study. Below 1024px each project carries its own small phone.
-export function ProjectBlock({ project, className = '' }: ProjectBlockProps) {
+export function ProjectBlock({ project, showPhone = true, className = '' }: ProjectBlockProps) {
   const headingId = `project-${project.slug}`;
   const details = [
     { term: 'Problem', value: project.problem },
@@ -31,7 +33,9 @@ export function ProjectBlock({ project, className = '' }: ProjectBlockProps) {
       aria-labelledby={headingId}
       className={`flex flex-col gap-10 md:flex-row md:items-start md:gap-12 ${className}`}
     >
-      <ScreenReel items={reelItemsFromProjects([project])} size="sm" className="shrink-0" />
+      {showPhone && (
+        <ScreenReel items={reelItemsFromProjects([project])} size="sm" className="shrink-0" />
+      )}
 
       <div className="max-w-[68ch]">
         <p className="flex items-center gap-2 text-small text-slate">

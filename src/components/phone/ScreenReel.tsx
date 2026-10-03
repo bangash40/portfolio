@@ -15,6 +15,8 @@ interface ScreenReelProps {
   monogram?: string;
   /** Load the first screen eagerly (hero only). */
   priority?: boolean;
+  /** Controlled mode: show this screen and never auto-cycle (the pinned projects phone). */
+  activeIndex?: number;
   className?: string;
 }
 
@@ -36,6 +38,7 @@ export function ScreenReel({
   state = 'on',
   monogram,
   priority = false,
+  activeIndex,
   className = '',
 }: ScreenReelProps) {
   const reducedMotion = useReducedMotion();
@@ -46,7 +49,15 @@ export function ScreenReel({
   const [hovered, setHovered] = useState(false);
   const [focused, setFocused] = useState(false);
 
-  const canCycle = items.length > 1 && !reducedMotion;
+  // In controlled mode, remember the outgoing screen so it fades out in place.
+  const controlled = activeIndex !== undefined;
+  const [lastActive, setLastActive] = useState(activeIndex);
+  if (controlled && activeIndex !== lastActive) {
+    setPrevious(lastActive ?? null);
+    setLastActive(activeIndex);
+  }
+
+  const canCycle = !controlled && items.length > 1 && !reducedMotion;
   const playing = canCycle && state === 'on' && !userPaused && !hovered && !focused && pageVisible;
 
   useEffect(() => {
@@ -58,7 +69,7 @@ export function ScreenReel({
     return () => window.clearTimeout(timer);
   }, [playing, index, items.length]);
 
-  const current = reducedMotion ? 0 : index;
+  const current = controlled ? activeIndex : reducedMotion ? 0 : index;
 
   return (
     <div
@@ -77,12 +88,14 @@ export function ScreenReel({
         label={items[current]?.screen.alt ?? ''}
       >
         {items.map((item, i) => {
+          // The incoming screen fades and slides in on top of the outgoing one, which stays
+          // opaque underneath so the black glass never shows through mid-crossfade.
           const position =
             i === current
-              ? 'translate-y-0 opacity-100'
+              ? 'z-2 translate-y-0 opacity-100'
               : i === previous
-                ? 'translate-y-0 opacity-0'
-                : 'translate-y-3 opacity-0';
+                ? 'z-1 translate-y-0 opacity-100'
+                : 'z-0 translate-y-3 opacity-0';
           return (
             <div
               key={item.key}
