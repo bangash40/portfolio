@@ -138,7 +138,7 @@ Steps 0.1 and 0.2 are committed locally; they are pushed together in step 0.3 on
   Timeline per `DESIGN.md §6.7`, newest first, from `content.timeline`.
   Commit: `feat: add journey timeline`
 
-- [ ] **6.2 Timeline scroll fill**
+- [x] **6.2 Timeline scroll fill**
   Dots fill with Signal as entries enter view (scrubbed, subtle). Off on reduced motion.
   Commit: `feat: animate timeline progress on scroll`
 

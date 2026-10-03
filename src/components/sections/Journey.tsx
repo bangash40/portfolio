@@ -1,4 +1,6 @@
+import { useRef } from 'react';
 import { content } from '../../data/content';
+import { gsap, useGSAP } from '../../lib/gsap';
 import { Container } from '../layout/Container';
 import { SectionHeading } from '../ui/SectionHeading';
 
@@ -6,6 +8,37 @@ const isMonth = (value: string) => /^\d{4}-\d{2}$/.test(value);
 
 // A git log of milestones, newest first: dot, short id, date, message (DESIGN.md §6.7).
 export function Journey() {
+  const listRef = useRef<HTMLOListElement>(null);
+
+  // Older dots fill with Signal as their entry scrolls into view, scrubbed (DESIGN.md §7.3).
+  // With reduced motion the fills stay hidden and the dots keep their static Slate.
+  useGSAP(
+    () => {
+      const mm = gsap.matchMedia();
+      mm.add('(prefers-reduced-motion: no-preference)', () => {
+        gsap.utils.toArray<HTMLElement>('[data-timeline-fill]').forEach((fill) => {
+          gsap.fromTo(
+            fill,
+            { opacity: 0, scale: 0.5 },
+            {
+              opacity: 1,
+              scale: 1,
+              ease: 'none',
+              scrollTrigger: {
+                trigger: fill.closest('li'),
+                start: 'top 85%',
+                end: 'top 60%',
+                scrub: true,
+              },
+            },
+          );
+        });
+      });
+      return () => mm.revert();
+    },
+    { scope: listRef },
+  );
+
   return (
     <section id="journey" aria-labelledby="journey-heading" className="py-20 lg:py-32">
       <Container>
@@ -14,7 +47,7 @@ export function Journey() {
         <div className="rounded-panel border border-line bg-paper p-6 md:p-10 lg:max-w-[880px]">
           <div className="relative">
             <span aria-hidden="true" className="absolute top-2 bottom-2 left-[5px] w-px bg-line" />
-            <ol className="relative flex flex-col gap-8">
+            <ol ref={listRef} className="relative flex flex-col gap-8">
               {content.timeline.map((entry, index) => (
                 <li
                   key={entry.id}
@@ -25,7 +58,14 @@ export function Journey() {
                     className={`relative top-[0.45em] size-3 self-start rounded-full ring-4 ring-paper md:top-0 md:self-auto ${
                       index === 0 ? 'bg-signal' : 'bg-slate'
                     }`}
-                  />
+                  >
+                    {index > 0 && (
+                      <span
+                        data-timeline-fill
+                        className="absolute inset-0 rounded-full bg-signal opacity-0"
+                      />
+                    )}
+                  </span>
                   <div className="flex gap-4 text-small text-slate tabular-nums md:contents">
                     <span>{entry.id}</span>
                     {isMonth(entry.date) ? (
