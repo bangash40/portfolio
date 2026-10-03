@@ -18,6 +18,7 @@ export function NotFound() {
   return (
     <main
       id="main"
+      tabIndex={-1}
       className="flex min-h-svh flex-col items-center justify-center gap-12 px-6 py-16 text-center"
     >
       <PhoneFrame size="sm" label="Phone showing a screen not found message">

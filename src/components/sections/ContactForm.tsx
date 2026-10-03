@@ -93,6 +93,7 @@ export function ContactForm() {
     const shared = {
       id,
       name,
+      required: true,
       value: values[name],
       onChange: (event: { target: { value: string } }) => update(name, event.target.value),
       onBlur: () => blur(name),

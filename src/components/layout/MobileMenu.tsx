@@ -99,7 +99,7 @@ export function MobileMenu({ id, open, onClose, onNavigate, activeId }: MobileMe
       </Container>
 
       <Container className="pt-8 pb-12">
-        <nav aria-label="Main">
+        <nav aria-label="Sections">
           <ul className="flex flex-col gap-2">
             {navLinks.map((link) => (
               <li key={link.id}>

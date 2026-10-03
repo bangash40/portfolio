@@ -182,7 +182,7 @@ Steps 0.1 and 0.2 are committed locally; they are pushed together in step 0.3 on
 
 ## Phase 10 — Quality pass
 
-- [ ] **10.1 Accessibility pass**
+- [x] **10.1 Accessibility pass**
   Run through `DESIGN.md §10`; keyboard-only walkthrough; fix issues.
   Commit: `fix(a11y): improve keyboard and screen reader support`
 

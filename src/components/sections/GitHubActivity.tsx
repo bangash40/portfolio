@@ -159,10 +159,11 @@ function GitHubPanel({ data }: { data: GitHubSummary }) {
             )}
             <p className="mt-auto flex flex-wrap items-center gap-x-4 gap-y-1 pt-5 text-small text-slate">
               {repo.language && <span>{repo.language}</span>}
-              <span className="flex items-center gap-1" aria-label={`${repo.stars} stars`}>
+              <span className="flex items-center gap-1">
                 <Star size={16} strokeWidth={1.75} aria-hidden="true" />
-                <span aria-hidden="true" className="tabular-nums">
+                <span className="tabular-nums">
                   {repo.stars}
+                  <span className="sr-only"> stars</span>
                 </span>
               </span>
               <span>Updated {timeAgo(repo.updatedAt)}</span>
