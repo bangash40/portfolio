@@ -8,6 +8,8 @@ interface PhoneFrameProps {
   state?: PhoneState;
   /** Describes what the screen currently shows (DESIGN.md §6.1). */
   label: string;
+  /** Letter shown at screen center during the boot sequence. */
+  monogram?: string;
   className?: string;
   children?: ReactNode;
 }
@@ -29,18 +31,19 @@ const sizes: Record<PhoneSize, { width: string; body: string; screen: string; le
   },
 };
 
-const fade = 'transition-opacity duration-400 ease-out motion-reduce:duration-100';
-
 // The signature device: pure CSS, graphite body, dynamic island, side buttons, power LED,
-// 9:19.5 screen and a soft glass reflection. Animations target the data-phone-* hooks.
+// 9:19.5 screen and a soft glass reflection. State sets static end points; the boot sequence
+// (GSAP, in Hero) animates between them through the data-phone-* hooks.
 export function PhoneFrame({
   size = 'lg',
   state = 'on',
   label,
+  monogram,
   className = '',
   children,
 }: PhoneFrameProps) {
   const s = sizes[size];
+  const powered = state === 'on';
 
   return (
     <div
@@ -64,22 +67,22 @@ export function PhoneFrame({
       />
 
       <div className={`relative bg-phone shadow-phone ring-1 ring-phone-rim ring-inset ${s.body}`}>
-        {/* Power LED: dim when off, saffron glow once powered */}
+        {/* Power LED: dim until the phone is on, then a saffron glow */}
         <span
           aria-hidden="true"
           className={`absolute right-[30%] rounded-full bg-phone-rim ${s.led}`}
         >
           <span
             data-phone-led
-            className={`absolute inset-0 rounded-full bg-saffron shadow-[0_0_6px_1px_var(--color-saffron)] ${fade} ${
-              state === 'off' ? 'opacity-0' : 'opacity-100'
+            className={`absolute inset-0 rounded-full bg-saffron shadow-[0_0_6px_1px_var(--color-saffron)] ${
+              powered ? 'opacity-100' : 'opacity-0'
             }`}
           />
         </span>
 
         <div
           data-phone-screen
-          className={`relative isolate aspect-[9/19.5] overflow-hidden bg-phone-screen ${s.screen}`}
+          className={`@container relative isolate aspect-[9/19.5] overflow-hidden bg-phone-screen ${s.screen}`}
         >
           {children}
 
@@ -87,10 +90,19 @@ export function PhoneFrame({
           <div
             data-phone-power
             aria-hidden="true"
-            className={`absolute inset-0 z-10 bg-phone-screen ${fade} ${
-              state === 'on' ? 'opacity-0' : 'opacity-100'
+            className={`absolute inset-0 z-10 flex items-center justify-center bg-phone-screen ${
+              powered ? 'opacity-0' : 'opacity-100'
             }`}
-          />
+          >
+            {monogram && (
+              <span
+                data-phone-monogram
+                className="font-display text-[22cqw] leading-none font-extrabold text-white opacity-0"
+              >
+                {monogram}
+              </span>
+            )}
+          </div>
 
           <div
             aria-hidden="true"

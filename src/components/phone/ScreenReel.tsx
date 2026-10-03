@@ -11,6 +11,8 @@ interface ScreenReelProps {
   items: ReelItem[];
   size?: PhoneSize;
   state?: PhoneState;
+  /** Letter for the phone boot screen. */
+  monogram?: string;
   /** Load the first screen eagerly (hero only). */
   priority?: boolean;
   className?: string;
@@ -32,6 +34,7 @@ export function ScreenReel({
   items,
   size = 'lg',
   state = 'on',
+  monogram,
   priority = false,
   className = '',
 }: ScreenReelProps) {
@@ -67,7 +70,12 @@ export function ScreenReel({
         if (!event.currentTarget.contains(event.relatedTarget)) setFocused(false);
       }}
     >
-      <PhoneFrame size={size} state={state} label={items[current]?.screen.alt ?? ''}>
+      <PhoneFrame
+        size={size}
+        state={state}
+        monogram={monogram}
+        label={items[current]?.screen.alt ?? ''}
+      >
         {items.map((item, i) => {
           const position =
             i === current

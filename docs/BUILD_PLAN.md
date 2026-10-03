@@ -104,7 +104,7 @@ Steps 0.1 and 0.2 are committed locally; they are pushed together in step 0.3 on
   Hero section layout (desktop grid + mobile stack), name as the only `h1`, sentence, both buttons (résumé link points to `content.person.resumeUrl`), availability dot in Saffron.
   Commit: `feat: build hero section`
 
-- [ ] **3.5 Boot sequence**
+- [x] **3.5 Boot sequence**
   GSAP timeline per `DESIGN.md §7.1`, once per session, skipped on reduced motion, no layout shift.
   Commit: `feat: add phone boot animation on page load`
 
