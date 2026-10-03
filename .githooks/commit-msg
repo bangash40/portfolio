@@ -1,0 +1,11 @@
+#!/bin/sh
+# Removes any AI attribution trailers so every commit is authored by the repo owner only.
+MSG_FILE="$1"
+sed -i.bak -E \
+  -e '/^[Cc]o-[Aa]uthored-[Bb]y:/d' \
+  -e '/^Claude-Session:/d' \
+  -e '/Generated with .*Claude/d' \
+  "$MSG_FILE"
+rm -f "$MSG_FILE.bak"
+# Trim trailing blank lines
+printf '%s\n' "$(cat "$MSG_FILE")" > "$MSG_FILE"

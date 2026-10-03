@@ -1,0 +1,272 @@
+# TRD — Bangash Portfolio Website
+
+Technical requirements for the product described in `PRD.md` and the design in `DESIGN.md`.
+
+---
+
+## 1. Tech stack (all free)
+
+| Layer | Choice | Why |
+|---|---|---|
+| Build tool | **Vite** (latest) | Fast dev server, tiny production builds |
+| UI | **React 19 + TypeScript** (strict) | Component model, type safety |
+| Styling | **Tailwind CSS v4** via `@tailwindcss/vite` | Design tokens with `@theme`, no config file needed |
+| Animation | **GSAP** + `@gsap/react` (`useGSAP`), **ScrollTrigger** | Free incl. all plugins; best timeline + scroll control |
+| Smooth scroll | **Lenis** (`lenis` package) | Lightweight, works with ScrollTrigger |
+| Icons | **lucide-react** | Tree-shakeable SVG icons |
+| Fonts | Google Fonts (Bricolage Grotesque, Instrument Sans) | Free |
+| Contact form | **Web3Forms** (free tier) | No backend; delivers to email |
+| GitHub data | **GitHub REST API** (unauthenticated) | Free; 60 requests/hour/IP, we cache |
+| Analytics | **Vercel Web Analytics** (`@vercel/analytics`) | Free on Hobby, cookie-free |
+| Lint/format | ESLint (Vite template config) + Prettier | Consistent code |
+| Hosting | **Vercel Hobby** | Free HTTPS, CDN, auto-deploy on push, `*.vercel.app` URL |
+| Repo | **GitHub** public repo `bangash40/portfolio` | Free; shows work history |
+
+Node.js ≥ 20 LTS. Package manager: npm.
+
+Do not add a UI kit (MUI, Chakra, shadcn), state library, router or CSS-in-JS. The site is one page plus a 404 handled without a router (see §6).
+
+---
+
+## 2. Project structure
+
+```
+portfolio/
+├── CLAUDE.md
+├── README.md
+├── .claude/settings.json          # disables AI attribution
+├── .githooks/commit-msg           # strips attribution trailers (safety net)
+├── docs/
+│   ├── PRD.md
+│   ├── TRD.md
+│   ├── DESIGN.md
+│   └── BUILD_PLAN.md
+├── public/
+│   ├── favicon.svg
+│   ├── og-image.png
+│   ├── robots.txt
+│   ├── sitemap.xml
+│   ├── resume/Farhan-Ali-Haider-Resume.pdf   # TODO(bangash)
+│   ├── images/avatar.webp                     # TODO(bangash), optional
+│   └── screens/<project-slug>/1.webp …        # TODO(bangash), optional
+├── src/
+│   ├── main.tsx
+│   ├── App.tsx
+│   ├── index.css                  # Tailwind import + @theme tokens + base styles
+│   ├── data/
+│   │   └── content.ts             # ALL personal content (single source)
+│   ├── types/
+│   │   └── content.ts             # TypeScript types for content
+│   ├── lib/
+│   │   ├── gsap.ts                # registers plugins once
+│   │   ├── github.ts              # GitHub API client + cache
+│   │   └── contact.ts             # Web3Forms submit
+│   ├── hooks/
+│   │   ├── useReducedMotion.ts
+│   │   ├── useTheme.ts
+│   │   ├── useLenis.ts
+│   │   ├── useScrollSpy.ts
+│   │   └── useMediaQuery.ts
+│   ├── components/
+│   │   ├── layout/   Navbar.tsx, MobileMenu.tsx, Footer.tsx, SkipLink.tsx, Container.tsx
+│   │   ├── ui/       Button.tsx, Tag.tsx, ThemeToggle.tsx, SectionHeading.tsx, Skeleton.tsx
+│   │   ├── phone/    PhoneFrame.tsx, ScreenReel.tsx, PlaceholderScreen.tsx
+│   │   └── sections/ Hero.tsx, About.tsx, Projects.tsx, ProjectBlock.tsx,
+│   │                 Journey.tsx, GitHubActivity.tsx, Contact.tsx, ContactForm.tsx
+│   └── pages/
+│       └── NotFound.tsx
+├── index.html
+├── vercel.json
+├── .env.example
+├── vite.config.ts
+├── tsconfig*.json
+├── eslint.config.js
+└── .prettierrc
+```
+
+---
+
+## 3. Content model (`src/types/content.ts`)
+
+```ts
+export type Screen =
+  | { kind: 'image'; src: string; alt: string }
+  | { kind: 'placeholder'; variant: 'ims' | 'kheench' | 'miniplayer' | 'portfolio'; alt: string };
+
+export type ProjectStatus = 'live' | 'completed' | 'in-progress' | 'planned';
+
+export interface Project {
+  slug: string;
+  name: string;
+  summary: string;          // one line
+  problem: string;
+  built: string;            // what was built
+  role: string;
+  stack: string[];
+  status: ProjectStatus;
+  links: { github?: string; demo?: string };
+  screens: Screen[];        // 1–4
+  tint: string;             // low-opacity accent for placeholder screens
+}
+
+export interface TimelineEntry {
+  id: string;               // 7-char hash-like id, e.g. 'a3f9c21'
+  date: string;             // 'YYYY-MM'
+  message: string;
+}
+
+export interface SkillGroup { title: string; items: string[] }
+
+export interface SiteContent {
+  person: {
+    fullName: string;
+    shortName: string;      // 'Bangash'
+    role: string;
+    heroSentence: string;
+    availability: string;
+    bio: string[];
+    avatar?: string;
+    resumeUrl: string;
+  };
+  links: { email: string; github: string; linkedin?: string; whatsapp?: string };
+  githubUsername: string;   // 'bangash40'
+  skills: SkillGroup[];
+  projects: Project[];
+  timeline: TimelineEntry[];
+  site: { url: string; title: string; description: string };
+}
+```
+
+`src/data/content.ts` exports a `content: SiteContent` object. Every placeholder value is a string starting with `TODO:` and has a `// TODO(bangash):` comment above it. Components never contain personal text.
+
+---
+
+## 4. Theming
+
+- Tokens defined in `src/index.css` with Tailwind v4 `@theme` using the exact values in `DESIGN.md §2` (light).
+- Dark values override the same CSS variables under `:root[data-theme="dark"]`.
+- `useTheme`:
+  1. Read `localStorage.getItem('theme')` inside try/catch.
+  2. If none, use `matchMedia('(prefers-color-scheme: dark)')`.
+  3. Set `document.documentElement.dataset.theme`.
+- An inline script in `index.html` `<head>` applies the theme **before** first paint to avoid a flash.
+- Fonts declared as `--font-display` and `--font-body` tokens.
+
+---
+
+## 5. Animation architecture
+
+- `src/lib/gsap.ts`: `gsap.registerPlugin(ScrollTrigger, useGSAP)`; export `gsap`, `ScrollTrigger`. Import from here only.
+- All animations use `useGSAP(() => {...}, { scope: ref })` so they auto-clean on unmount.
+- `useReducedMotion()` returns a boolean from `matchMedia('(prefers-reduced-motion: reduce)')`, reactive to change. Every animated component checks it first.
+- `useLenis()` (called once in `App`):
+  - Skip entirely if reduced motion.
+  - `const lenis = new Lenis()`; `lenis.on('scroll', ScrollTrigger.update)`; `gsap.ticker.add(t => lenis.raf(t * 1000))`; `gsap.ticker.lagSmoothing(0)`.
+  - Expose `scrollTo(target)` for nav links (falls back to `element.scrollIntoView` when Lenis is off).
+- Projects pinning uses `ScrollTrigger.matchMedia` / `gsap.matchMedia()` with `(min-width: 1024px) and (prefers-reduced-motion: no-preference)`.
+- Boot sequence plays once per session: guard with `sessionStorage.getItem('booted')` (try/catch).
+- Animate only `transform`, `opacity`, `clip-path`. Never animate layout properties.
+
+---
+
+## 6. Routing and 404
+
+No router library.
+- `App.tsx` renders the single page.
+- `vercel.json`:
+  ```json
+  {
+    "cleanUrls": true,
+    "rewrites": [{ "source": "/((?!assets/|.*\\..*).*)", "destination": "/index.html" }]
+  }
+  ```
+- In `main.tsx`: if `window.location.pathname` is not `/` (ignoring hash), render `NotFound` and set `document.title` accordingly; otherwise render `App`.
+
+---
+
+## 7. GitHub integration (`src/lib/github.ts`)
+
+Endpoints (unauthenticated):
+- `GET https://api.github.com/users/{username}` → `public_repos`, `followers`
+- `GET https://api.github.com/users/{username}/repos?sort=updated&per_page=30` → filter out forks, take 6 most recently pushed; compute language totals by counting each repo's `language`.
+
+Rules:
+- Single function `getGitHubSummary(username)` returns `{ publicRepos, followers, languages: {name, share}[], repos: RepoItem[] }`.
+- Cache result in `sessionStorage` key `gh:{username}` with a timestamp; reuse for 30 minutes.
+- Use `AbortController` with an 8 s timeout.
+- On any error (network, 403 rate limit, timeout): component shows the fallback message from `DESIGN.md §8`. Never throw to the UI.
+- Fetch only when the section is near the viewport (`IntersectionObserver`, rootMargin `400px`).
+- Relative dates via `Intl.RelativeTimeFormat`.
+
+---
+
+## 8. Contact form (`src/lib/contact.ts`)
+
+- Web3Forms endpoint: `POST https://api.web3forms.com/submit` with JSON body `{ access_key, name, email, message, subject: 'New message from portfolio', botcheck }`.
+- Access key from `import.meta.env.VITE_WEB3FORMS_KEY` (Web3Forms keys are designed to be public; still keep it in env for easy rotation).
+- `.env.example` contains `VITE_WEB3FORMS_KEY=your-access-key-here`. Real `.env` is git-ignored.
+- On Vercel, the owner adds the same variable in Project → Settings → Environment Variables.
+- Client validation: name 2–80 chars; valid email; message 10–2000 chars. Errors shown inline on blur and on submit.
+- Honeypot: hidden `botcheck` checkbox; if checked, silently pretend success.
+- If the key is missing, the form shows the email link instead of failing silently.
+
+---
+
+## 9. SEO and sharing
+
+`index.html` must include:
+- `<html lang="en">`, `<meta name="viewport" content="width=device-width, initial-scale=1">`
+- `<title>Farhan Ali Haider — Mobile App Developer</title>`
+- meta description (≤ 155 chars)
+- canonical link (site URL from content once known; placeholder until deploy)
+- Open Graph: `og:title`, `og:description`, `og:type=website`, `og:url`, `og:image` (absolute URL to `/og-image.png`)
+- Twitter: `summary_large_image`
+- `theme-color` for light and dark
+- favicon SVG + apple-touch-icon
+- JSON-LD `Person` schema (name, url, sameAs: GitHub/LinkedIn)
+
+`public/robots.txt` allows all and points to the sitemap. `public/sitemap.xml` lists the home URL.
+
+---
+
+## 10. Performance budget
+
+- Total JS ≤ 250 KB gzipped (check with `npm run build` output).
+- Hero LCP element is the name text (not an image) → fast LCP.
+- First hero screenshot `fetchpriority="high"`; all others lazy.
+- Images WebP, explicit `width`/`height` to prevent layout shift (CLS < 0.1).
+- Lazy-load the GitHub and Contact sections' heavy parts with `React.lazy` only if the bundle exceeds budget.
+- Fonts: only the weights listed in DESIGN.md.
+
+---
+
+## 11. Quality gates (every commit)
+
+1. `npm run build` succeeds (includes `tsc -b`).
+2. `npm run lint` passes (from Phase 0.4 onward).
+3. No `console.log` left in committed code.
+4. No TypeScript `any` unless justified with a comment.
+
+Final phase gates: Lighthouse mobile ≥ 90 ×4, keyboard-only walkthrough, reduced-motion walkthrough, widths 320/375/768/1024/1440/1920 checked.
+
+---
+
+## 12. Git and deployment
+
+- Remote: `https://github.com/bangash40/portfolio` (owner creates it if it doesn't exist, or Claude Code uses `gh repo create` if the GitHub CLI is installed and authenticated).
+- Branch: `main`. Every push auto-deploys to Vercel production.
+- Commit hooks: `git config core.hooksPath .githooks` (set in Step 0.2).
+- Attribution disabled via `.claude/settings.json` → `{"attribution": {"commit": "", "pr": ""}}`.
+- Commit format: Conventional Commits (`feat`, `fix`, `style`, `chore`, `docs`, `refactor`, `perf`, `a11y` is written as `fix(a11y)`).
+
+### Vercel setup (owner does this once, in Phase 1)
+1. Go to vercel.com → sign up with GitHub (Hobby plan, free).
+2. Add New → Project → import `bangash40/portfolio`.
+3. Framework preset: Vite (auto-detected). Build: `npm run build`. Output: `dist`.
+4. Deploy. Optionally rename the project to `bangash` in Settings → General so the URL becomes `bangash.vercel.app` (if available).
+5. Later (Phase 8): add `VITE_WEB3FORMS_KEY` in Settings → Environment Variables and redeploy.
+6. Later (Phase 9): enable Analytics in the project's Analytics tab.
+
+### Web3Forms setup (owner, Phase 8)
+1. Go to web3forms.com → enter the email address where messages should arrive → receive the access key by email.
+2. Put it in local `.env` and in Vercel environment variables.
