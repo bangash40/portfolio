@@ -248,7 +248,7 @@ Library: GSAP (+ ScrollTrigger) for timelines and scroll; Lenis for smooth scrol
 2. 200 ms: LED fades to saffron (200 ms).
 3. 450 ms: a small "B" monogram fades in at screen center, scales 0.9 → 1 (400 ms).
 4. 1000 ms: monogram fades out; first app screen fades in (400 ms); ScreenReel begins.
-5. In parallel from 100 ms: name lines reveal with a clip-path wipe from bottom (each line 600 ms, 120 ms stagger), then sentence and buttons fade in (300 ms).
+5. In parallel from 100 ms: name lines reveal with a clip-path wipe from bottom (each line 600 ms, 120 ms stagger), and the sentence, buttons and availability line fade in at the same time (300 ms). (Changed in step 10.3: they previously waited for the wipe to finish, which delayed LCP by ~0.8 s.)
 
 Total ≤ 1.6 s. Content is readable even before animation completes (no blank page, no layout shift). Plays once per session.
 

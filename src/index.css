@@ -234,8 +234,9 @@
   animation: boot-wipe 600ms var(--ease-boot) var(--boot-delay, 100ms) both;
 }
 
+/* Starts with the name wipe rather than after it, so the main text is visible early (LCP). */
 .booting #top [data-boot-fade] {
-  animation: boot-fade 300ms var(--ease-boot) 820ms both;
+  animation: boot-fade 300ms var(--ease-boot) 100ms both;
 }
 
 @media (prefers-reduced-motion: reduce) {
