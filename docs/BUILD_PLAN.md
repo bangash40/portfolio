@@ -30,7 +30,7 @@ Steps 0.1 and 0.2 are committed locally; they are pushed together in step 0.3 on
   Commit (after remote is connected): `docs: add initial readme`
   README: project title, one-line description, tech stack list, "Live site: coming soon".
 
-- [ ] **0.4 Lint and format**
+- [x] **0.4 Lint and format**
   Add Prettier (`.prettierrc`: singleQuote, semi, printWidth 100, trailingComma all) and `eslint-config-prettier`. Add scripts `lint`, `format`. Format the codebase.
   Commit: `chore: configure eslint and prettier`
 
