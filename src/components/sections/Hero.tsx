@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react';
 import { content } from '../../data/content';
 import { handleAnchorClick } from '../../hooks/useLenis';
+import { useMagnetic } from '../../hooks/useMagnetic';
 import { gsap, useGSAP } from '../../lib/gsap';
 import { reelItemsFromProjects } from '../../lib/reel';
 import { Container } from '../layout/Container';
@@ -37,6 +38,7 @@ function markBooted() {
 
 export function Hero() {
   const sectionRef = useRef<HTMLElement>(null);
+  const primaryRef = useMagnetic<HTMLAnchorElement>();
   const [phoneState, setPhoneState] = useState<PhoneState>(() => (shouldBoot() ? 'booting' : 'on'));
 
   // The one orchestrated moment (DESIGN.md §7.1), total 1.4s. Runs in a layout effect, so the
@@ -97,7 +99,11 @@ export function Hero() {
           </p>
 
           <div data-boot-fade className="mt-10 flex flex-wrap gap-4">
-            <Button href="#projects" onClick={(event) => handleAnchorClick(event, 'projects')}>
+            <Button
+              ref={primaryRef}
+              href="#projects"
+              onClick={(event) => handleAnchorClick(event, 'projects')}
+            >
               See my projects
             </Button>
             <Button variant="secondary" href={person.resumeUrl} download>

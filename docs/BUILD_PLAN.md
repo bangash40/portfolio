@@ -108,7 +108,7 @@ Steps 0.1 and 0.2 are committed locally; they are pushed together in step 0.3 on
   GSAP timeline per `DESIGN.md §7.1`, once per session, skipped on reduced motion, no layout shift.
   Commit: `feat: add phone boot animation on page load`
 
-- [ ] **3.6 Magnetic primary button**
+- [x] **3.6 Magnetic primary button**
   Max 6 px pull, pointer-fine devices only, off on reduced motion.
   Commit: `feat: add magnetic hover to hero button`
 
