@@ -62,6 +62,8 @@
 @layer base {
   :root {
     color-scheme: light;
+    /* Anchor jumps land below the 60px fixed navbar */
+    scroll-padding-top: 60px;
   }
 
   :root[data-theme='dark'] {

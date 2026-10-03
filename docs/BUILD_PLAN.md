@@ -66,7 +66,7 @@ Steps 0.1 and 0.2 are committed locally; they are pushed together in step 0.3 on
   `useTheme` + `ThemeToggle` per `TRD.md §4`, with accessible labels and a 250 ms color transition.
   Commit: `feat: add light and dark theme toggle`
 
-- [ ] **2.4 Navbar**
+- [x] **2.4 Navbar**
   Sticky nav with logo text "Bangash", section links, Contact primary button, theme toggle, shrink-on-scroll behavior from `DESIGN.md §6.6`. Sections exist as empty anchored `<section id>` placeholders in `App.tsx`.
   Commit: `feat: add sticky navbar`
 

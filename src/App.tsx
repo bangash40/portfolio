@@ -1,17 +1,24 @@
 import { Container } from './components/layout/Container';
+import { Navbar } from './components/layout/Navbar';
 import { SkipLink } from './components/layout/SkipLink';
-import { ThemeToggle } from './components/ui/ThemeToggle';
 import { content } from './data/content';
 
 function App() {
   return (
     <>
       <SkipLink />
+      <Navbar />
       <main id="main">
-        <Container>
-          <ThemeToggle />
-          <h1 className="text-hero">{content.person.fullName}</h1>
-        </Container>
+        <section id="top" className="pt-[72px]">
+          <Container>
+            <h1 className="text-hero">{content.person.fullName}</h1>
+          </Container>
+        </section>
+        <section id="about" />
+        <section id="projects" />
+        <section id="journey" />
+        <section id="github" />
+        <section id="contact" />
       </main>
     </>
   );
