@@ -1,6 +1,7 @@
 import { Menu } from 'lucide-react';
 import { useCallback, useEffect, useState } from 'react';
 import { content } from '../../data/content';
+import { handleAnchorClick, scrollToSection } from '../../hooks/useLenis';
 import { Button } from '../ui/Button';
 import { ThemeToggle } from '../ui/ThemeToggle';
 import { Container } from './Container';
@@ -16,6 +17,12 @@ export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const closeMenu = useCallback(() => setMenuOpen(false), []);
+
+  // Close first so the menu releases scroll and focus, then scroll on the next frame.
+  const navigateFromMenu = useCallback((id: string) => {
+    setMenuOpen(false);
+    requestAnimationFrame(() => scrollToSection(id));
+  }, []);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > SHRINK_AFTER_PX);
@@ -59,6 +66,7 @@ export function Navbar() {
         >
           <a
             href="#top"
+            onClick={(event) => handleAnchorClick(event, 'top')}
             className="pointer-events-auto inline-flex h-11 items-center font-display text-xl font-extrabold tracking-[-0.02em] text-graphite"
           >
             {content.person.shortName}
@@ -70,6 +78,7 @@ export function Navbar() {
                 <li key={link.id}>
                   <a
                     href={`#${link.id}`}
+                    onClick={(event) => handleAnchorClick(event, link.id)}
                     className="inline-flex h-11 items-center px-3 font-medium text-graphite transition-colors duration-150 hover:text-signal motion-reduce:transition-none"
                   >
                     {link.label}
@@ -77,7 +86,11 @@ export function Navbar() {
                 </li>
               ))}
             </ul>
-            <Button href={`#${contactLink.id}`} className="ml-2 max-md:hidden">
+            <Button
+              href={`#${contactLink.id}`}
+              onClick={(event) => handleAnchorClick(event, contactLink.id)}
+              className="ml-2 max-md:hidden"
+            >
               {contactLink.label}
             </Button>
             <ThemeToggle />
@@ -94,7 +107,7 @@ export function Navbar() {
           </nav>
         </Container>
       </header>
-      <MobileMenu id={MENU_ID} open={menuOpen} onClose={closeMenu} />
+      <MobileMenu id={MENU_ID} open={menuOpen} onClose={closeMenu} onNavigate={navigateFromMenu} />
     </>
   );
 }

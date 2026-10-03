@@ -91,6 +91,11 @@
     outline: 2px solid var(--color-signal);
     outline-offset: 3px;
   }
+
+  /* Sections receive focus programmatically after in-page navigation; no ring needed */
+  [tabindex='-1']:focus {
+    outline: none;
+  }
 }
 
 /* Added to <html> for 250ms while the theme switches (see useTheme). */

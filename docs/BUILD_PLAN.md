@@ -78,7 +78,7 @@ Steps 0.1 and 0.2 are committed locally; they are pushed together in step 0.3 on
   Footer per `DESIGN.md §8`, source-code link, back-to-top.
   Commit: `feat: add footer`
 
-- [ ] **2.7 Motion foundation**
+- [x] **2.7 Motion foundation**
   Install `gsap @gsap/react lenis`. Add `src/lib/gsap.ts`, `useReducedMotion`, `useMediaQuery`, `useLenis` per `TRD.md §5`. Nav links use `scrollTo`.
   Commit: `feat: add gsap, lenis and reduced motion support`
 

@@ -3,8 +3,11 @@ import { Footer } from './components/layout/Footer';
 import { Navbar } from './components/layout/Navbar';
 import { SkipLink } from './components/layout/SkipLink';
 import { content } from './data/content';
+import { useLenis } from './hooks/useLenis';
 
 function App() {
+  useLenis();
+
   return (
     <>
       <SkipLink />

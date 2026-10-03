@@ -1,6 +1,7 @@
 import { X } from 'lucide-react';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, type MouseEvent } from 'react';
 import { content } from '../../data/content';
+import { isModifiedClick, setScrollLocked } from '../../hooks/useLenis';
 import { Button } from '../ui/Button';
 import { ThemeToggle } from '../ui/ThemeToggle';
 import { Container } from './Container';
@@ -10,10 +11,11 @@ interface MobileMenuProps {
   id: string;
   open: boolean;
   onClose: () => void;
+  onNavigate: (id: string) => void;
 }
 
 // Full-screen menu for < 768px: traps focus, closes on Esc, locks page scroll while open.
-export function MobileMenu({ id, open, onClose }: MobileMenuProps) {
+export function MobileMenu({ id, open, onClose, onNavigate }: MobileMenuProps) {
   const panelRef = useRef<HTMLDivElement>(null);
   const closeRef = useRef<HTMLButtonElement>(null);
 
@@ -24,6 +26,7 @@ export function MobileMenu({ id, open, onClose }: MobileMenuProps) {
     const opener = document.activeElement instanceof HTMLElement ? document.activeElement : null;
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
+    setScrollLocked(true);
     closeRef.current?.focus();
 
     const onKeyDown = (event: KeyboardEvent) => {
@@ -49,11 +52,18 @@ export function MobileMenu({ id, open, onClose }: MobileMenuProps) {
     return () => {
       document.removeEventListener('keydown', onKeyDown);
       document.body.style.overflow = previousOverflow;
+      setScrollLocked(false);
       opener?.focus();
     };
   }, [open, onClose]);
 
   if (!open) return null;
+
+  const navigate = (event: MouseEvent<HTMLAnchorElement>, target: string) => {
+    if (isModifiedClick(event)) return;
+    event.preventDefault();
+    onNavigate(target);
+  };
 
   return (
     <div
@@ -62,12 +72,13 @@ export function MobileMenu({ id, open, onClose }: MobileMenuProps) {
       role="dialog"
       aria-modal="true"
       aria-label="Menu"
+      data-lenis-prevent
       className="fixed inset-0 z-50 overflow-y-auto bg-fog md:hidden"
     >
       <Container className="flex h-[72px] items-center justify-between">
         <a
           href="#top"
-          onClick={onClose}
+          onClick={(event) => navigate(event, 'top')}
           className="inline-flex h-11 items-center font-display text-xl font-extrabold tracking-[-0.02em] text-graphite"
         >
           {content.person.shortName}
@@ -93,7 +104,7 @@ export function MobileMenu({ id, open, onClose }: MobileMenuProps) {
               <li key={link.id}>
                 <a
                   href={`#${link.id}`}
-                  onClick={onClose}
+                  onClick={(event) => navigate(event, link.id)}
                   className="inline-flex min-h-11 items-center py-1 font-display text-h3 font-extrabold text-graphite transition-colors duration-150 hover:text-signal motion-reduce:transition-none"
                 >
                   {link.label}
@@ -101,7 +112,11 @@ export function MobileMenu({ id, open, onClose }: MobileMenuProps) {
               </li>
             ))}
           </ul>
-          <Button href={`#${contactLink.id}`} onClick={onClose} className="mt-10">
+          <Button
+            href={`#${contactLink.id}`}
+            onClick={(event) => navigate(event, contactLink.id)}
+            className="mt-10"
+          >
             {contactLink.label}
           </Button>
         </nav>

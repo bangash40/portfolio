@@ -1,4 +1,5 @@
 import { content } from '../../data/content';
+import { handleAnchorClick } from '../../hooks/useLenis';
 import { Container } from './Container';
 
 const sourceCodeUrl =
@@ -24,7 +25,11 @@ export function Footer() {
             </a>
           </li>
           <li>
-            <a href="#top" className={linkClass}>
+            <a
+              href="#top"
+              onClick={(event) => handleAnchorClick(event, 'top')}
+              className={linkClass}
+            >
               Back to top
             </a>
           </li>
