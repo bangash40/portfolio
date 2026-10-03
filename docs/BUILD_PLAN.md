@@ -114,7 +114,7 @@ Steps 0.1 and 0.2 are committed locally; they are pushed together in step 0.3 on
 
 ## Phase 4 — About
 
-- [ ] **4.1 About section**
+- [x] **4.1 About section**
   Bio paragraphs, optional avatar (renders only if `content.person.avatar` exists), skill groups in a clean typographic list (no cards).
   Commit: `feat: build about section`
 
