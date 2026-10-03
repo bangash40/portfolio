@@ -25,7 +25,7 @@ Steps 0.1 and 0.2 are committed locally; they are pushed together in step 0.3 on
   Run `git config core.hooksPath .githooks` and make sure `.githooks/commit-msg` is executable (`git update-index --chmod=+x .githooks/commit-msg`). Add a short "Commit rules" note to README.
   Commit: `chore: add commit-msg hook and project rules`
 
-- [ ] **0.3 Connect GitHub and push** 🛑
+- [x] **0.3 Connect GitHub and push** 🛑
   If no remote exists: if `gh` CLI is installed and logged in, run `gh repo create bangash40/portfolio --public --source=. --remote=origin`; otherwise stop and ask the owner to create an empty public repo named `portfolio` on GitHub (no README) and paste the URL. Add remote, push `main`. Confirm the first commit on GitHub shows only the owner as author.
   Commit (after remote is connected): `docs: add initial readme`
   README: project title, one-line description, tech stack list, "Live site: coming soon".

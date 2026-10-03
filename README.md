@@ -1,4 +1,19 @@
-# portfolio
+# Farhan Ali Haider — Portfolio
+
+The personal portfolio of Farhan Ali Haider ("Bangash"), a mobile app developer working with Flutter and Firebase.
+
+Live site: coming soon
+
+## Tech stack
+
+- Vite
+- React 19 + TypeScript
+- Tailwind CSS v4
+- GSAP + ScrollTrigger, Lenis
+- lucide-react icons
+- Web3Forms (contact form)
+- GitHub REST API (live activity)
+- Vercel (hosting and analytics)
 
 ## Commit rules
 
