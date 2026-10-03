@@ -2,9 +2,12 @@ import { Container } from './components/layout/Container';
 import { Footer } from './components/layout/Footer';
 import { Navbar } from './components/layout/Navbar';
 import { SkipLink } from './components/layout/SkipLink';
-import { PhoneFrame } from './components/phone/PhoneFrame';
+import { ScreenReel } from './components/phone/ScreenReel';
 import { content } from './data/content';
 import { useLenis } from './hooks/useLenis';
+import { reelItemsFromProjects } from './lib/reel';
+
+const heroReel = reelItemsFromProjects(content.projects);
 
 function App() {
   useLenis();
@@ -17,7 +20,7 @@ function App() {
         <section id="top" className="pt-[72px]">
           <Container className="flex flex-col gap-12 py-16 lg:flex-row lg:items-center lg:justify-between">
             <h1 className="text-hero">{content.person.fullName}</h1>
-            <PhoneFrame label="Phone with a blank screen" />
+            <ScreenReel items={heroReel} priority />
           </Container>
         </section>
         <section id="about" />

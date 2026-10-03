@@ -96,7 +96,7 @@ Steps 0.1 and 0.2 are committed locally; they are pushed together in step 0.3 on
   `PlaceholderScreen` with the four variants from `DESIGN.md §6.3`.
   Commit: `feat: add placeholder app screens`
 
-- [ ] **3.3 ScreenReel**
+- [x] **3.3 ScreenReel**
   Crossfade reel per `DESIGN.md §6.2` with pause on hover/focus/hidden tab, keyboard pause button, reduced-motion behavior, live-updating `aria-label`.
   Commit: `feat: add screen reel for phone`
 
