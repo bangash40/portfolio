@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { Fragment, useRef, useState } from 'react';
 import { content } from '../../data/content';
 import { handleAnchorClick } from '../../hooks/useLenis';
 import { useMagnetic } from '../../hooks/useMagnetic';
@@ -87,10 +87,14 @@ export function Hero() {
       <Container className="flex flex-col gap-16 lg:grid lg:grid-cols-12 lg:items-center lg:gap-6">
         <div className="lg:col-span-7">
           <h1 id="hero-name" className="font-display text-hero font-extrabold text-graphite">
-            {nameLines.map((line) => (
-              <span key={line} data-boot-line className="block">
-                {line}
-              </span>
+            {nameLines.map((line, index) => (
+              <Fragment key={line}>
+                {/* A real space keeps the accessible name "Farhan Ali Haider", not "FarhanAli" */}
+                {index > 0 && ' '}
+                <span data-boot-line className="block">
+                  {line}
+                </span>
+              </Fragment>
             ))}
           </h1>
 
