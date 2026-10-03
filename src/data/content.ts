@@ -1,7 +1,7 @@
 import type { SiteContent } from '../types/content';
 
 // Every personal fact on the site lives here. Values starting with 'TODO:' are placeholders
-// for the owner to replace; components treat them as missing content.
+// for the owner to replace. Placeholder text shows as written; placeholder links are hidden.
 export const content: SiteContent = {
   person: {
     fullName: 'Farhan Ali Haider',

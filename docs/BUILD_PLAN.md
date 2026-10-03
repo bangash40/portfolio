@@ -154,7 +154,7 @@ Steps 0.1 and 0.2 are committed locally; they are pushed together in step 0.3 on
 
 ## Phase 8 — Contact
 
-- [ ] **8.1 Contact section and links**
+- [x] **8.1 Contact section and links**
   Heading, line, direct links (email, GitHub, LinkedIn, WhatsApp if set), résumé button.
   Commit: `feat: add contact section`
 
