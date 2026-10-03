@@ -100,7 +100,7 @@ Steps 0.1 and 0.2 are committed locally; they are pushed together in step 0.3 on
   Crossfade reel per `DESIGN.md §6.2` with pause on hover/focus/hidden tab, keyboard pause button, reduced-motion behavior, live-updating `aria-label`.
   Commit: `feat: add screen reel for phone`
 
-- [ ] **3.4 Hero layout and copy**
+- [x] **3.4 Hero layout and copy**
   Hero section layout (desktop grid + mobile stack), name as the only `h1`, sentence, both buttons (résumé link points to `content.person.resumeUrl`), availability dot in Saffron.
   Commit: `feat: build hero section`
 
