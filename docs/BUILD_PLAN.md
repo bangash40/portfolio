@@ -62,7 +62,7 @@ Steps 0.1 and 0.2 are committed locally; they are pushed together in step 0.3 on
   `Container`, `Button` (primary/secondary, renders `<a>` or `<button>`), `Tag`, `SectionHeading`, `Skeleton`, `SkipLink`.
   Commit: `feat: add base ui components`
 
-- [ ] **2.3 Theme hook and toggle**
+- [x] **2.3 Theme hook and toggle**
   `useTheme` + `ThemeToggle` per `TRD.md §4`, with accessible labels and a 250 ms color transition.
   Commit: `feat: add light and dark theme toggle`
 

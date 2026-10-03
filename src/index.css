@@ -90,3 +90,16 @@
     outline-offset: 3px;
   }
 }
+
+/* Added to <html> for 250ms while the theme switches (see useTheme). */
+.theme-transition,
+.theme-transition *,
+.theme-transition *::before,
+.theme-transition *::after {
+  transition:
+    color 250ms ease,
+    background-color 250ms ease,
+    border-color 250ms ease,
+    fill 250ms ease,
+    stroke 250ms ease !important;
+}
