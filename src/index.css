@@ -79,8 +79,8 @@
   --color-phone-rim: #2c3445;
   --color-phone-screen: #07090d;
 
-  /* Only the phone casts a shadow (DESIGN.md §2, §6.1) */
-  --shadow-phone: 0 40px 80px -20px rgb(29 35 48 / 0.35);
+  /* Only the phone casts a shadow (DESIGN.md §2, §6.1): 0 40px 80px -20px rgb(29 35 48 / 0.35),
+     shipped as public/phone-shadow.png (see PhoneFrame). */
 
   /* Container (DESIGN.md §4) */
   --container-page: 1200px;

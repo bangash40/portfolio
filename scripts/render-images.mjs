@@ -1,4 +1,4 @@
-// Renders the social preview and touch icon PNGs with a local headless Chrome or Edge:
+// Renders the social preview, touch icon and phone shadow PNGs with a local headless Chrome or Edge:
 //   node scripts/render-images.mjs
 // Set CHROME_PATH if the browser is not in the default Windows location.
 import { spawnSync } from 'node:child_process';
@@ -18,6 +18,7 @@ const jobs = [
     output: 'public/apple-touch-icon.png',
     size: '180,180',
   },
+  { source: 'scripts/phone-shadow.html', output: 'public/phone-shadow.png', size: '210,371' },
 ];
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));

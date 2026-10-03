@@ -53,6 +53,14 @@ export function PhoneFrame({
       data-phone-state={state}
       className={`relative ${s.width} ${className}`}
     >
+      {/* The phone's soft, long shadow (DESIGN.md §6.1), pre-rendered by scripts/phone-shadow.html.
+          A live 80px box-shadow blur is very slow to paint without a GPU and delayed first paint.
+          Insets are percentages of the phone, so the shadow scales with every size. */}
+      <span
+        aria-hidden="true"
+        className="pointer-events-none absolute -inset-x-[20%] -top-[3.22%] -bottom-[16.26%] bg-[url(/phone-shadow.png)] bg-size-[100%_100%] bg-no-repeat"
+      />
+
       {/* Side buttons: volume up and down on the left, power on the right */}
       <span
         aria-hidden="true"
@@ -67,7 +75,7 @@ export function PhoneFrame({
         className="absolute top-[24%] -right-[2px] h-[11%] w-[3px] rounded-r-sm bg-phone-rim"
       />
 
-      <div className={`relative bg-phone shadow-phone ring-1 ring-phone-rim ring-inset ${s.body}`}>
+      <div className={`relative bg-phone ring-1 ring-phone-rim ring-inset ${s.body}`}>
         {/* Power LED: dim until the phone is on, then a saffron glow */}
         <span
           aria-hidden="true"

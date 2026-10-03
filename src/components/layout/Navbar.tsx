@@ -50,8 +50,10 @@ export function Navbar() {
       <header className="pointer-events-none fixed inset-x-0 top-0 z-40 h-[72px]">
         <div
           aria-hidden="true"
-          className={`absolute inset-x-0 top-0 h-[72px] origin-top bg-fog/85 backdrop-blur-[12px] ${motion} ${
-            scrolled ? 'scale-y-[0.8334] opacity-100' : 'opacity-0'
+          className={`absolute inset-x-0 top-0 h-[72px] origin-top bg-fog/85 ${motion} ${
+            // The blur only matters once the bar is visible; skipping it at the top keeps the
+            // first paint cheap (backdrop filters are slow to draw without a GPU).
+            scrolled ? 'scale-y-[0.8334] opacity-100 backdrop-blur-[12px]' : 'opacity-0'
           }`}
         />
         <div
