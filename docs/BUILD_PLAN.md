@@ -70,7 +70,7 @@ Steps 0.1 and 0.2 are committed locally; they are pushed together in step 0.3 on
   Sticky nav with logo text "Bangash", section links, Contact primary button, theme toggle, shrink-on-scroll behavior from `DESIGN.md §6.6`. Sections exist as empty anchored `<section id>` placeholders in `App.tsx`.
   Commit: `feat: add sticky navbar`
 
-- [ ] **2.5 Mobile menu**
+- [x] **2.5 Mobile menu**
   Hamburger (< 768 px) opening a full-screen menu; focus trap, `Esc` closes, body scroll locked, `aria-expanded`.
   Commit: `feat: add mobile navigation menu`
 
