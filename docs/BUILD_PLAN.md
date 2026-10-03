@@ -88,7 +88,7 @@ Steps 0.1 and 0.2 are committed locally; they are pushed together in step 0.3 on
 
 ## Phase 3 — Hero and the phone
 
-- [ ] **3.1 PhoneFrame**
+- [x] **3.1 PhoneFrame**
   Build the device per `DESIGN.md §6.1` with `size` and `state` props. Show it alone in the hero area to review.
   Commit: `feat: add phone frame component`
 
