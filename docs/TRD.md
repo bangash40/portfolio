@@ -177,7 +177,7 @@ No router library.
   ```json
   {
     "cleanUrls": true,
-    "rewrites": [{ "source": "/((?!assets/|.*\\..*).*)", "destination": "/index.html" }]
+    "rewrites": [{ "source": "/((?!assets/|.*\\..*).*)", "destination": "/" }]
   }
   ```
 - In `main.tsx`: if `window.location.pathname` is not `/` (ignoring hash), render `NotFound` and set `document.title` accordingly; otherwise render `App`.
