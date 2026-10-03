@@ -176,7 +176,7 @@ Steps 0.1 and 0.2 are committed locally; they are pushed together in step 0.3 on
   Canonical URL (live URL), Open Graph/Twitter tags, JSON-LD Person, `robots.txt`, `sitemap.xml`, `og-image.png` (1200×630, per `DESIGN.md §9`; generate from an SVG with a small node script if needed), apple-touch-icon.
   Commit: `feat: add seo metadata, sitemap and og image`
 
-- [ ] **9.3 Analytics** 🛑
+- [x] **9.3 Analytics** 🛑
   Install `@vercel/analytics`, add `<Analytics />` in `App`. Ask the owner to enable Analytics in the Vercel dashboard.
   Commit: `feat: add vercel web analytics`
 
