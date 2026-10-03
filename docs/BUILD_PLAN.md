@@ -54,7 +54,7 @@ Steps 0.1 and 0.2 are committed locally; they are pushed together in step 0.3 on
 
 ## Phase 2 — Content and layout foundation
 
-- [ ] **2.1 Content data file**
+- [x] **2.1 Content data file**
   Create `src/data/content.ts` with all data from `PRD.md` (4 projects, skills, timeline placeholders, links). Placeholders start with `TODO:` and have `// TODO(bangash):` comments. GitHub link `https://github.com/bangash40`.
   Commit: `feat: add site content data`
 
