@@ -144,7 +144,7 @@ Steps 0.1 and 0.2 are committed locally; they are pushed together in step 0.3 on
 
 ## Phase 7 — Live GitHub
 
-- [ ] **7.1 GitHub client**
+- [x] **7.1 GitHub client**
   `src/lib/github.ts` per `TRD.md §7` with caching, timeout and safe errors.
   Commit: `feat: add github api client with session cache`
 
