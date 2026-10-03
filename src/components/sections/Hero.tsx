@@ -1,11 +1,9 @@
-import { Fragment, useRef, useState } from 'react';
+import { Fragment, useEffect, useState, type CSSProperties } from 'react';
 import { content } from '../../data/content';
 import { handleAnchorClick } from '../../hooks/useLenis';
 import { useMagnetic } from '../../hooks/useMagnetic';
-import { gsap, useGSAP } from '../../lib/gsap';
 import { reelItemsFromProjects } from '../../lib/reel';
 import { Container } from '../layout/Container';
-import type { PhoneState } from '../phone/PhoneFrame';
 import { ScreenReel } from '../phone/ScreenReel';
 import { Button } from '../ui/Button';
 
@@ -16,70 +14,37 @@ const heroReel = reelItemsFromProjects(projects);
 const [firstName, ...otherNames] = person.fullName.split(' ');
 const nameLines = [firstName, otherNames.join(' ')];
 
-const BOOTED_KEY = 'booted';
-
-// The boot sequence plays once per session and never with reduced motion (TRD.md §5).
-function shouldBoot() {
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return false;
-  try {
-    return sessionStorage.getItem(BOOTED_KEY) === null;
-  } catch {
-    return true;
-  }
-}
-
-function markBooted() {
-  try {
-    sessionStorage.setItem(BOOTED_KEY, '1');
-  } catch {
-    // Storage unavailable; the sequence may replay on the next visit, which is harmless.
-  }
+// The boot sequence (DESIGN.md §7.1) is CSS keyframes in index.css, started by the
+// `booting` class that the inline script in index.html adds before the first paint (once per
+// session, never with reduced motion). It runs as soon as the page appears, without waiting
+// for JavaScript. Here we only wait for it to finish, then let the screen reel start.
+function isBooting() {
+  return typeof document !== 'undefined' && document.documentElement.classList.contains('booting');
 }
 
 export function Hero() {
-  const sectionRef = useRef<HTMLElement>(null);
   const primaryRef = useMagnetic<HTMLAnchorElement>();
-  const [phoneState, setPhoneState] = useState<PhoneState>(() => (shouldBoot() ? 'booting' : 'on'));
+  const [booting, setBooting] = useState(isBooting);
 
-  // The one orchestrated moment (DESIGN.md §7.1), total 1.4s. Runs in a layout effect, so the
-  // starting state is set before the first paint and nothing shifts.
-  useGSAP(
-    () => {
-      if (phoneState !== 'booting') return;
-      markBooted();
-
-      const timeline = gsap.timeline({
-        defaults: { ease: 'power3.out' },
-        onComplete: () => setPhoneState('on'),
-      });
-
-      timeline
-        .fromTo('[data-phone-led]', { opacity: 0 }, { opacity: 1, duration: 0.2 }, 0.2)
-        .fromTo(
-          '[data-phone-monogram]',
-          { opacity: 0, scale: 0.9 },
-          { opacity: 1, scale: 1, duration: 0.4 },
-          0.45,
-        )
-        .to('[data-phone-monogram]', { opacity: 0, duration: 0.25 }, 1)
-        .fromTo('[data-phone-power]', { opacity: 1 }, { opacity: 0, duration: 0.4 }, 1)
-        .fromTo(
-          '[data-boot-line]',
-          { clipPath: 'inset(100% -10% -25% -10%)' },
-          { clipPath: 'inset(-25% -10% -25% -10%)', duration: 0.6, stagger: 0.12 },
-          0.1,
-        )
-        .fromTo('[data-boot-fade]', { opacity: 0 }, { opacity: 1, duration: 0.3 }, 0.82)
-        // Text returns to its static styles. The phone keeps its end values, which match the
-        // 'on' classes, so there is no flicker before React re-renders with the new state.
-        .set('[data-boot-line], [data-boot-fade]', { clearProps: 'opacity,clipPath' });
-    },
-    { scope: sectionRef, dependencies: [] },
-  );
+  useEffect(() => {
+    if (!booting) return;
+    let cancelled = false;
+    const running = document
+      .getAnimations()
+      .filter((animation) => (animation as CSSAnimation).animationName?.startsWith('boot-'));
+    Promise.all(running.map((animation) => animation.finished.catch(() => undefined))).then(() => {
+      if (cancelled) return;
+      // The end state of every boot animation equals the static styles, so this is seamless.
+      document.documentElement.classList.remove('booting');
+      setBooting(false);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [booting]);
 
   return (
     <section
-      ref={sectionRef}
       id="top"
       aria-labelledby="hero-name"
       className="pt-[calc(72px+48px)] pb-20 lg:flex lg:min-h-svh lg:items-center lg:pt-[calc(72px+32px)] lg:pb-16"
@@ -91,7 +56,11 @@ export function Hero() {
               <Fragment key={line}>
                 {/* A real space keeps the accessible name "Farhan Ali Haider", not "FarhanAli" */}
                 {index > 0 && ' '}
-                <span data-boot-line className="block">
+                <span
+                  data-boot-line
+                  className="block"
+                  style={{ '--boot-delay': `${100 + index * 120}ms` } as CSSProperties}
+                >
                   {line}
                 </span>
               </Fragment>
@@ -123,7 +92,7 @@ export function Hero() {
 
         <ScreenReel
           items={heroReel}
-          state={phoneState}
+          hold={booting}
           monogram={person.shortName.charAt(0)}
           priority
           className="lg:col-span-5 lg:justify-self-center"

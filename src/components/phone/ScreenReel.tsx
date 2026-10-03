@@ -15,6 +15,8 @@ interface ScreenReelProps {
   state?: PhoneState;
   /** Letter for the phone boot screen. */
   monogram?: string;
+  /** Keep the first screen while something else is happening (the hero boot sequence). */
+  hold?: boolean;
   /** Load the first screen eagerly (hero only). */
   priority?: boolean;
   /** Controlled mode: show this screen and never auto-cycle (the pinned projects phone). */
@@ -23,7 +25,9 @@ interface ScreenReelProps {
 }
 
 function usePageVisible() {
-  const [visible, setVisible] = useState(() => document.visibilityState === 'visible');
+  const [visible, setVisible] = useState(
+    () => typeof document === 'undefined' || document.visibilityState === 'visible',
+  );
   useEffect(() => {
     const onChange = () => setVisible(document.visibilityState === 'visible');
     document.addEventListener('visibilitychange', onChange);
@@ -39,6 +43,7 @@ export function ScreenReel({
   size = 'lg',
   state = 'on',
   monogram,
+  hold = false,
   priority = false,
   activeIndex,
   className = '',
@@ -60,7 +65,8 @@ export function ScreenReel({
   }
 
   const canCycle = !controlled && items.length > 1 && !reducedMotion;
-  const playing = canCycle && state === 'on' && !userPaused && !hovered && !focused && pageVisible;
+  const playing =
+    canCycle && state === 'on' && !hold && !userPaused && !hovered && !focused && pageVisible;
 
   useEffect(() => {
     if (!playing) return;

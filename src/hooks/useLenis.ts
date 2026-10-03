@@ -1,29 +1,42 @@
-import Lenis from 'lenis';
+import type Lenis from 'lenis';
 import { useEffect, type MouseEvent } from 'react';
-import { gsap, ScrollTrigger } from '../lib/gsap';
 import { useReducedMotion } from './useReducedMotion';
 
 let lenis: Lenis | null = null;
 
 // Smooth scrolling for the whole page. Call once, in App. Off when reduced motion is on.
+// Lenis and GSAP load after the first render, keeping them off the critical path; until then
+// scrolling is native.
 export function useLenis() {
   const reducedMotion = useReducedMotion();
 
   useEffect(() => {
     if (reducedMotion) return;
+    let cleanup: (() => void) | undefined;
+    let cancelled = false;
 
-    const instance = new Lenis();
-    lenis = instance;
-    instance.on('scroll', ScrollTrigger.update);
-    const tick = (time: number) => instance.raf(time * 1000);
-    gsap.ticker.add(tick);
-    gsap.ticker.lagSmoothing(0);
+    Promise.all([import('lenis'), import('../lib/gsap')]).then(
+      ([{ default: LenisClass }, { gsap, ScrollTrigger }]) => {
+        if (cancelled) return;
+        const instance = new LenisClass();
+        lenis = instance;
+        instance.on('scroll', ScrollTrigger.update);
+        const tick = (time: number) => instance.raf(time * 1000);
+        gsap.ticker.add(tick);
+        gsap.ticker.lagSmoothing(0);
+
+        cleanup = () => {
+          gsap.ticker.remove(tick);
+          gsap.ticker.lagSmoothing(500, 33);
+          instance.destroy();
+          lenis = null;
+        };
+      },
+    );
 
     return () => {
-      gsap.ticker.remove(tick);
-      gsap.ticker.lagSmoothing(500, 33);
-      instance.destroy();
-      lenis = null;
+      cancelled = true;
+      cleanup?.();
     };
   }, [reducedMotion]);
 }

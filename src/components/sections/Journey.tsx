@@ -11,27 +11,23 @@ export function Journey() {
   const listRef = useRef<HTMLOListElement>(null);
 
   // Older dots fill with Signal as their entry scrolls into view, scrubbed (DESIGN.md §7.3).
+  // Opacity only: tweening a transform makes GSAP read computed transforms, forcing layouts.
   // With reduced motion the fills stay hidden and the dots keep their static Slate.
   useGSAP(
     () => {
       const mm = gsap.matchMedia();
       mm.add('(prefers-reduced-motion: no-preference)', () => {
         gsap.utils.toArray<HTMLElement>('[data-timeline-fill]').forEach((fill) => {
-          gsap.fromTo(
-            fill,
-            { opacity: 0, scale: 0.5 },
-            {
-              opacity: 1,
-              scale: 1,
-              ease: 'none',
-              scrollTrigger: {
-                trigger: fill.closest('li'),
-                start: 'top 85%',
-                end: 'top 60%',
-                scrub: true,
-              },
+          gsap.to(fill, {
+            opacity: 1,
+            ease: 'none',
+            scrollTrigger: {
+              trigger: fill.closest('li'),
+              start: 'top 85%',
+              end: 'top 60%',
+              scrub: true,
             },
-          );
+          });
         });
       });
       return () => mm.revert();

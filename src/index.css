@@ -1,5 +1,37 @@
 @import 'tailwindcss';
 
+/* Metric-matched fallbacks: local Arial resized to the web fonts' widths and heights (measured
+   from the font files), so text does not shift when Google Fonts swap in after first paint. */
+@font-face {
+  font-family: 'Bricolage Fallback';
+  src: local('Arial Bold'), local('Arial-BoldMT'), local('Helvetica Neue Bold');
+  font-weight: 600 900;
+  size-adjust: 91.57%;
+  ascent-override: 101.56%;
+  descent-override: 29.48%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: 'Instrument Fallback';
+  src: local('Arial'), local('ArialMT'), local('Helvetica Neue');
+  font-weight: 100 500;
+  size-adjust: 102.08%;
+  ascent-override: 95.02%;
+  descent-override: 24.49%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: 'Instrument Fallback';
+  src: local('Arial Bold'), local('Arial-BoldMT'), local('Helvetica Neue Bold');
+  font-weight: 600 900;
+  size-adjust: 97.61%;
+  ascent-override: 99.38%;
+  descent-override: 25.61%;
+  line-gap-override: 0%;
+}
+
 /* Design tokens from docs/DESIGN.md. Light theme is the default. */
 @theme {
   /* Colors (DESIGN.md §2) */
@@ -15,8 +47,10 @@
   --color-on-signal: #ffffff;
 
   /* Fonts (DESIGN.md §3) */
-  --font-display: 'Bricolage Grotesque', 'Segoe UI', system-ui, sans-serif;
-  --font-body: 'Instrument Sans', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-display: 'Bricolage Grotesque', 'Bricolage Fallback', 'Segoe UI', system-ui, sans-serif;
+  --font-body:
+    'Instrument Sans', 'Instrument Fallback', system-ui, -apple-system, 'Segoe UI', Roboto,
+    sans-serif;
 
   /* Type scale: ratio 1.25, base 17px (DESIGN.md §3) */
   --text-hero: clamp(3rem, 8.5vw, 7rem);
@@ -104,6 +138,11 @@
   }
 }
 
+/* Unknown paths: hide the prerendered home page until the 404 page renders (see main.tsx). */
+.not-found #root {
+  visibility: hidden;
+}
+
 /* Added to <html> for 250ms while the theme switches (see useTheme). */
 .theme-transition,
 .theme-transition *,
@@ -115,4 +154,92 @@
     border-color 250ms ease,
     fill 250ms ease,
     stroke 250ms ease !important;
+}
+
+/* Boot sequence, the one orchestrated moment (DESIGN.md §7.1). The inline script in index.html
+   adds .booting to <html> before the first paint, once per session and never with reduced
+   motion. Every end state equals the static styles, so removing the class later is seamless. */
+@keyframes boot-led {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes boot-monogram {
+  /* 0–450ms hidden, 450–850ms fade in and scale 0.9 → 1, hold, 1000–1250ms fade out */
+  0%,
+  36% {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  68%,
+  80% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1);
+  }
+}
+
+@keyframes boot-power {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes boot-wipe {
+  from {
+    clip-path: inset(100% -10% -25% -10%);
+  }
+  to {
+    clip-path: inset(-25% -10% -25% -10%);
+  }
+}
+
+@keyframes boot-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.booting #top {
+  /* GSAP's power3.out */
+  --ease-boot: cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+
+.booting #top [data-phone-led] {
+  animation: boot-led 200ms var(--ease-boot) 200ms both;
+}
+
+.booting #top [data-phone-monogram] {
+  animation: boot-monogram 1250ms var(--ease-boot) both;
+}
+
+.booting #top [data-phone-power] {
+  animation: boot-power 400ms var(--ease-boot) 1000ms both;
+}
+
+.booting #top [data-boot-line] {
+  animation: boot-wipe 600ms var(--ease-boot) var(--boot-delay, 100ms) both;
+}
+
+.booting #top [data-boot-fade] {
+  animation: boot-fade 300ms var(--ease-boot) 820ms both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .booting #top * {
+    animation: none !important;
+  }
 }

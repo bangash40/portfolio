@@ -63,15 +63,49 @@
           theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
         }
         document.documentElement.dataset.theme = theme;
+        // Any path but '/' gets the prerendered home HTML via the Vercel rewrite; hide it
+        // until main.tsx swaps in the 404 page.
+        if (location.pathname !== '/') document.documentElement.classList.add('not-found');
+      })();
+    </script>
+
+    <!-- Boot sequence: decide before the first paint so the CSS animation starts with the page.
+         Once per session, home page only, never with reduced motion (DESIGN.md §7.1). -->
+    <script>
+      (function () {
+        try {
+          if (
+            location.pathname === '/' &&
+            !window.matchMedia('(prefers-reduced-motion: reduce)').matches &&
+            sessionStorage.getItem('booted') === null
+          ) {
+            sessionStorage.setItem('booted', '1');
+            document.documentElement.classList.add('booting');
+          }
+        } catch (e) {}
       })();
     </script>
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- Fonts load without blocking the first paint; metric-matched fallbacks in index.css keep
+         the layout steady when they swap in. -->
+    <link
+      rel="preload"
+      as="style"
+      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Instrument+Sans:wght@400;500;600&display=swap"
+    />
     <link
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Instrument+Sans:wght@400;500;600&display=swap"
+      media="print"
+      onload="this.media = 'all'"
     />
+    <noscript
+      ><link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Instrument+Sans:wght@400;500;600&display=swap"
+    /></noscript>
   </head>
   <body>
     <div id="root"></div>

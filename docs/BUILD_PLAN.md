@@ -190,7 +190,7 @@ Steps 0.1 and 0.2 are committed locally; they are pushed together in step 0.3 on
   Check 320/375/768/1024/1440/1920; fix overflow, spacing, type sizes.
   Commit: `fix: polish responsive layout`
 
-- [ ] **10.3 Performance pass**
+- [x] **10.3 Performance pass**
   Check bundle size vs budget, image sizes, CLS, font loading; ask the owner to run Lighthouse (mobile) on the live URL and share scores; fix until ≥ 90 ×4.
   Commit: `perf: optimize bundle, images and loading`
 

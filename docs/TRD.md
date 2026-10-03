@@ -49,8 +49,12 @@ portfolio/
 │   ├── resume/Farhan-Ali-Haider-Resume.pdf   # TODO(bangash)
 │   ├── images/avatar.webp                     # TODO(bangash), optional
 │   └── screens/<project-slug>/1.webp …        # TODO(bangash), optional
+├── scripts/
+│   ├── prerender.mjs              # injects the prerendered home page into dist/index.html
+│   └── render-images.mjs          # regenerates og-image.png and apple-touch-icon.png
 ├── src/
 │   ├── main.tsx
+│   ├── entry-server.tsx           # build-time prerender of the home page
 │   ├── App.tsx
 │   ├── index.css                  # Tailwind import + @theme tokens + base styles
 │   ├── data/
@@ -157,14 +161,16 @@ export interface SiteContent {
 ## 5. Animation architecture
 
 - `src/lib/gsap.ts`: `gsap.registerPlugin(ScrollTrigger, useGSAP)`; export `gsap`, `ScrollTrigger`. Import from here only.
-- All animations use `useGSAP(() => {...}, { scope: ref })` so they auto-clean on unmount.
+- All GSAP animations use `useGSAP(() => {...}, { scope: ref })` so they auto-clean on unmount.
 - `useReducedMotion()` returns a boolean from `matchMedia('(prefers-reduced-motion: reduce)')`, reactive to change. Every animated component checks it first.
 - `useLenis()` (called once in `App`):
   - Skip entirely if reduced motion.
+  - Lenis and GSAP are dynamically imported after the first render, keeping them off the critical path; scrolling is native until they arrive.
   - `const lenis = new Lenis()`; `lenis.on('scroll', ScrollTrigger.update)`; `gsap.ticker.add(t => lenis.raf(t * 1000))`; `gsap.ticker.lagSmoothing(0)`.
   - Expose `scrollTo(target)` for nav links (falls back to `element.scrollIntoView` when Lenis is off).
 - Projects pinning uses `ScrollTrigger.matchMedia` / `gsap.matchMedia()` with `(min-width: 1024px) and (prefers-reduced-motion: no-preference)`.
-- Boot sequence plays once per session: guard with `sessionStorage.getItem('booted')` (try/catch).
+- Boot sequence (DESIGN §7.1) is CSS keyframes in `index.css`, not a GSAP timeline (changed in step 10.3 for performance). An inline script in `index.html` adds `.booting` to `<html>` before the first paint, once per session (`sessionStorage.getItem('booted')`, try/catch), on the home page only and never with reduced motion. The animation therefore starts with the page instead of waiting for JavaScript; `Hero` only waits for it to finish before starting the screen reel.
+- Avoid GSAP tweens that read computed transforms during page load (they force layout); create them after the first paint or on first interaction.
 - Animate only `transform`, `opacity`, `clip-path`. Never animate layout properties.
 
 ---
@@ -180,7 +186,7 @@ No router library.
     "rewrites": [{ "source": "/((?!assets/|.*\\..*).*)", "destination": "/" }]
   }
   ```
-- In `main.tsx`: if `window.location.pathname` is not `/` (ignoring hash), render `NotFound` and set `document.title` accordingly; otherwise render `App`.
+- In `main.tsx`: if `window.location.pathname` is not `/` (ignoring hash), render `NotFound` and set `document.title` accordingly; otherwise hydrate the prerendered `App` (see §10). Unknown paths receive the prerendered home HTML through the rewrite, so `index.html` hides it (`.not-found`) until the 404 page replaces it.
 
 ---
 
@@ -235,7 +241,9 @@ Rules:
 - Hero LCP element is the name text (not an image) → fast LCP.
 - First hero screenshot `fetchpriority="high"`; all others lazy.
 - Images WebP, explicit `width`/`height` to prevent layout shift (CLS < 0.1).
-- Lazy-load the GitHub and Contact sections' heavy parts with `React.lazy` only if the bundle exceeds budget.
+- The home page is prerendered at build time: `src/entry-server.tsx` renders `App` with `react-dom/static` and `scripts/prerender.mjs` injects the HTML into `dist/index.html`; `main.tsx` hydrates it. Content paints before any JavaScript runs.
+- Everything below the hero (and the footer) is one `React.lazy` chunk, so the first render and hydration only cover the navbar and hero.
+- Google Fonts load without blocking render (`media="print"` swap); metric-matched `@font-face` fallbacks (Arial with `size-adjust` and ascent/descent overrides measured from the font files) keep CLS at 0 when they swap in.
 - Fonts: only the weights listed in DESIGN.md.
 
 ---

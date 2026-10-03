@@ -27,3 +27,6 @@ dist-ssr
 .env
 .env.local
 .vercel
+
+# Temporary server build used by scripts/prerender.mjs
+dist-ssr

@@ -33,8 +33,8 @@ const sizes: Record<PhoneSize, { width: string; body: string; screen: string; le
 };
 
 // The signature device: pure CSS, graphite body, dynamic island, side buttons, power LED,
-// 9:19.5 screen and a soft glass reflection. State sets static end points; the boot sequence
-// (GSAP, in Hero) animates between them through the data-phone-* hooks.
+// 9:19.5 screen and a soft glass reflection. State sets static end points; the hero boot
+// sequence (CSS keyframes in index.css) animates between them through the data-phone-* hooks.
 export function PhoneFrame({
   size = 'lg',
   state = 'on',
@@ -83,7 +83,7 @@ export function PhoneFrame({
 
         <div
           data-phone-screen
-          className={`@container relative isolate aspect-[9/19.5] overflow-hidden bg-phone-screen ${s.screen}`}
+          className={`relative isolate aspect-[9/19.5] overflow-hidden bg-phone-screen ${s.screen}`}
         >
           {children}
 
@@ -96,12 +96,25 @@ export function PhoneFrame({
             }`}
           >
             {monogram && (
-              <span
+              // SVG text scales with the screen without container query units, so the screen does not
+              // need to be a size container (cheaper layout while the boot animation runs).
+              <svg
                 data-phone-monogram
-                className="font-display text-[22cqw] leading-none font-extrabold text-white opacity-0"
+                viewBox="0 0 100 100"
+                aria-hidden="true"
+                className="w-[30%] [transform:scale(0.9)] overflow-visible opacity-0"
               >
-                {monogram}
-              </span>
+                <text
+                  x="50"
+                  y="50"
+                  textAnchor="middle"
+                  dominantBaseline="central"
+                  fill="white"
+                  className="font-display text-[100px] font-extrabold"
+                >
+                  {monogram}
+                </text>
+              </svg>
             )}
           </div>
 
