@@ -44,7 +44,7 @@ Steps 0.1 and 0.2 are committed locally; they are pushed together in step 0.3 on
   Install `tailwindcss @tailwindcss/vite`, add the plugin to `vite.config.ts`. In `src/index.css`: `@import "tailwindcss";`, `@theme` with all light tokens, fonts, type scale from `DESIGN.md`; dark overrides under `:root[data-theme="dark"]`; base styles (body bg Fog, text Graphite, font body, focus-visible ring).
   Commit: `style: add tailwind and design tokens`
 
-- [ ] **1.2 Fonts and base HTML**
+- [x] **1.2 Fonts and base HTML**
   Add Google Fonts links with preconnect in `index.html`, `lang="en"`, title and meta description from `TRD.md §9`, inline no-flash theme script, temporary `favicon.svg` (B monogram).
   Commit: `feat: add fonts, meta tags and favicon`
 
