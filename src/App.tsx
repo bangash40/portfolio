@@ -1,4 +1,5 @@
 import { Container } from './components/layout/Container';
+import { Footer } from './components/layout/Footer';
 import { Navbar } from './components/layout/Navbar';
 import { SkipLink } from './components/layout/SkipLink';
 import { content } from './data/content';
@@ -20,6 +21,7 @@ function App() {
         <section id="github" />
         <section id="contact" />
       </main>
+      <Footer />
     </>
   );
 }

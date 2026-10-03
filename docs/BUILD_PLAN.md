@@ -74,7 +74,7 @@ Steps 0.1 and 0.2 are committed locally; they are pushed together in step 0.3 on
   Hamburger (< 768 px) opening a full-screen menu; focus trap, `Esc` closes, body scroll locked, `aria-expanded`.
   Commit: `feat: add mobile navigation menu`
 
-- [ ] **2.6 Footer**
+- [x] **2.6 Footer**
   Footer per `DESIGN.md §8`, source-code link, back-to-top.
   Commit: `feat: add footer`
 
