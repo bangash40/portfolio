@@ -21,7 +21,7 @@ Steps 0.1 and 0.2 are committed locally; they are pushed together in step 0.3 on
   Create a Vite React + TypeScript app in the current folder (keep existing `docs/`, `CLAUDE.md`, `.claude/`, `.githooks/`). `git init -b main` if not already a repo. Clean out Vite demo content (counter, logos, App.css). `App.tsx` renders just "Farhan Ali Haider". Make sure `.gitignore` includes `node_modules`, `dist`, `.env`, `.env.local`, `.DS_Store`, `.vercel`.
   Commit: `chore: scaffold vite react typescript project`
 
-- [ ] **0.2 Enable the commit hook**
+- [x] **0.2 Enable the commit hook**
   Run `git config core.hooksPath .githooks` and make sure `.githooks/commit-msg` is executable (`git update-index --chmod=+x .githooks/commit-msg`). Add a short "Commit rules" note to README.
   Commit: `chore: add commit-msg hook and project rules`
 
