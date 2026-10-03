@@ -11,6 +11,8 @@
   --color-signal: #2b59ff;
   --color-saffron: #f0a202;
   --color-error: #c62828;
+  /* Text on Signal backgrounds. White fails AA on dark-theme Signal, so dark uses Fog. */
+  --color-on-signal: #ffffff;
 
   /* Fonts (DESIGN.md §3) */
   --font-display: 'Bricolage Grotesque', 'Segoe UI', system-ui, sans-serif;
@@ -54,6 +56,7 @@
   --color-signal: #7390ff;
   --color-saffron: #f5b731;
   --color-error: #ff8a80;
+  --color-on-signal: #141821;
 }
 
 @layer base {
