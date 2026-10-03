@@ -172,7 +172,7 @@ Steps 0.1 and 0.2 are committed locally; they are pushed together in step 0.3 on
   `NotFound` with small phone showing "screen not found", per `DESIGN.md §8`; wire in `main.tsx`.
   Commit: `feat: add 404 page`
 
-- [ ] **9.2 SEO and sharing**
+- [x] **9.2 SEO and sharing**
   Canonical URL (live URL), Open Graph/Twitter tags, JSON-LD Person, `robots.txt`, `sitemap.xml`, `og-image.png` (1200×630, per `DESIGN.md §9`; generate from an SVG with a small node script if needed), apple-touch-icon.
   Commit: `feat: add seo metadata, sitemap and og image`
 
