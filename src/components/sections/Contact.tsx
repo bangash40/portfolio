@@ -4,6 +4,7 @@ import { isFilled } from '../../lib/placeholders';
 import { Container } from '../layout/Container';
 import { Button } from '../ui/Button';
 import { SectionHeading } from '../ui/SectionHeading';
+import { ContactForm } from './ContactForm';
 
 const { links, person } = content;
 
@@ -49,6 +50,10 @@ export function Contact() {
             <Button variant="secondary" href={person.resumeUrl} download className="mt-8">
               Download résumé
             </Button>
+          </div>
+
+          <div className="lg:col-span-6 lg:col-start-7">
+            <ContactForm />
           </div>
         </div>
       </Container>

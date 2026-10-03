@@ -158,7 +158,7 @@ Steps 0.1 and 0.2 are committed locally; they are pushed together in step 0.3 on
   Heading, line, direct links (email, GitHub, LinkedIn, WhatsApp if set), résumé button.
   Commit: `feat: add contact section`
 
-- [ ] **8.2 Contact form**
+- [x] **8.2 Contact form**
   `ContactForm` + `src/lib/contact.ts` per `TRD.md §8` with validation, honeypot and all states. Add `.env.example`.
   Commit: `feat: add contact form with web3forms`
 
