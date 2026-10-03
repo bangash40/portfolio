@@ -15,6 +15,25 @@ Live site: https://farhan-bangash.vercel.app
 - GitHub REST API (live activity)
 - Vercel (hosting and analytics)
 
+## Adding app screenshots
+
+Until real screenshots exist, each project shows a designed placeholder screen. To show a real one:
+
+1. Take a screenshot of the app and export it as **WebP at 1080 × 2340** (a free converter such as [Squoosh](https://squoosh.app) works).
+2. Save it as `public/screens/<project-slug>/1.webp`, then `2.webp` and so on (up to 4 per project). The slug is the project's `slug` in `src/data/content.ts`, for example `kheench`.
+3. In `src/data/content.ts`, replace that project's placeholder in `screens` with image entries:
+
+   ```ts
+   screens: [
+     { kind: 'image', src: '/screens/kheench/1.webp', alt: 'Kheench home screen with a pasted video link' },
+     { kind: 'image', src: '/screens/kheench/2.webp', alt: 'Kheench quality picker showing 1080p and 720p' },
+   ],
+   ```
+
+   Write `alt` text that says what the screen shows. The phone's screen-reader label uses it.
+
+The first hero screen loads with high priority; every other screenshot is lazy-loaded.
+
 ## Commit rules
 
 - One build-plan step = one commit = one push (see `docs/BUILD_PLAN.md`).

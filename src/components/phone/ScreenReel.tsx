@@ -6,6 +6,8 @@ import { PhoneFrame, type PhoneSize, type PhoneState } from './PhoneFrame';
 import { PlaceholderScreen } from './PlaceholderScreen';
 
 const INTERVAL_MS = 3500;
+const SCREENSHOT_WIDTH = 1080;
+const SCREENSHOT_HEIGHT = 2340;
 
 interface ScreenReelProps {
   items: ReelItem[];
@@ -130,11 +132,17 @@ function ReelScreen({ item, eager }: { item: ReelItem; eager: boolean }) {
   if (screen.kind === 'placeholder') {
     return <PlaceholderScreen variant={screen.variant} name={item.projectName} tint={item.tint} />;
   }
+  // Real screenshot: exported at the 1080 x 2340 source size (DESIGN.md §9). Explicit
+  // dimensions reserve the space; only the first hero screen loads eagerly.
   return (
     <img
       src={screen.src}
-      alt=""
+      alt={screen.alt}
+      width={SCREENSHOT_WIDTH}
+      height={SCREENSHOT_HEIGHT}
       loading={eager ? 'eager' : 'lazy'}
+      fetchPriority={eager ? 'high' : 'auto'}
+      decoding="async"
       className="absolute inset-0 h-full w-full object-cover"
     />
   );

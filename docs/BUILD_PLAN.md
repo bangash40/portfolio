@@ -128,7 +128,7 @@ Steps 0.1 and 0.2 are committed locally; they are pushed together in step 0.3 on
   Two-column layout ≥ 1024 px; phone pinned with ScrollTrigger via `gsap.matchMedia`; screen swaps to the project in view; side progress indicator. Reduced motion → stacked layout.
   Commit: `feat: pin phone and swap screens while scrolling projects`
 
-- [ ] **5.3 Real screenshot support**
+- [x] **5.3 Real screenshot support**
   If `public/screens/<slug>/` images are listed in content as `kind: 'image'`, render them with width/height, lazy loading, and `alt`. Document in README how to add screenshots.
   Commit: `feat: support real app screenshots in projects`
 
