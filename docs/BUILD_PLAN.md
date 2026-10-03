@@ -162,7 +162,7 @@ Steps 0.1 and 0.2 are committed locally; they are pushed together in step 0.3 on
   `ContactForm` + `src/lib/contact.ts` per `TRD.md §8` with validation, honeypot and all states. Add `.env.example`.
   Commit: `feat: add contact form with web3forms`
 
-- [ ] **8.3 Form key setup** 🛑
+- [x] **8.3 Form key setup** 🛑
   Walk the owner through Web3Forms and Vercel env setup (`TRD.md §12`). After the owner confirms a test message arrived, update README with a "Contact form setup" section.
   Commit: `docs: add contact form setup guide`
 

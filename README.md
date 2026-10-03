@@ -34,6 +34,24 @@ Until real screenshots exist, each project shows a designed placeholder screen. 
 
 The first hero screen loads with high priority; every other screenshot is lazy-loaded.
 
+## Contact form setup
+
+The contact form sends messages to your inbox through [Web3Forms](https://web3forms.com) (free tier, no backend needed).
+
+1. Go to web3forms.com, enter the email address that should receive messages, and copy the access key they email you. The key is designed to be public.
+2. **Local development:** create a `.env` file in the project root (it is git-ignored) with:
+
+   ```bash
+   VITE_WEB3FORMS_KEY=your-access-key
+   ```
+
+   Restart `npm run dev` after changing it.
+
+3. **Vercel:** Project → Settings → Environment Variables → add `VITE_WEB3FORMS_KEY` with the same value for all environments, then redeploy (Deployments → ⋯ → Redeploy). Vite bakes the key in at build time, so a redeploy is required.
+4. Send yourself a test message from the live site and check your inbox (and spam) for "New message from portfolio".
+
+Without a key the form is replaced by a short note pointing visitors to your email (or GitHub, if no email is set in `src/data/content.ts`). To rotate the key, generate a new one on Web3Forms and repeat steps 2–3.
+
 ## Commit rules
 
 - One build-plan step = one commit = one push (see `docs/BUILD_PLAN.md`).
