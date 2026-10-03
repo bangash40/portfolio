@@ -168,7 +168,7 @@ Steps 0.1 and 0.2 are committed locally; they are pushed together in step 0.3 on
 
 ## Phase 9 — Polish, SEO and 404
 
-- [ ] **9.1 404 page**
+- [x] **9.1 404 page**
   `NotFound` with small phone showing "screen not found", per `DESIGN.md §8`; wire in `main.tsx`.
   Commit: `feat: add 404 page`
 
