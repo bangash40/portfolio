@@ -148,7 +148,7 @@ Steps 0.1 and 0.2 are committed locally; they are pushed together in step 0.3 on
   `src/lib/github.ts` per `TRD.md §7` with caching, timeout and safe errors.
   Commit: `feat: add github api client with session cache`
 
-- [ ] **7.2 GitHub section UI**
+- [x] **7.2 GitHub section UI**
   Stats, language bar, recent repos, skeleton loading, fallback message. Fetch when near viewport.
   Commit: `feat: build live github activity section`
 

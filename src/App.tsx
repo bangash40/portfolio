@@ -2,6 +2,7 @@ import { Footer } from './components/layout/Footer';
 import { Navbar } from './components/layout/Navbar';
 import { SkipLink } from './components/layout/SkipLink';
 import { About } from './components/sections/About';
+import { GitHubActivity } from './components/sections/GitHubActivity';
 import { Hero } from './components/sections/Hero';
 import { Journey } from './components/sections/Journey';
 import { Projects } from './components/sections/Projects';
@@ -19,7 +20,7 @@ function App() {
         <About />
         <Projects />
         <Journey />
-        <section id="github" />
+        <GitHubActivity />
         <section id="contact" />
       </main>
       <Footer />
