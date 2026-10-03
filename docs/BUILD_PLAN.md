@@ -186,7 +186,7 @@ Steps 0.1 and 0.2 are committed locally; they are pushed together in step 0.3 on
   Run through `DESIGN.md §10`; keyboard-only walkthrough; fix issues.
   Commit: `fix(a11y): improve keyboard and screen reader support`
 
-- [ ] **10.2 Responsive pass**
+- [x] **10.2 Responsive pass**
   Check 320/375/768/1024/1440/1920; fix overflow, spacing, type sizes.
   Commit: `fix: polish responsive layout`
 

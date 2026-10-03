@@ -18,7 +18,8 @@ interface PhoneFrameProps {
 // lg ones (52px body, 42px screen) scaled down so the device keeps the same proportions.
 const sizes: Record<PhoneSize, { width: string; body: string; screen: string; led: string }> = {
   lg: {
-    width: 'w-[min(70vw,300px)]',
+    // Also bounded by viewport height so the phone fits short laptop screens (hero and pinned).
+    width: 'w-[min(70vw,300px,max(180px,calc((100svh_-_160px)*0.48)))]',
     body: 'rounded-phone p-[10px]',
     screen: 'rounded-screen',
     led: 'top-[3px] size-1',
