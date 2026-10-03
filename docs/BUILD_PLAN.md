@@ -134,7 +134,7 @@ Steps 0.1 and 0.2 are committed locally; they are pushed together in step 0.3 on
 
 ## Phase 6 — Journey
 
-- [ ] **6.1 Git-log timeline**
+- [x] **6.1 Git-log timeline**
   Timeline per `DESIGN.md §6.7`, newest first, from `content.timeline`.
   Commit: `feat: add journey timeline`
 

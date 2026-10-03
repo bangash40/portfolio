@@ -3,6 +3,7 @@ import { Navbar } from './components/layout/Navbar';
 import { SkipLink } from './components/layout/SkipLink';
 import { About } from './components/sections/About';
 import { Hero } from './components/sections/Hero';
+import { Journey } from './components/sections/Journey';
 import { Projects } from './components/sections/Projects';
 import { useLenis } from './hooks/useLenis';
 
@@ -17,7 +18,7 @@ function App() {
         <Hero />
         <About />
         <Projects />
-        <section id="journey" />
+        <Journey />
         <section id="github" />
         <section id="contact" />
       </main>
