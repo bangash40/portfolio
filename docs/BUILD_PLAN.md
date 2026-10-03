@@ -48,7 +48,7 @@ Steps 0.1 and 0.2 are committed locally; they are pushed together in step 0.3 on
   Add Google Fonts links with preconnect in `index.html`, `lang="en"`, title and meta description from `TRD.md §9`, inline no-flash theme script, temporary `favicon.svg` (B monogram).
   Commit: `feat: add fonts, meta tags and favicon`
 
-- [ ] **1.3 Vercel config and deploy** 🛑
+- [x] **1.3 Vercel config and deploy** 🛑
   Add `vercel.json` from `TRD.md §6`. Push, then stop and walk the owner through the Vercel steps in `TRD.md §12`. When the owner shares the live URL, put it in README ("Live site: <url>").
   Commit: `chore: add vercel config and live link`
 

@@ -2,7 +2,7 @@
 
 The personal portfolio of Farhan Ali Haider ("Bangash"), a mobile app developer working with Flutter and Firebase.
 
-Live site: coming soon
+Live site: https://farhan-bangash.vercel.app
 
 ## Tech stack
 
