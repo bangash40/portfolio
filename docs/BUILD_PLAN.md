@@ -120,7 +120,7 @@ Steps 0.1 and 0.2 are committed locally; they are pushed together in step 0.3 on
 
 ## Phase 5 — Projects
 
-- [ ] **5.1 Project blocks (static)**
+- [x] **5.1 Project blocks (static)**
   `ProjectBlock` showing name, summary, problem, built, role, status, stack tags, links. Mobile/tablet layout with a small phone per project.
   Commit: `feat: add project case study blocks`
 
