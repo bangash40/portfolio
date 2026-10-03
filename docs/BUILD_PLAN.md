@@ -34,7 +34,7 @@ Steps 0.1 and 0.2 are committed locally; they are pushed together in step 0.3 on
   Add Prettier (`.prettierrc`: singleQuote, semi, printWidth 100, trailingComma all) and `eslint-config-prettier`. Add scripts `lint`, `format`. Format the codebase.
   Commit: `chore: configure eslint and prettier`
 
-- [ ] **0.5 Folder structure and types**
+- [x] **0.5 Folder structure and types**
   Create the folder structure from `TRD.md §2` (empty folders get an `index.ts` or are created when first used — do not commit `.gitkeep` spam). Add `src/types/content.ts` exactly as `TRD.md §3`.
   Commit: `chore: add folder structure and content types`
 
