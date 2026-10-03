@@ -1,3 +1,89 @@
-body {
-  margin: 0;
+@import 'tailwindcss';
+
+/* Design tokens from docs/DESIGN.md. Light theme is the default. */
+@theme {
+  /* Colors (DESIGN.md §2) */
+  --color-fog: #edeff2;
+  --color-paper: #ffffff;
+  --color-graphite: #1d2330;
+  --color-slate: #5b6475;
+  --color-line: #d5d9e0;
+  --color-signal: #2b59ff;
+  --color-saffron: #f0a202;
+  --color-error: #c62828;
+
+  /* Fonts (DESIGN.md §3) */
+  --font-display: 'Bricolage Grotesque', 'Segoe UI', system-ui, sans-serif;
+  --font-body: 'Instrument Sans', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+
+  /* Type scale: ratio 1.25, base 17px (DESIGN.md §3) */
+  --text-hero: clamp(3rem, 8.5vw, 7rem);
+  --text-hero--line-height: 0.95;
+  --text-hero--letter-spacing: -0.03em;
+  --text-h2: clamp(2.25rem, 5vw, 3.8rem);
+  --text-h2--line-height: 1;
+  --text-h2--letter-spacing: -0.02em;
+  --text-h3: 1.95rem;
+  --text-h3--line-height: 1.15;
+  --text-lead: 1.25rem;
+  --text-lead--line-height: 1.5;
+  --text-body: 1.0625rem;
+  --text-body--line-height: 1.6;
+  --text-small: 0.875rem;
+  --text-small--line-height: 1.5;
+
+  /* Radius hierarchy (DESIGN.md §4) */
+  --radius-phone: 52px;
+  --radius-screen: 42px;
+  --radius-panel: 20px;
+  --radius-field: 10px;
+
+  /* Only the phone casts a shadow (DESIGN.md §2, §6.1) */
+  --shadow-phone: 0 40px 80px -20px rgb(29 35 48 / 0.35);
+
+  /* Container (DESIGN.md §4) */
+  --container-page: 1200px;
+}
+
+:root[data-theme='dark'] {
+  --color-fog: #141821;
+  --color-paper: #1b2130;
+  --color-graphite: #e7eaf0;
+  --color-slate: #9aa3b5;
+  --color-line: #2c3445;
+  --color-signal: #7390ff;
+  --color-saffron: #f5b731;
+  --color-error: #ff8a80;
+}
+
+@layer base {
+  :root {
+    color-scheme: light;
+  }
+
+  :root[data-theme='dark'] {
+    color-scheme: dark;
+  }
+
+  body {
+    background-color: var(--color-fog);
+    color: var(--color-graphite);
+    font-family: var(--font-body);
+    font-size: var(--text-body);
+    line-height: var(--text-body--line-height);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    font-weight: 800;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-signal);
+    outline-offset: 3px;
+  }
 }

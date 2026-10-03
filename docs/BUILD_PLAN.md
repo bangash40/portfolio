@@ -40,7 +40,7 @@ Steps 0.1 and 0.2 are committed locally; they are pushed together in step 0.3 on
 
 ## Phase 1 — Go live early
 
-- [ ] **1.1 Tailwind and design tokens**
+- [x] **1.1 Tailwind and design tokens**
   Install `tailwindcss @tailwindcss/vite`, add the plugin to `vite.config.ts`. In `src/index.css`: `@import "tailwindcss";`, `@theme` with all light tokens, fonts, type scale from `DESIGN.md`; dark overrides under `:root[data-theme="dark"]`; base styles (body bg Fog, text Graphite, font body, focus-visible ring).
   Commit: `style: add tailwind and design tokens`
 
