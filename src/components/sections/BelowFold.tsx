@@ -2,8 +2,8 @@ import { useEffect } from 'react';
 import { scrollToSection } from '../../hooks/useLenis';
 import { About } from './About';
 import { Contact } from './Contact';
+import { Experience } from './Experience';
 import { GitHubActivity } from './GitHubActivity';
-import { Journey } from './Journey';
 import { Projects } from './Projects';
 import { Skills } from './Skills';
 
@@ -23,7 +23,7 @@ export default function BelowFold() {
       <About />
       <Skills />
       <Projects />
-      <Journey />
+      <Experience />
       <GitHubActivity />
       <Contact />
     </>

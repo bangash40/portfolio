@@ -47,6 +47,10 @@ export const content: SiteContent = {
       title: 'Products, not exercises.',
       lead: 'Mobile first. Each one built end to end — interface, data and release.',
     },
+    experience: {
+      title: 'The commit history so far.',
+      lead: 'Newest first, like git log.',
+    },
   },
   links: {
     // TODO(bangash): real email address

@@ -235,7 +235,7 @@ The owner approved the "Widget Tree" concept. `docs/DESIGN.md` v2 is the spec. S
   Featured mobile cards with phones, supporting web cards, details toggle, 3D hover.
   Commit: `feat: rebuild projects as product cards`
 
-- [ ] **11.9 Experience**
+- [x] **11.9 Experience**
   Commit: `feat: replace journey with experience commit history`
 
 - [ ] **11.10 GitHub activity**

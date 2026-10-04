@@ -91,7 +91,12 @@ export interface SiteContent {
     enjoys: string; // terminal: enjoy_building.txt
     mindset: string[]; // terminal: mindset steps
   };
-  sections: { about: SectionCopy; skills: SectionCopy; projects: SectionCopy };
+  sections: {
+    about: SectionCopy;
+    skills: SectionCopy;
+    projects: SectionCopy;
+    experience: SectionCopy;
+  };
   links: { email: string; github: string; linkedin?: string; whatsapp?: string };
   githubUsername: string; // 'bangash40'
   /** Flutter at the root, everything else as its children (DESIGN.md §6.6). */
