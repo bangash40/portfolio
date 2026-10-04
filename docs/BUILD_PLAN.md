@@ -198,7 +198,7 @@ Steps 0.1 and 0.2 are committed locally; they are pushed together in step 0.3 on
   README: live link, screenshot of the site, features, tech stack, local setup (`npm install`, `npm run dev`), how to edit content (`src/data/content.ts`), how to add a project, add screenshots, replace résumé, deployment notes, list of remaining `TODO(bangash)` items.
   Commit: `docs: complete readme`
 
-- [ ] **10.5 Release v1.0.0**
+- [x] **10.5 Release v1.0.0**
   Bump `package.json` version to `1.0.0`, create tag `v1.0.0` and push tags (`git push --follow-tags`).
   Commit: `chore: release v1.0.0`
 
