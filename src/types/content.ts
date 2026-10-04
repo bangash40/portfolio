@@ -96,6 +96,7 @@ export interface SiteContent {
     skills: SectionCopy;
     projects: SectionCopy;
     experience: SectionCopy;
+    github: SectionCopy;
   };
   links: { email: string; github: string; linkedin?: string; whatsapp?: string };
   githubUsername: string; // 'bangash40'

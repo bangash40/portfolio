@@ -238,7 +238,7 @@ The owner approved the "Widget Tree" concept. `docs/DESIGN.md` v2 is the spec. S
 - [x] **11.9 Experience**
   Commit: `feat: replace journey with experience commit history`
 
-- [ ] **11.10 GitHub activity**
+- [x] **11.10 GitHub activity**
   Commit: `feat: restyle github activity`
 
 - [ ] **11.11 Contact and footer**

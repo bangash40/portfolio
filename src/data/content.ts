@@ -51,6 +51,10 @@ export const content: SiteContent = {
       title: 'The commit history so far.',
       lead: 'Newest first, like git log.',
     },
+    github: {
+      title: 'Shipping in public.',
+      lead: 'Pulled from the GitHub API on every visit.',
+    },
   },
   links: {
     // TODO(bangash): real email address
