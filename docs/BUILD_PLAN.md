@@ -228,7 +228,7 @@ The owner approved the "Widget Tree" concept. `docs/DESIGN.md` v2 is the spec. S
 - [x] **11.6 About**
   Commit: `feat: rebuild about as profile card and terminal`
 
-- [ ] **11.7 Skills orbit**
+- [x] **11.7 Skills orbit**
   Commit: `feat: add interactive skills orbit`
 
 - [ ] **11.8 Projects**

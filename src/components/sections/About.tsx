@@ -4,7 +4,7 @@ import { Container } from '../layout/Container';
 import { Chip } from '../ui/Chip';
 import { SectionHeader } from '../ui/SectionHeader';
 
-const { person, projects, sections, skills } = content;
+const { person, projects, sections } = content;
 
 const initials = person.fullName
   .split(' ')
@@ -131,23 +131,6 @@ export function About() {
             </div>
           </div>
         </div>
-
-        {/* Temporary: the v1 skills list keeps the #skills anchor working until the orbit (11.7). */}
-        <ul
-          id="skills"
-          className="mt-16 grid scroll-mt-24 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4"
-        >
-          {skills.map((group) => (
-            <li key={group.title}>
-              <h3 className="font-semibold">{group.title}</h3>
-              <ul className="mt-3 flex flex-col gap-1.5 text-muted">
-                {group.items.map((item) => (
-                  <li key={item}>{item}</li>
-                ))}
-              </ul>
-            </li>
-          ))}
-        </ul>
       </Container>
     </section>
   );

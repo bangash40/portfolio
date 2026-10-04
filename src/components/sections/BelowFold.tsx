@@ -5,6 +5,7 @@ import { Contact } from './Contact';
 import { GitHubActivity } from './GitHubActivity';
 import { Journey } from './Journey';
 import { Projects } from './Projects';
+import { Skills } from './Skills';
 
 // Everything after the hero. Loaded as its own chunk once the hero has rendered, so the first
 // paint only waits for the navbar and hero (TRD.md §10).
@@ -20,6 +21,7 @@ export default function BelowFold() {
   return (
     <>
       <About />
+      <Skills />
       <Projects />
       <Journey />
       <GitHubActivity />

@@ -39,6 +39,10 @@ export const content: SiteContent = {
       title: 'A developer who ships the whole app.',
       lead: 'Interface, state, backend and release — I care about every layer a user touches.',
     },
+    skills: {
+      title: 'Flutter at the center. The rest in orbit.',
+      lead: 'Hover or select a technology to see what I use it for.',
+    },
   },
   links: {
     // TODO(bangash): real email address
