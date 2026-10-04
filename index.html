@@ -11,8 +11,7 @@
     <link rel="canonical" href="https://farhan-bangash.vercel.app/" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#edeff2" />
-    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#141821" />
+    <meta name="theme-color" content="#0e1013" />
 
     <!-- Link previews (WhatsApp, LinkedIn, X). Keep in sync with src/data/content.ts. -->
     <meta property="og:type" content="website" />
@@ -59,9 +58,8 @@
         try {
           theme = localStorage.getItem('theme');
         } catch (e) {}
-        if (theme !== 'light' && theme !== 'dark') {
-          theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-        }
+        // Dark is the default experience until the visitor chooses light.
+        if (theme !== 'light' && theme !== 'dark') theme = 'dark';
         document.documentElement.dataset.theme = theme;
         // Any path but '/' gets the prerendered home HTML via the Vercel rewrite; hide it
         // until main.tsx swaps in the 404 page.
@@ -93,18 +91,18 @@
     <link
       rel="preload"
       as="style"
-      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Instrument+Sans:wght@400;500;600&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
     />
     <link
       rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Instrument+Sans:wght@400;500;600&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
       media="print"
       onload="this.media = 'all'"
     />
     <noscript
       ><link
         rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Instrument+Sans:wght@400;500;600&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
     /></noscript>
   </head>
   <body>

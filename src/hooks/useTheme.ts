@@ -3,7 +3,7 @@ import { useCallback, useEffect, useSyncExternalStore } from 'react';
 export type Theme = 'light' | 'dark';
 
 const STORAGE_KEY = 'theme';
-const TRANSITION_MS = 250;
+const TRANSITION_MS = 450;
 
 let transitionTimer: number | undefined;
 
@@ -16,11 +16,10 @@ function readStoredTheme(): Theme | null {
   }
 }
 
-function getSystemTheme(): Theme {
-  return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-}
+// Dark is the primary experience: it is the default until the visitor picks light (DESIGN.md §6.2).
+const DEFAULT_THEME: Theme = 'dark';
 
-// Colors transition for 250ms on a theme switch only, never on first paint (DESIGN.md §7.3).
+// Colors cross-fade for 450ms on a theme switch only, never on first paint (DESIGN.md §7).
 function applyTheme(theme: Theme, animate: boolean) {
   const root = document.documentElement;
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -38,7 +37,7 @@ function applyTheme(theme: Theme, animate: boolean) {
 // The data-theme attribute on <html> is the single source of truth, so every hook
 // instance stays in sync with the inline script in index.html and with each other.
 function getSnapshot(): Theme {
-  return document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light';
+  return document.documentElement.dataset.theme === 'light' ? 'light' : 'dark';
 }
 
 function subscribe(onChange: () => void) {
@@ -51,20 +50,12 @@ function subscribe(onChange: () => void) {
 }
 
 export function useTheme() {
-  const theme = useSyncExternalStore(subscribe, getSnapshot, (): Theme => 'light');
+  const theme = useSyncExternalStore(subscribe, getSnapshot, (): Theme => DEFAULT_THEME);
 
   useEffect(() => {
     if (!document.documentElement.dataset.theme) {
-      applyTheme(readStoredTheme() ?? getSystemTheme(), false);
+      applyTheme(readStoredTheme() ?? DEFAULT_THEME, false);
     }
-
-    // Follow the system setting until the visitor makes a choice.
-    const media = window.matchMedia('(prefers-color-scheme: dark)');
-    const onSystemChange = () => {
-      if (!readStoredTheme()) applyTheme(getSystemTheme(), true);
-    };
-    media.addEventListener('change', onSystemChange);
-    return () => media.removeEventListener('change', onSystemChange);
   }, []);
 
   const setTheme = useCallback((next: Theme) => {

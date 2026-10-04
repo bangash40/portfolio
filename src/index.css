@@ -1,119 +1,159 @@
 @import 'tailwindcss';
 
-/* Metric-matched fallbacks: local Arial resized to the web fonts' widths and heights (measured
+/* Metric-matched fallbacks: local fonts resized to the web fonts' widths and heights (measured
    from the font files), so text does not shift when Google Fonts swap in after first paint. */
 @font-face {
-  font-family: 'Bricolage Fallback';
-  src: local('Arial Bold'), local('Arial-BoldMT'), local('Helvetica Neue Bold');
-  font-weight: 600 900;
-  size-adjust: 91.57%;
-  ascent-override: 101.56%;
-  descent-override: 29.48%;
-  line-gap-override: 0%;
-}
-
-@font-face {
-  font-family: 'Instrument Fallback';
+  font-family: 'Geist Fallback';
   src: local('Arial'), local('ArialMT'), local('Helvetica Neue');
   font-weight: 100 500;
-  size-adjust: 102.08%;
-  ascent-override: 95.02%;
-  descent-override: 24.49%;
+  size-adjust: 101.75%;
+  ascent-override: 98.77%;
+  descent-override: 28.99%;
   line-gap-override: 0%;
 }
 
 @font-face {
-  font-family: 'Instrument Fallback';
+  font-family: 'Geist Fallback';
   src: local('Arial Bold'), local('Arial-BoldMT'), local('Helvetica Neue Bold');
   font-weight: 600 900;
-  size-adjust: 97.61%;
-  ascent-override: 99.38%;
-  descent-override: 25.61%;
+  size-adjust: 99.59%;
+  ascent-override: 100.92%;
+  descent-override: 29.62%;
   line-gap-override: 0%;
 }
 
-/* Design tokens from docs/DESIGN.md. Light theme is the default. */
+@font-face {
+  font-family: 'JetBrains Mono Fallback';
+  src: local('Courier New'), local('CourierNewPSMT'), local('Courier');
+  size-adjust: 99.98%;
+  ascent-override: 102.02%;
+  descent-override: 30%;
+  line-gap-override: 0%;
+}
+
+/* Design tokens from docs/DESIGN.md v2. Dark is the default theme; light overrides below. */
 @theme {
   /* Colors (DESIGN.md §2) */
-  --color-fog: #edeff2;
-  --color-paper: #ffffff;
-  --color-graphite: #1d2330;
-  --color-slate: #5b6475;
-  --color-line: #d5d9e0;
-  --color-signal: #2b59ff;
-  --color-saffron: #f0a202;
-  --color-error: #c62828;
-  /* Text on Signal backgrounds. White fails AA on dark-theme Signal, so dark uses Fog. */
-  --color-on-signal: #ffffff;
+  --color-bg: #0e1013;
+  --color-bg-2: #121418;
+  --color-surface: #16191e;
+  --color-surface-2: #1c2027;
+  --color-border: #262a33;
+  --color-border-2: #363b46;
+  --color-text: #edeef0;
+  --color-muted: #9ba1ad;
+  --color-faint: #6b7280;
+  --color-primary: #7c8bff;
+  --color-primary-ink: #0e1013;
+  --color-primary-soft: rgb(124 139 255 / 0.13);
+  --color-primary-line: rgb(124 139 255 / 0.45);
+  --color-cyan: #4fd8f0;
+  --color-ok: #4ade80;
+  --color-error: #ff8a80;
+  --color-code-keyword: #c4a7ff;
+  --color-device: #060709;
+
+  /* v1 names, mapped onto the v2 palette until every component is rebuilt (Phase 11). */
+  --color-fog: var(--color-bg);
+  --color-paper: var(--color-surface);
+  --color-graphite: var(--color-text);
+  --color-slate: var(--color-muted);
+  --color-line: var(--color-border);
+  --color-signal: var(--color-primary);
+  --color-on-signal: var(--color-primary-ink);
+  --color-saffron: var(--color-ok);
+  --color-phone: var(--color-device);
+  --color-phone-rim: var(--color-border-2);
+  --color-phone-screen: #07090d;
 
   /* Fonts (DESIGN.md §3) */
-  --font-display: 'Bricolage Grotesque', 'Bricolage Fallback', 'Segoe UI', system-ui, sans-serif;
-  --font-body:
-    'Instrument Sans', 'Instrument Fallback', system-ui, -apple-system, 'Segoe UI', Roboto,
-    sans-serif;
+  --font-sans: 'Geist', 'Geist Fallback', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono:
+    'JetBrains Mono', 'JetBrains Mono Fallback', ui-monospace, 'Cascadia Code', monospace;
+  --font-display: var(--font-sans);
+  --font-body: var(--font-sans);
 
-  /* Type scale: ratio 1.25, base 17px (DESIGN.md §3) */
-  --text-hero: clamp(3rem, 8.5vw, 7rem);
-  --text-hero--line-height: 0.95;
-  --text-hero--letter-spacing: -0.03em;
-  --text-h2: clamp(2.25rem, 5vw, 3.8rem);
-  --text-h2--line-height: 1;
-  --text-h2--letter-spacing: -0.02em;
-  --text-h3: 1.95rem;
+  /* Type scale (DESIGN.md §3) */
+  --text-display: clamp(2.4rem, 5.2vw, 3.65rem);
+  --text-display--line-height: 1.04;
+  --text-display--letter-spacing: -0.04em;
+  --text-h2: clamp(2rem, 4vw, 2.75rem);
+  --text-h2--line-height: 1.08;
+  --text-h2--letter-spacing: -0.03em;
+  --text-h3: 1.875rem;
   --text-h3--line-height: 1.15;
-  --text-lead: 1.25rem;
-  --text-lead--line-height: 1.5;
-  --text-body: 1.0625rem;
+  --text-h3--letter-spacing: -0.03em;
+  --text-lead: 1.125rem;
+  --text-lead--line-height: 1.6;
+  --text-body: 1rem;
   --text-body--line-height: 1.6;
   --text-small: 0.875rem;
   --text-small--line-height: 1.5;
+  --text-mono: 0.78rem;
+  --text-mono--line-height: 1.6;
+  /* v1 hero size, used until the hero is rebuilt */
+  --text-hero: var(--text-display);
+  --text-hero--line-height: 1.04;
+  --text-hero--letter-spacing: -0.04em;
 
-  /* Radius hierarchy (DESIGN.md §4) */
-  --radius-phone: 52px;
-  --radius-screen: 42px;
-  --radius-panel: 20px;
+  /* Radius (DESIGN.md §4) */
+  --radius-chip: 7px;
   --radius-field: 10px;
+  --radius-button: 12px;
+  --radius-panel: 14px;
+  --radius-card: 18px;
+  --radius-phone: 46px;
+  --radius-screen: 38px;
 
-  /* The phone body stays graphite in both themes; the rim keeps it visible on dark (DESIGN.md §2) */
-  --color-phone: #1d2330;
-  --color-phone-rim: #2c3445;
-  --color-phone-screen: #07090d;
-
-  /* Only the phone casts a shadow (DESIGN.md §2, §6.1): 0 40px 80px -20px rgb(29 35 48 / 0.35),
-     shipped as public/phone-shadow.png (see PhoneFrame). */
+  /* Elevation (DESIGN.md §2, §4). The phone shadow ships as public/phone-shadow.png. */
+  --shadow-float: 0 12px 24px -12px rgb(0 0 0 / 0.65);
+  --shadow-glow: 0 0 0 1px rgb(124 139 255 / 0.28), 0 18px 40px -22px rgb(124 139 255 / 0.6);
 
   /* Container (DESIGN.md §4) */
   --container-page: 1200px;
+
+  /* Motion (DESIGN.md §7) */
+  --ease-out-soft: cubic-bezier(0.2, 0.7, 0.2, 1);
 }
 
-:root[data-theme='dark'] {
-  --color-fog: #141821;
-  --color-paper: #1b2130;
-  --color-graphite: #e7eaf0;
-  --color-slate: #9aa3b5;
-  --color-line: #2c3445;
-  --color-signal: #7390ff;
-  --color-saffron: #f5b731;
-  --color-error: #ff8a80;
-  --color-on-signal: #141821;
-  --color-phone-rim: #3a4356;
+:root[data-theme='light'] {
+  --color-bg: #f5f6f8;
+  --color-bg-2: #eef0f3;
+  --color-surface: #ffffff;
+  --color-surface-2: #f7f8fa;
+  --color-border: #e3e5ea;
+  --color-border-2: #cdd1d9;
+  --color-text: #111318;
+  --color-muted: #5b616e;
+  --color-faint: #8a909c;
+  --color-primary: #3f4fe0;
+  --color-primary-ink: #ffffff;
+  --color-primary-soft: rgb(63 79 224 / 0.08);
+  --color-primary-line: rgb(63 79 224 / 0.35);
+  --color-cyan: #0e7490;
+  --color-ok: #15803d;
+  --color-error: #c62828;
+  --color-code-keyword: #6d28d9;
+  --color-device: #111318;
+  --shadow-float: 0 12px 24px -14px rgb(17 19 24 / 0.3);
+  --shadow-glow: 0 0 0 1px rgb(63 79 224 / 0.2), 0 16px 36px -24px rgb(63 79 224 / 0.45);
 }
 
 @layer base {
   :root {
-    color-scheme: light;
-    /* Anchor jumps land below the 60px fixed navbar */
-    scroll-padding-top: 60px;
+    color-scheme: dark;
+    /* Anchor jumps land below the 68px sticky navbar */
+    scroll-padding-top: 76px;
   }
 
-  :root[data-theme='dark'] {
-    color-scheme: dark;
+  :root[data-theme='light'] {
+    color-scheme: light;
   }
 
   body {
-    background-color: var(--color-fog);
-    color: var(--color-graphite);
-    font-family: var(--font-body);
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    font-family: var(--font-sans);
     font-size: var(--text-body);
     line-height: var(--text-body--line-height);
     -webkit-font-smoothing: antialiased;
@@ -123,12 +163,12 @@
   h1,
   h2,
   h3 {
-    font-family: var(--font-display);
-    font-weight: 800;
+    font-family: var(--font-sans);
+    font-weight: 600;
   }
 
   :focus-visible {
-    outline: 2px solid var(--color-signal);
+    outline: 2px solid var(--color-primary);
     outline-offset: 3px;
   }
 
@@ -143,17 +183,17 @@
   visibility: hidden;
 }
 
-/* Added to <html> for 250ms while the theme switches (see useTheme). */
+/* Added to <html> for 450ms while the theme switches (see useTheme). */
 .theme-transition,
 .theme-transition *,
 .theme-transition *::before,
 .theme-transition *::after {
   transition:
-    color 250ms ease,
-    background-color 250ms ease,
-    border-color 250ms ease,
-    fill 250ms ease,
-    stroke 250ms ease !important;
+    color 450ms ease,
+    background-color 450ms ease,
+    border-color 450ms ease,
+    fill 450ms ease,
+    stroke 450ms ease !important;
 }
 
 /* Boot sequence, the one orchestrated moment (DESIGN.md §7.1). The inline script in index.html

@@ -148,14 +148,14 @@ export interface SiteContent {
 
 ## 4. Theming
 
-- Tokens defined in `src/index.css` with Tailwind v4 `@theme` using the exact values in `DESIGN.md §2` (light).
-- Dark values override the same CSS variables under `:root[data-theme="dark"]`.
+- Tokens defined in `src/index.css` with Tailwind v4 `@theme` using the exact values in `DESIGN.md` v2 §2. The `@theme` values are the **dark** theme (the default); light values override the same variables under `:root[data-theme="light"]`.
+- Components use the semantic tokens (`bg`, `surface`, `text`, `muted`, `primary`, …), never raw hex.
 - `useTheme`:
   1. Read `localStorage.getItem('theme')` inside try/catch.
-  2. If none, use `matchMedia('(prefers-color-scheme: dark)')`.
-  3. Set `document.documentElement.dataset.theme`.
+  2. If none, use dark (the primary experience).
+  3. Set `document.documentElement.dataset.theme`; colours cross-fade for 450 ms on a switch.
 - An inline script in `index.html` `<head>` applies the theme **before** first paint to avoid a flash.
-- Fonts declared as `--font-display` and `--font-body` tokens.
+- Fonts: `--font-sans` (Geist) and `--font-mono` (JetBrains Mono), each with a metric-matched local fallback.
 
 ---
 

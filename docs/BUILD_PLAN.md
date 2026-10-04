@@ -210,7 +210,7 @@ The owner approved the "Widget Tree" concept. `docs/DESIGN.md` v2 is the spec. S
   Replace `DESIGN.md` with v2, add this phase, note the redesign in the PRD.
   Commit: `docs: adopt widget tree design`
 
-- [ ] **11.2 Tokens, fonts and dark-first theme**
+- [x] **11.2 Tokens, fonts and dark-first theme**
   New colour tokens for dark (default) and light, Geist + JetBrains Mono with metric-matched fallbacks, type scale, radii. Map the v1 token names onto the new palette so every existing component re-themes until it is rebuilt. Default theme dark; head script and `useTheme` updated.
   Commit: `style: add widget tree tokens, fonts and dark-first theme`
 
