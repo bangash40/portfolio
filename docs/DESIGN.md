@@ -161,7 +161,7 @@ Heading "A developer who ships the whole app." Two cards:
 Heading "Flutter at the center. The rest in orbit."
 - Desktop: an orbit. Flutter is the large primary node at the centre; Dart, Firebase, REST APIs, Git, GitHub sit on the inner ring joined by spokes; Python, PostgreSQL, Docker, n8n, WordPress, JavaScript, HTML/CSS sit on a dashed outer ring with dashed borders and cyan dots.
 - Hover, focus or click a node → the **inspector panel** (glowing card, `aria-live`) shows tier, name, what I use it for, level, used in, weight.
-- Below 980 px: nodes become a wrapping grid of buttons (primary first), the inspector below.
+- Below 1100 px (where the column is too narrow for the full orbit): nodes become a wrapping grid of buttons (primary first), the inspector below.
 - Nothing spins.
 
 ### 6.7 Projects — `lib/projects.dart`

@@ -16,15 +16,15 @@ export const content: SiteContent = {
       "I'm Farhan Ali Haider, a Flutter developer building cross-platform apps with Dart, Firebase and clean APIs — and the occasional website.",
     // TODO(bangash): confirm availability text
     availability: 'Available for opportunities',
-    // TODO(bangash): write a short intro for the profile card (one or two short paragraphs)
-    bio: ['TODO: Short intro — two sentences about who you are and what you enjoy building.'],
+    // From the CV profile; edit freely.
+    bio: [
+      'A motivated, quick-learning developer with a strong foundation in modern tools and frameworks. I enjoy contributing to real-world applications, learning from experienced teams and exploring tools that make apps smarter, cleaner and faster.',
+    ],
     // TODO(bangash): add photo at public/images/avatar.webp, then set avatar: '/images/avatar.webp'
-    // TODO(bangash): add résumé PDF at public/resume/Farhan-Ali-Haider-Resume.pdf
     resumeUrl: '/resume/Farhan-Ali-Haider-Resume.pdf',
-    // TODO(bangash): your city and country
-    location: 'TODO: your city',
-    // TODO(bangash): years of experience, e.g. '1+ years'
-    yearsExperience: 'TODO: years',
+    location: 'Peshawar, Pakistan',
+    // First professional role (Diginatives) started in January 2025.
+    yearsExperience: 'Since 2025',
     openTo: 'Internships · freelance',
     focus: ['Flutter', 'Dart', 'Firebase', 'REST APIs', 'Automation'],
     // TODO(bangash): confirm what you enjoy building
@@ -64,11 +64,9 @@ export const content: SiteContent = {
     tagline: 'Designed with curiosity, built with code — and a lot of hot reloads.',
   },
   links: {
-    // TODO(bangash): real email address
-    email: 'TODO: your email address',
+    email: 'farhanbangash40@gmail.com',
     github: 'https://github.com/bangash40',
-    // TODO(bangash): real LinkedIn URL
-    linkedin: 'TODO: your LinkedIn profile URL',
+    linkedin: 'https://www.linkedin.com/in/farhan-ali-haider-632044220',
     // TODO(bangash): optional WhatsApp link, e.g. whatsapp: 'https://wa.me/<number>'
   },
 
@@ -138,8 +136,8 @@ export const content: SiteContent = {
         id: 'postgres',
         name: 'PostgreSQL',
         tier: 'secondary',
-        use: 'Relational databases for backend work.',
-        usedIn: 'TODO: project',
+        use: 'Relational databases and the queries behind reports.',
+        usedIn: 'Tryton ERP reporting at Diginatives',
         level: 'TODO: level',
       },
       {
@@ -162,8 +160,8 @@ export const content: SiteContent = {
         id: 'wordpress',
         name: 'WordPress',
         tier: 'secondary',
-        use: 'Content-managed websites.',
-        usedIn: 'TODO: project',
+        use: 'Content-managed websites and landing pages.',
+        usedIn: 'A landing page for a mobile app at Diginatives',
         level: 'TODO: level',
       },
       {
@@ -180,6 +178,14 @@ export const content: SiteContent = {
         tier: 'secondary',
         use: 'Accessible layouts for the web — including this portfolio.',
         usedIn: 'This portfolio',
+        level: 'TODO: level',
+      },
+      {
+        id: 'tryton',
+        name: 'Tryton',
+        tier: 'secondary',
+        use: 'ERP reports, deployments and day-to-day support.',
+        usedIn: 'Diginatives, including a hospital deployment',
         level: 'TODO: level',
       },
     ],
@@ -236,6 +242,28 @@ export const content: SiteContent = {
       screens: [{ kind: 'placeholder', variant: 'kheench', alt: 'Kheench app screen' }],
     },
     {
+      slug: 'grocery-app',
+      name: 'Grocery App with Web Admin',
+      tag: 'Final year project',
+      summary: 'Online grocery delivery for customers and sellers, with a web admin panel.',
+      problem:
+        'Grocery shopping is moving online; this makes ordering easy for customers and sellers while cutting operational costs.',
+      built:
+        'A grocery delivery app with a web admin, with real-time updates on products and prices.',
+      // TODO(bangash): your role on this project
+      role: 'TODO: Your role',
+      // TODO(bangash): the technologies used (also shown as the architecture flow)
+      stack: [],
+      status: 'completed',
+      kind: 'mobile',
+      featured: true,
+      keyFeature: 'Real-time updates on products and prices',
+      architecture: [],
+      // TODO(bangash): add the repository link if it is public
+      links: {},
+      screens: [{ kind: 'placeholder', variant: 'grocery', alt: 'Grocery app product list' }],
+    },
+    {
       slug: 'arc-mini-player',
       name: 'Arc-style mini player for Chrome',
       summary:
@@ -290,7 +318,7 @@ export const content: SiteContent = {
   ],
 
   // A git log, newest first (DESIGN.md §6.8).
-  // TODO(bangash): fill in roles, dates and education
+  // TODO(bangash): personal projects start year, Internee.pk role and dates, institution
   experience: [
     {
       hash: 'HEAD',
@@ -302,6 +330,28 @@ export const content: SiteContent = {
         'Building Kheench and this portfolio, and planning a Chrome mini-player extension.',
       tech: ['Flutter', 'Dart', 'React', 'TypeScript'],
       kind: 'head',
+    },
+    {
+      hash: 'e81b07d',
+      branch: 'diginatives',
+      role: 'Associate Software Engineer',
+      organisation: 'Diginatives',
+      duration: 'Apr 2025 — Oct 2025',
+      description:
+        'Built and customised Tryton ERP reports with senior developers, ran PostgreSQL queries for reporting, wrote installation and deployment documentation, and built a WordPress landing page for a mobile app.',
+      tech: ['Tryton', 'PostgreSQL', 'WordPress'],
+      kind: 'work',
+    },
+    {
+      hash: '6c2d4fa',
+      branch: 'diginatives',
+      role: 'Intern',
+      organisation: 'Diginatives',
+      duration: 'Jan 2025 — Mar 2025',
+      description:
+        'Deployed Tryton ERP in a hospital and handled day-to-day software issues and user support.',
+      tech: ['Tryton'],
+      kind: 'work',
     },
     {
       hash: 'a3f9c21',
@@ -317,10 +367,10 @@ export const content: SiteContent = {
     {
       hash: '19d04ce',
       branch: 'education',
-      role: 'TODO: degree',
-      organisation: 'TODO: institution',
-      duration: 'TODO: years',
-      description: 'TODO: what you studied and key achievements',
+      role: 'Bachelor in Computer Science',
+      organisation: 'TODO: institution, Peshawar',
+      duration: '2018 — 2022',
+      description: 'Final year project: a grocery delivery app with a web admin panel.',
       tech: [],
       kind: 'education',
     },

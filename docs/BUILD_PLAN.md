@@ -256,6 +256,10 @@ The owner approved the "Widget Tree" concept. `docs/DESIGN.md` v2 is the spec. S
   Accessibility (axe, keyboard), responsive widths, reduced motion, both themes; owner runs PageSpeed Insights (mobile) — fix until ≥ 90 ×4.
   Commit: `fix: polish widget tree redesign`
 
+- [x] **11.14a CV content**
+  Owner's CV (Jan 2026): résumé PDF, intro, location, email, LinkedIn, Diginatives roles, education, final year project (Grocery App with Web Admin), Tryton skill.
+  Commit: `feat: add resume and cv details`
+
 - [ ] **11.15 README**
   Commit: `docs: update readme for the redesign`
 

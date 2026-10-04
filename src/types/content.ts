@@ -2,7 +2,7 @@ export type Screen =
   | { kind: 'image'; src: string; alt: string }
   | {
       kind: 'placeholder';
-      variant: 'ims' | 'ims-admin' | 'kheench' | 'miniplayer' | 'portfolio';
+      variant: 'ims' | 'ims-admin' | 'kheench' | 'grocery' | 'miniplayer' | 'portfolio';
       alt: string;
     };
 
@@ -14,6 +14,7 @@ export type ProjectKind = 'mobile' | 'web';
 export interface Project {
   slug: string;
   name: string;
+  tag?: string; // replaces the platform chip, e.g. 'Final year project'
   summary: string; // one line
   problem: string;
   built: string; // what was built

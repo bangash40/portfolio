@@ -12,10 +12,11 @@ const secondary = skillTree.children.filter((skill) => skill.tier === 'secondary
 const allSkills = [root, ...primary, ...secondary];
 
 // Orbit geometry on a 560px square (DESIGN.md §6.6), as percentages so it shrinks with the column:
-// primary skills on the inner ring (radius 170), secondary on the dashed outer ring (radius 250).
+// primary skills on the inner ring (radius 150), secondary on the dashed outer ring (radius 274).
+// Radii and start angles keep at least 20px between any two nodes.
 const ORBIT = 560;
-const INNER = { radius: 170, start: -90, width: 118, height: 42 };
-const OUTER = { radius: 250, start: -90, width: 112, height: 34 };
+const INNER = { radius: 150, start: -90, width: 118, height: 42 };
+const OUTER = { radius: 274, start: -67.5, width: 104, height: 34 };
 
 function place(skills: Skill[], ring: typeof INNER) {
   return skills.map((skill, index) => {
@@ -40,9 +41,9 @@ const outerNodes = place(secondary, OUTER);
 const weight = (skill: Skill) =>
   skill === root ? '★★★ core' : skill.tier === 'primary' ? '★★ primary' : '★ supporting';
 
-// Below 980px every node is a plain button in a wrapping grid; from 980px it takes its orbit slot.
+// Below 1100px every node is a plain button in a wrapping grid; from 1100px it takes its orbit slot.
 const nodeBase =
-  'inline-flex min-h-11 cursor-pointer items-center justify-center gap-2 rounded-button border px-3.5 transition-[border-color,box-shadow,translate,background-color,color] duration-250 ease-out-soft hover:-translate-y-[3px] hover:border-primary-line motion-reduce:transition-none motion-reduce:hover:translate-y-0 min-[980px]:absolute min-[980px]:top-(--y) min-[980px]:left-(--x) min-[980px]:min-h-0 min-[980px]:px-0';
+  'inline-flex min-h-11 cursor-pointer items-center justify-center gap-2 rounded-button border px-3.5 transition-[border-color,box-shadow,translate,background-color,color] duration-250 ease-out-soft hover:-translate-y-[3px] hover:border-primary-line motion-reduce:transition-none motion-reduce:hover:translate-y-0 min-[1100px]:absolute min-[1100px]:top-(--y) min-[1100px]:left-(--x) min-[1100px]:min-h-0 min-[1100px]:px-0';
 
 export function Skills() {
   const [selectedId, setSelectedId] = useState(root.id);
@@ -63,8 +64,8 @@ export function Skills() {
           : 'border-border bg-surface text-text'
     } ${
       minor
-        ? 'text-[12.5px] font-medium min-[980px]:h-[34px] min-[980px]:w-[112px]'
-        : 'text-[14.5px] font-semibold min-[980px]:h-[42px] min-[980px]:w-[118px]'
+        ? 'text-[12.5px] font-medium min-[1100px]:h-[34px] min-[1100px]:w-[104px]'
+        : 'text-[14.5px] font-semibold min-[1100px]:h-[42px] min-[1100px]:w-[118px]'
     }`;
   };
 
@@ -77,16 +78,16 @@ export function Skills() {
       <Container>
         <SectionHeader file="skills" id="skills-heading" copy={sections.skills} />
 
-        <div className="scroll-rise mt-10 grid items-center gap-10 min-[980px]:grid-cols-[minmax(0,7fr)_minmax(0,5fr)]">
-          <div className="relative min-[980px]:mx-auto min-[980px]:aspect-square min-[980px]:w-full min-[980px]:max-w-[560px]">
+        <div className="scroll-rise mt-10 grid items-center gap-10 min-[1100px]:grid-cols-[minmax(0,7fr)_minmax(0,5fr)]">
+          <div className="relative min-[1100px]:mx-auto min-[1100px]:aspect-square min-[1100px]:w-full min-[1100px]:max-w-[560px]">
             {/* Rings and spokes (desktop only) */}
-            <div aria-hidden="true" className="max-[979px]:hidden">
-              <span className="absolute inset-[19.64%] rounded-full border border-border-2" />
-              <span className="absolute inset-[5.36%] rounded-full border border-dashed border-border" />
+            <div aria-hidden="true" className="max-[1099px]:hidden">
+              <span className="absolute inset-[23.21%] rounded-full border border-border-2" />
+              <span className="absolute inset-[1.07%] rounded-full border border-dashed border-border" />
               {innerNodes.map(({ skill, deg }) => (
                 <span
                   key={skill.id}
-                  className="absolute top-1/2 left-1/2 h-px w-[30.36%] origin-left bg-linear-to-r from-primary-line to-transparent"
+                  className="absolute top-1/2 left-1/2 h-px w-[26.79%] origin-left bg-linear-to-r from-primary-line to-transparent"
                   style={{ rotate: `${deg}deg` }}
                 />
               ))}
@@ -98,14 +99,14 @@ export function Skills() {
                   type="button"
                   {...handlers(root)}
                   style={{ '--x': 'calc(50% - 70px)', '--y': 'calc(50% - 40px)' } as CSSProperties}
-                  className={`${nodeBase} border-primary bg-primary text-primary-ink min-[980px]:h-20 min-[980px]:w-[140px] min-[980px]:flex-col min-[980px]:gap-0.5 min-[980px]:rounded-[22px] ${
+                  className={`${nodeBase} border-primary bg-primary text-primary-ink min-[1100px]:h-20 min-[1100px]:w-[140px] min-[1100px]:flex-col min-[1100px]:gap-0.5 min-[1100px]:rounded-[22px] ${
                     root === selected ? 'shadow-glow' : ''
                   }`}
                 >
-                  <span className="text-[15px] font-bold tracking-[-0.02em] min-[980px]:text-xl">
+                  <span className="text-[15px] font-bold tracking-[-0.02em] min-[1100px]:text-xl">
                     {root.name}
                   </span>
-                  <span className="font-mono text-[10.5px] opacity-80 max-[979px]:hidden">
+                  <span className="font-mono text-[10.5px] opacity-80 max-[1099px]:hidden">
                     primary stack
                   </span>
                 </button>

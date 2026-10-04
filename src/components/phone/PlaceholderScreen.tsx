@@ -18,7 +18,13 @@ export function PlaceholderScreen({ variant, title }: PlaceholderScreenProps) {
     <div aria-hidden="true" className="@container absolute inset-0 bg-bg-2 text-text">
       <div className="flex h-full flex-col gap-[4.8cqw] px-[6.5cqw] pt-[18.3cqw] pb-[6.5cqw]">
         <p className="text-[7.5cqw] leading-tight font-bold tracking-[-0.02em]">{title}</p>
-        {variant === 'kheench' ? <KheenchBody /> : <ImsBody admin={variant === 'ims-admin'} />}
+        {variant === 'kheench' ? (
+          <KheenchBody />
+        ) : variant === 'grocery' ? (
+          <GroceryBody />
+        ) : (
+          <ImsBody admin={variant === 'ims-admin'} />
+        )}
       </div>
     </div>
   );
@@ -83,6 +89,43 @@ function KheenchBody() {
       </div>
       <Row width="64%" icon="bg-primary-soft" />
       <Row width="50%" icon="bg-primary-soft" />
+    </>
+  );
+}
+
+// Grocery app: search, categories and a grid of products with prices.
+function GroceryBody() {
+  return (
+    <>
+      <div className="flex h-[16cqw] items-center rounded-[5.4cqw] border border-border bg-surface px-[5.4cqw] text-[5.1cqw] text-muted">
+        Search groceries
+      </div>
+      <div className="flex gap-[2.7cqw] text-[5.1cqw] font-semibold">
+        <span className="rounded-full bg-primary px-[4cqw] py-[2.2cqw] text-primary-ink">
+          Fruit
+        </span>
+        <span className="rounded-full border border-border px-[4cqw] py-[2.2cqw] text-muted">
+          Dairy
+        </span>
+        <span className="rounded-full border border-border px-[4cqw] py-[2.2cqw] text-muted">
+          Bakery
+        </span>
+      </div>
+      <div className="grid grid-cols-2 gap-[3.8cqw]">
+        {['bg-primary-soft', 'bg-cyan/25', 'bg-cyan/25', 'bg-primary-soft'].map((tone, index) => (
+          <div key={index} className="rounded-[5.4cqw] border border-border bg-surface p-[3.2cqw]">
+            <span className={`block aspect-square rounded-[4cqw] ${tone}`} />
+            <span className="mt-[3cqw] block h-[3cqw] w-[70%] rounded-full bg-text opacity-70" />
+            <span className="mt-[2.4cqw] flex items-center justify-between">
+              <span className="h-[2.6cqw] w-[38%] rounded-full bg-primary" />
+              <span className="size-[7cqw] rounded-[2.4cqw] bg-primary" />
+            </span>
+          </div>
+        ))}
+      </div>
+      <div className="mt-auto flex h-[16cqw] items-center justify-center rounded-[5.4cqw] bg-primary text-[5.6cqw] font-semibold text-primary-ink">
+        View cart
+      </div>
     </>
   );
 }

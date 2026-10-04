@@ -72,13 +72,14 @@ function ScreenContent({ screen, title }: { screen: Screen; title: string }) {
   );
 }
 
-// Interns and Admin for the IMS; the app's name for single-screen projects.
+// Short in-app titles for the placeholder screens; the app's name otherwise.
+const screenTitles: Partial<Record<string, string>> = {
+  ims: 'Interns',
+  'ims-admin': 'Admin',
+  grocery: 'Groceries',
+};
 const screenTitle = (screen: Screen, project: Project) =>
-  screen.kind === 'placeholder' && screen.variant === 'ims'
-    ? 'Interns'
-    : screen.kind === 'placeholder' && screen.variant === 'ims-admin'
-      ? 'Admin'
-      : project.name;
+  (screen.kind === 'placeholder' && screenTitles[screen.variant]) || project.name;
 
 function FeaturedProject({ project, flip }: { project: Project; flip: boolean }) {
   const [open, setOpen] = useState(false);
@@ -114,9 +115,7 @@ function FeaturedProject({ project, flip }: { project: Project; flip: boolean })
 
       <div className="flex flex-col gap-[18px] p-6 sm:p-9 min-[980px]:p-11 min-[980px]:pb-10">
         <div className="flex flex-wrap items-center gap-2.5">
-          <Chip hot>
-            {project.stack[0]} · {project.kind}
-          </Chip>
+          <Chip hot>{project.tag ?? `${project.stack[0]} · ${project.kind}`}</Chip>
           <Status status={project.status} />
         </div>
         <h3 id={`${project.slug}-title`} className="text-h3 font-semibold">
