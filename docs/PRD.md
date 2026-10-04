@@ -9,6 +9,8 @@
 
 ---
 
+> **v2 (Phase 11):** the site is redesigned as "Widget Tree" — Flutter-first identity, dark-first theme, sections Home · About · Skills · Projects · Experience · GitHub · Contact. The goals, audience and non-functional requirements below still apply; `DESIGN.md` v2 defines the look and the section details.
+
 ## 1. Summary
 
 A fast, professional, animated personal portfolio website that presents Farhan as a mobile app developer (Flutter + Firebase). It is live on the internet with a public, shareable link and costs nothing to build, host or run.

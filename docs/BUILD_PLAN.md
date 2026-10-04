@@ -202,6 +202,66 @@ Steps 0.1 and 0.2 are committed locally; they are pushed together in step 0.3 on
   Bump `package.json` version to `1.0.0`, create tag `v1.0.0` and push tags (`git push --follow-tags`).
   Commit: `chore: release v1.0.0`
 
+## Phase 11 — "Widget Tree" redesign (v2)
+
+The owner approved the "Widget Tree" concept. `docs/DESIGN.md` v2 is the spec. Same rules: one step = one commit = one push; build, lint and check before each.
+
+- [x] **11.1 Adopt the design**
+  Replace `DESIGN.md` with v2, add this phase, note the redesign in the PRD.
+  Commit: `docs: adopt widget tree design`
+
+- [ ] **11.2 Tokens, fonts and dark-first theme**
+  New colour tokens for dark (default) and light, Geist + JetBrains Mono with metric-matched fallbacks, type scale, radii. Map the v1 token names onto the new palette so every existing component re-themes until it is rebuilt. Default theme dark; head script and `useTheme` updated.
+  Commit: `style: add widget tree tokens, fonts and dark-first theme`
+
+- [ ] **11.3 Content model**
+  Extend types and `content.ts`: hero copy, About facts and terminal, skills with tiers and inspector data, project kind, key feature and architecture, experience entries. Placeholders for unknown facts. Update TRD §3.
+  Commit: `feat: extend content model for the redesign`
+
+- [ ] **11.4 Navbar, mobile menu and theme toggle**
+  Commit: `feat: rebuild navbar, mobile menu and theme toggle`
+
+- [ ] **11.5 Hero**
+  Badge, headline, CTAs, meta row, the phone with code/API/git/breadcrumb cards and connection lines, background system, page-load reveal, credibility strip.
+  Commit: `feat: rebuild hero with the engineering visual`
+
+- [ ] **11.6 About**
+  Commit: `feat: rebuild about as profile card and terminal`
+
+- [ ] **11.7 Skills orbit**
+  Commit: `feat: add interactive skills orbit`
+
+- [ ] **11.8 Projects**
+  Featured mobile cards with phones, supporting web cards, details toggle, 3D hover.
+  Commit: `feat: rebuild projects as product cards`
+
+- [ ] **11.9 Experience**
+  Commit: `feat: replace journey with experience commit history`
+
+- [ ] **11.10 GitHub activity**
+  Commit: `feat: restyle github activity`
+
+- [ ] **11.11 Contact and footer**
+  Commit: `feat: rebuild contact and footer`
+
+- [ ] **11.12 404 and share images**
+  Restyled 404, new favicon, touch icon and OG image.
+  Commit: `feat: restyle 404 page and share images`
+
+- [ ] **11.13 Cleanup**
+  Remove v1-only components, hooks, tokens and dependencies; scroll-driven section reveals.
+  Commit: `refactor: remove pre-redesign code`
+
+- [ ] **11.14 Quality pass** 🛑
+  Accessibility (axe, keyboard), responsive widths, reduced motion, both themes; owner runs PageSpeed Insights (mobile) — fix until ≥ 90 ×4.
+  Commit: `fix: polish widget tree redesign`
+
+- [ ] **11.15 README**
+  Commit: `docs: update readme for the redesign`
+
+- [ ] **11.16 Release v2.0.0**
+  Commit: `chore: release v2.0.0` and tag `v2.0.0`.
+
 ---
 
 ## After v1 — owner's to-do list
