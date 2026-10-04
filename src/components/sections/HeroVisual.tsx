@@ -29,7 +29,7 @@ const codeLines = [
     {'      '}title: <span className="text-cyan">Text</span>(task.title),
   </>,
   <>
-    {'    '}); <span className="hero-caret" />
+    {'    '}); <span className="caret" />
   </>,
 ];
 

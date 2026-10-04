@@ -7,6 +7,8 @@ export const content: SiteContent = {
     fullName: 'Farhan Ali Haider',
     shortName: 'Bangash',
     role: 'Mobile app developer working with Flutter and Firebase',
+    title: 'Flutter developer · Mobile engineer',
+    whoami: 'Flutter developer · mobile application engineer',
     badge: 'FLUTTER DEVELOPER • MOBILE ENGINEER',
     headline: 'Mobile apps, engineered to',
     headlineAccent: 'feel effortless.',
@@ -16,12 +18,8 @@ export const content: SiteContent = {
       'I build mobile apps with Flutter and Firebase — and ship them one commit at a time.',
     // TODO(bangash): confirm availability text
     availability: 'Available for opportunities',
-    // TODO(bangash): write real bio (2–3 short paragraphs)
-    bio: [
-      'TODO: Bio paragraph one. Who you are and what you build.',
-      'TODO: Bio paragraph two. How you got into mobile development and what you are learning now.',
-      'TODO: Bio paragraph three (optional). What kind of work or internship you are looking for.',
-    ],
+    // TODO(bangash): write a short intro for the profile card (one or two short paragraphs)
+    bio: ['TODO: Short intro — two sentences about who you are and what you enjoy building.'],
     // TODO(bangash): add photo at public/images/avatar.webp, then set avatar: '/images/avatar.webp'
     // TODO(bangash): add résumé PDF at public/resume/Farhan-Ali-Haider-Resume.pdf
     resumeUrl: '/resume/Farhan-Ali-Haider-Resume.pdf',
@@ -36,6 +34,12 @@ export const content: SiteContent = {
     mindset: ['build', 'test', 'improve', 'ship'],
   },
 
+  sections: {
+    about: {
+      title: 'A developer who ships the whole app.',
+      lead: 'Interface, state, backend and release — I care about every layer a user touches.',
+    },
+  },
   links: {
     // TODO(bangash): real email address
     email: 'TODO: your email address',

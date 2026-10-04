@@ -62,11 +62,19 @@ export interface SkillGroup {
   items: string[];
 }
 
+/** A section's h2 and one-line lead (DESIGN.md §8). */
+export interface SectionCopy {
+  title: string;
+  lead: string;
+}
+
 export interface SiteContent {
   person: {
     fullName: string;
     shortName: string; // 'Bangash'
     role: string;
+    title: string; // profile card, under the name
+    whoami: string; // terminal: whoami
     badge: string; // hero badge, e.g. 'FLUTTER DEVELOPER • MOBILE ENGINEER'
     headline: string; // hero h1, before the highlighted phrase
     headlineAccent: string; // highlighted end of the h1
@@ -83,6 +91,7 @@ export interface SiteContent {
     enjoys: string; // terminal: enjoy_building.txt
     mindset: string[]; // terminal: mindset steps
   };
+  sections: { about: SectionCopy };
   links: { email: string; github: string; linkedin?: string; whatsapp?: string };
   githubUsername: string; // 'bangash40'
   /** Flutter at the root, everything else as its children (DESIGN.md §6.6). */
