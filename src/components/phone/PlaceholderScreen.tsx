@@ -1,195 +1,88 @@
-import type { ComponentType, CSSProperties } from 'react';
 import type { Screen } from '../../types/content';
 
 type Variant = Extract<Screen, { kind: 'placeholder' }>['variant'];
+/** Phone screens; the web variants are drawn as browser thumbnails in the project cards. */
+export type PhoneVariant = Exclude<Variant, 'miniplayer' | 'portfolio'>;
 
 interface PlaceholderScreenProps {
-  variant: Variant;
-  /** Project name shown in the app title bar. */
-  name: string;
-  /** Project accent color, applied at low opacity. */
-  tint: string;
+  variant: PhoneVariant;
+  /** Title shown at the top of the app. */
+  title: string;
 }
 
-// Designed stand-in app screens used until real screenshots exist (DESIGN.md §6.3).
-// Everything is sized in container query units so one design fits the lg and sm phones.
-export function PlaceholderScreen({ variant, name, tint }: PlaceholderScreenProps) {
-  const Body = bodies[variant];
-
+// Designed stand-in app screens used until real screenshots exist (DESIGN.md §6.7). They use the
+// theme tokens, so they follow dark and light mode. Sized in container query units: the units
+// resolve against the outer wrapper, so padding and gaps sit on the inner column.
+export function PlaceholderScreen({ variant, title }: PlaceholderScreenProps) {
   return (
-    <div
-      aria-hidden="true"
-      className="@container absolute inset-0 overflow-hidden bg-[#f6f7f9] font-body text-[#1d2330]"
-      style={{ '--tint': tint } as CSSProperties}
-    >
-      <div className="absolute inset-0 bg-(--tint) opacity-[0.07]" />
-      <div className="relative flex h-full flex-col">
-        <StatusBar />
-        <p className="line-clamp-2 px-[7cqw] pt-[3cqw] pb-[4cqw] font-display text-[6.4cqw] leading-tight font-extrabold tracking-[-0.02em]">
-          {name}
-        </p>
-        <div className="flex-1 px-[7cqw]">
-          <Body />
-        </div>
+    <div aria-hidden="true" className="@container absolute inset-0 bg-bg-2 text-text">
+      <div className="flex h-full flex-col gap-[4.8cqw] px-[6.5cqw] pt-[18.3cqw] pb-[6.5cqw]">
+        <p className="text-[7.5cqw] leading-tight font-bold tracking-[-0.02em]">{title}</p>
+        {variant === 'kheench' ? <KheenchBody /> : <ImsBody admin={variant === 'ims-admin'} />}
       </div>
-      <span className="absolute bottom-[2.2cqw] left-1/2 h-[1.4cqw] w-[34cqw] -translate-x-1/2 rounded-full bg-[#1d2330]" />
     </div>
   );
 }
 
-function StatusBar() {
+function Row({ width, icon }: { width: string; icon: string }) {
   return (
-    <div className="flex h-[13cqw] items-center justify-between px-[9cqw] pt-[1.5cqw] text-[4.2cqw] font-semibold">
-      <span>9:41</span>
-      <span className="relative h-[3.6cqw] w-[7cqw] rounded-[1cqw] border-[0.5cqw] border-current p-[0.4cqw]">
-        <span className="block h-full w-3/4 rounded-[0.4cqw] bg-current" />
-      </span>
+    <div className="flex items-center gap-[4.8cqw] rounded-[5.9cqw] border border-border bg-surface p-[4.3cqw]">
+      <span className={`size-[12.9cqw] shrink-0 rounded-[4.3cqw] ${icon}`} />
+      <div className="flex flex-1 flex-col gap-[2.15cqw]">
+        <span className="h-[3.2cqw] rounded-full bg-text opacity-70" style={{ width }} />
+        <span className="h-[2.15cqw] w-[40%] rounded-full bg-muted opacity-45" />
+      </div>
     </div>
   );
 }
 
-function Bar({ className = '', width }: { className?: string; width?: number }) {
+// Intern Management System: intern/admin switch over a list. Both sides share one layout.
+function ImsBody({ admin }: { admin: boolean }) {
+  const on = 'flex-1 rounded-full bg-primary py-[2.7cqw] text-center text-primary-ink';
+  const off = 'flex-1 py-[2.7cqw] text-center text-muted';
+  const widths = admin ? ['62%', '74%', '50%', '66%', '45%'] : ['70%', '55%', '64%', '48%', '58%'];
   return (
-    <span
-      className={`block rounded-full bg-[#d9dde4] ${className}`}
-      style={width ? { width: `${width}%` } : undefined}
-    />
-  );
-}
-
-function Accent({ className = '', strong = false }: { className?: string; strong?: boolean }) {
-  return (
-    <span className={`block bg-(--tint) ${strong ? 'opacity-40' : 'opacity-20'} ${className}`} />
-  );
-}
-
-// Intern Management System: intern/admin switch and a list of interns.
-// Intern and admin sides share one layout; only the selected tab differs.
-function ImsBody({ admin = false }: { admin?: boolean }) {
-  const on = 'flex flex-1 items-center justify-center rounded-full bg-white';
-  const off = 'flex flex-1 items-center justify-center text-[#5b6475]';
-  return (
-    <div className="flex flex-col gap-[4cqw]">
-      <div className="flex h-[10cqw] rounded-full bg-[#e7eaef] p-[1cqw] text-[3.6cqw] font-semibold">
+    <>
+      <div className="flex rounded-full border border-border bg-surface p-[1.6cqw] text-[5.4cqw] font-semibold">
         <span className={admin ? off : on}>Intern</span>
         <span className={admin ? on : off}>Admin</span>
       </div>
-      <Bar className="mt-[2cqw] h-[2.4cqw] w-[30%]" />
-      {[70, 55, 64, 48, 60].map((width) => (
-        <div
+      {widths.map((width, index) => (
+        <Row
           key={width}
-          className="flex items-center gap-[3.5cqw] rounded-[4cqw] bg-white p-[3cqw]"
-        >
-          <Accent strong className="size-[9cqw] shrink-0 rounded-full" />
-          <div className="flex flex-1 flex-col gap-[1.8cqw]">
-            <span
-              className="block h-[2.6cqw] rounded-full bg-[#1d2330] opacity-70"
-              style={{ width: `${width}%` }}
-            />
-            <Bar className="h-[2.2cqw] w-[40%]" />
-          </div>
-          <Accent className="h-[5cqw] w-[11cqw] rounded-full" />
-        </div>
+          width={width}
+          icon={admin && index % 2 === 0 ? 'bg-cyan/25' : 'bg-primary-soft'}
+        />
       ))}
-    </div>
-  );
-}
-
-// Kheench: link field, fetch button, preview and quality chips.
-function KheenchBody() {
-  return (
-    <div className="flex flex-col gap-[4cqw]">
-      <div className="flex h-[11cqw] items-center gap-[3cqw] rounded-[3cqw] border-[0.5cqw] border-[#d9dde4] bg-white px-[3.5cqw]">
-        <Accent strong className="size-[4.5cqw] rounded-full" />
-        <Bar className="h-[2.4cqw] w-[65%]" />
-      </div>
-      <div className="relative flex h-[10cqw] items-center justify-center overflow-hidden rounded-full">
-        <Accent strong className="absolute inset-0" />
-        <span className="relative block h-[2.4cqw] w-[22%] rounded-full bg-white" />
-      </div>
-      <div className="relative mt-[2cqw] aspect-video overflow-hidden rounded-[4cqw] bg-[#e1e4ea]">
-        <span className="absolute top-1/2 left-1/2 size-0 -translate-x-1/3 -translate-y-1/2 border-y-[4cqw] border-l-[6.5cqw] border-y-transparent border-l-white" />
-      </div>
-      <div className="flex flex-wrap gap-[2.2cqw] text-[3.4cqw] font-semibold">
-        {['1080p', '720p', '480p', 'Audio'].map((label, index) => (
-          <span
-            key={label}
-            className="relative overflow-hidden rounded-full border-[0.5cqw] border-[#d9dde4] bg-white px-[3.2cqw] py-[1.4cqw]"
-          >
-            {index === 0 && <Accent strong className="absolute inset-0" />}
-            <span className="relative">{label}</span>
-          </span>
-        ))}
-      </div>
-      {[80, 62, 70].map((width) => (
-        <Bar key={width} width={width} className="h-[2.4cqw]" />
-      ))}
-    </div>
-  );
-}
-
-// Arc-style mini player: a web page with a floating video player on top.
-function MiniPlayerBody() {
-  return (
-    <>
-      <div className="flex flex-col gap-[3.5cqw]">
-        <div className="flex h-[8cqw] items-center rounded-full bg-[#e7eaef] px-[3.5cqw]">
-          <span className="block h-[2.2cqw] w-[55%] rounded-full bg-[#cfd4dc]" />
-        </div>
-        <span className="mt-[2cqw] block h-[4cqw] w-[80%] rounded-full bg-[#1d2330] opacity-70" />
-        <div className="aspect-video rounded-[3cqw] bg-[#e1e4ea]" />
-        {[92, 85, 96, 70, 88, 60].map((width, index) => (
-          <Bar key={index} width={width} className="h-[2.4cqw]" />
-        ))}
-      </div>
-      <div className="absolute right-[7cqw] bottom-[10cqw] w-[56cqw] overflow-hidden rounded-[4cqw] bg-[#1d2330] shadow-[0_3cqw_8cqw_rgb(29_35_48/0.35)]">
-        <div className="relative aspect-video">
-          <Accent strong className="absolute inset-0 opacity-60" />
-          <span className="absolute top-1/2 left-1/2 size-0 -translate-x-1/3 -translate-y-1/2 border-y-[3cqw] border-l-[5cqw] border-y-transparent border-l-white" />
-        </div>
-        <div className="flex items-center gap-[2.5cqw] p-[2.5cqw]">
-          <span className="block h-[1.2cqw] flex-1 rounded-full bg-white/25">
-            <span className="block h-full w-2/5 rounded-full bg-white" />
-          </span>
-        </div>
-      </div>
     </>
   );
 }
 
-// This portfolio: the hero of this site, in miniature.
-function PortfolioBody() {
+// Kheench: link field, fetch button, preview and format chips.
+function KheenchBody() {
   return (
-    <div className="flex flex-col gap-[3cqw]">
-      <div className="flex items-center justify-between">
-        <span className="block h-[3cqw] w-[22%] rounded-full bg-[#1d2330] opacity-70" />
-        <Accent strong className="h-[6cqw] w-[18cqw] rounded-full" />
+    <>
+      <div className="flex h-[18.3cqw] items-center rounded-[5.4cqw] border border-border bg-surface px-[5.4cqw] font-mono text-[5.1cqw] text-muted">
+        https://…/watch?v=
       </div>
-      <span className="mt-[8cqw] block h-[9cqw] w-[58%] rounded-[2cqw] bg-[#1d2330]" />
-      <span className="block h-[9cqw] w-[80%] rounded-[2cqw] bg-[#1d2330]" />
-      <Bar className="mt-[3cqw] h-[2.6cqw] w-[90%]" />
-      <Bar className="h-[2.6cqw] w-[70%]" />
-      <div className="mt-[3cqw] flex gap-[2.5cqw]">
-        <Accent strong className="h-[8cqw] w-[30cqw] rounded-full" />
-        <span className="block h-[8cqw] w-[30cqw] rounded-full border-[0.6cqw] border-[#1d2330]" />
+      <div className="flex h-[17.2cqw] items-center justify-center rounded-[5.4cqw] bg-primary text-[5.9cqw] font-semibold text-primary-ink">
+        Fetch formats
       </div>
-      <div className="mt-[6cqw] flex justify-center">
-        <div className="h-[56cqw] w-[27cqw] rounded-[5cqw] border-[1.4cqw] border-[#1d2330] p-[1cqw]">
-          <Accent strong className="h-full w-full rounded-[3.5cqw]" />
-        </div>
+      <div className="h-[49.5cqw] rounded-[6.5cqw] border border-border bg-surface" />
+      <div className="flex flex-wrap gap-[2.7cqw] font-mono text-[5.1cqw]">
+        {['1080p', '720p', '480p', 'audio'].map((label, index) => (
+          <span
+            key={label}
+            className={`rounded-[3.2cqw] px-[3.8cqw] py-[2.15cqw] ${
+              index === 0 ? 'bg-primary text-primary-ink' : 'border border-border'
+            }`}
+          >
+            {label}
+          </span>
+        ))}
       </div>
-    </div>
+      <Row width="64%" icon="bg-primary-soft" />
+      <Row width="50%" icon="bg-primary-soft" />
+    </>
   );
 }
-
-function ImsAdminBody() {
-  return <ImsBody admin />;
-}
-
-const bodies: Record<Variant, ComponentType> = {
-  ims: ImsBody,
-  'ims-admin': ImsAdminBody,
-  kheench: KheenchBody,
-  miniplayer: MiniPlayerBody,
-  portfolio: PortfolioBody,
-};

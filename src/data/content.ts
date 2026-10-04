@@ -43,6 +43,10 @@ export const content: SiteContent = {
       title: 'Flutter at the center. The rest in orbit.',
       lead: 'Hover or select a technology to see what I use it for.',
     },
+    projects: {
+      title: 'Products, not exercises.',
+      lead: 'Mobile first. Each one built end to end — interface, data and release.',
+    },
   },
   links: {
     // TODO(bangash): real email address
