@@ -45,7 +45,7 @@ export function Hero() {
 
   return (
     <section
-      id="top"
+      id="home"
       aria-labelledby="hero-name"
       className="pt-[calc(72px+48px)] pb-20 lg:flex lg:min-h-svh lg:items-center lg:pt-[calc(72px+32px)] lg:pb-16"
     >

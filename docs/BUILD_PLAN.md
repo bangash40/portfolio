@@ -218,7 +218,7 @@ The owner approved the "Widget Tree" concept. `docs/DESIGN.md` v2 is the spec. S
   Extend types and `content.ts`: hero copy, About facts and terminal, skills with tiers and inspector data, project kind, key feature and architecture, experience entries. Placeholders for unknown facts. Update TRD §3.
   Commit: `feat: extend content model for the redesign`
 
-- [ ] **11.4 Navbar, mobile menu and theme toggle**
+- [x] **11.4 Navbar, mobile menu and theme toggle**
   Commit: `feat: rebuild navbar, mobile menu and theme toggle`
 
 - [ ] **11.5 Hero**

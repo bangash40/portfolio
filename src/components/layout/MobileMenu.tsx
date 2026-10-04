@@ -2,10 +2,12 @@ import { X } from 'lucide-react';
 import { useEffect, useRef, type MouseEvent } from 'react';
 import { content } from '../../data/content';
 import { isModifiedClick, setScrollLocked } from '../../hooks/useLenis';
+import { isFilled } from '../../lib/placeholders';
 import { Button } from '../ui/Button';
-import { ThemeToggle } from '../ui/ThemeToggle';
+import { GitHubIcon, LinkedInIcon } from '../ui/icons';
+import { IconLink } from '../ui/IconLink';
 import { Container } from './Container';
-import { contactLink, navLinkStateClass, navLinks } from './navLinks';
+import { navLinks } from './navLinks';
 
 interface MobileMenuProps {
   id: string;
@@ -15,7 +17,10 @@ interface MobileMenuProps {
   activeId: string | null;
 }
 
-// Full-screen menu for < 768px: traps focus, closes on Esc, locks page scroll while open.
+const { links, person } = content;
+
+// Full-screen menu below 980px (DESIGN.md §6.1): numbered links, résumé, availability and
+// socials. Traps focus, closes on Esc, locks page scroll while open.
 export function MobileMenu({ id, open, onClose, onNavigate, activeId }: MobileMenuProps) {
   const panelRef = useRef<HTMLDivElement>(null);
   const closeRef = useRef<HTMLButtonElement>(null);
@@ -74,54 +79,81 @@ export function MobileMenu({ id, open, onClose, onNavigate, activeId }: MobileMe
       aria-modal="true"
       aria-label="Menu"
       data-lenis-prevent
-      className="fixed inset-0 z-50 overflow-y-auto bg-fog md:hidden"
+      className="fixed inset-0 z-50 flex flex-col overflow-y-auto bg-bg min-[980px]:hidden"
     >
-      <Container className="flex h-[72px] items-center justify-between">
-        <a
-          href="#top"
-          onClick={(event) => navigate(event, 'top')}
-          className="inline-flex h-11 items-center font-display text-xl font-extrabold tracking-[-0.02em] text-graphite"
-        >
-          {content.person.shortName}
-        </a>
-        <div className="flex items-center gap-2">
-          <ThemeToggle />
+      <div aria-hidden="true" className="bg-grid pointer-events-none absolute inset-0" />
+      <div className="relative border-b border-border">
+        <Container className="flex h-[68px] items-center justify-between">
+          <span className="font-mono text-xs text-muted">
+            lib/<span className="text-primary">main</span>.dart
+          </span>
           <button
             ref={closeRef}
             type="button"
             onClick={onClose}
             aria-label="Close menu"
-            className="inline-flex h-11 w-11 items-center justify-center rounded-full text-graphite transition-colors duration-150 hover:bg-line motion-reduce:transition-none"
+            className="inline-flex size-11 items-center justify-center rounded-[11px] border border-border text-text"
           >
-            <X size={20} strokeWidth={1.75} aria-hidden="true" />
+            <X size={18} strokeWidth={2} aria-hidden="true" />
           </button>
-        </div>
-      </Container>
+        </Container>
+      </div>
 
-      <Container className="pt-8 pb-12">
+      <Container className="relative flex flex-1 flex-col pt-7 pb-7">
         <nav aria-label="Sections">
-          <ul className="flex flex-col gap-2">
-            {navLinks.map((link) => (
-              <li key={link.id}>
-                <a
-                  href={`#${link.id}`}
-                  onClick={(event) => navigate(event, link.id)}
-                  aria-current={activeId === link.id ? 'true' : undefined}
-                  className={`inline-flex min-h-11 items-center py-1 font-display text-h3 font-extrabold transition-colors duration-150 motion-reduce:transition-none ${navLinkStateClass(activeId === link.id)}`}
-                >
-                  {link.label}
-                </a>
-              </li>
-            ))}
-          </ul>
-          <Button
-            href={`#${contactLink.id}`}
-            onClick={(event) => navigate(event, contactLink.id)}
-            className="mt-10"
-          >
-            {contactLink.label}
-          </Button>
+          <ol>
+            {navLinks.map((link, index) => {
+              const active = activeId === link.id;
+              return (
+                <li key={link.id} className="border-b border-border">
+                  <a
+                    href={`#${link.id}`}
+                    onClick={(event) => navigate(event, link.id)}
+                    aria-current={active ? 'true' : undefined}
+                    className={`flex items-baseline gap-4 py-3.5 transition-[transform,color] duration-200 hover:translate-x-1.5 motion-reduce:transition-none ${
+                      active ? 'text-text' : 'text-muted hover:text-text'
+                    }`}
+                  >
+                    <span className="w-6 font-mono text-xs text-muted">
+                      {String(index + 1).padStart(2, '0')}
+                    </span>
+                    <span className="text-[30px] leading-tight font-semibold tracking-[-0.03em]">
+                      {link.label}
+                    </span>
+                    {active && (
+                      <span
+                        aria-hidden="true"
+                        className="ml-auto size-2 self-center rounded-full bg-primary shadow-[0_0_12px_var(--color-primary)]"
+                      />
+                    )}
+                  </a>
+                </li>
+              );
+            })}
+          </ol>
         </nav>
+
+        <div className="mt-auto flex flex-col gap-3.5 pt-10">
+          <Button href={person.resumeUrl} download className="w-full">
+            Download résumé
+          </Button>
+          <div className="flex items-center justify-between">
+            <span className="inline-flex items-center gap-2 font-mono text-xs text-text">
+              <span aria-hidden="true" className="size-[7px] rounded-full bg-ok" />
+              {person.availability}
+            </span>
+            <span className="flex">
+              <IconLink href={links.github} label="GitHub">
+                <GitHubIcon />
+              </IconLink>
+              {isFilled(links.linkedin) && (
+                <IconLink href={links.linkedin} label="LinkedIn">
+                  <LinkedInIcon />
+                </IconLink>
+              )}
+            </span>
+          </div>
+        </div>
       </Container>
     </div>
   );

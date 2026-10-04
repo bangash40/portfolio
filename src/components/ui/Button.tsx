@@ -1,28 +1,46 @@
 import type { ComponentPropsWithRef } from 'react';
 
 type Variant = 'primary' | 'secondary';
+type Size = 'md' | 'sm';
 
-type LinkButtonProps = ComponentPropsWithRef<'a'> & { href: string; variant?: Variant };
-type NativeButtonProps = ComponentPropsWithRef<'button'> & { href?: undefined; variant?: Variant };
+interface Options {
+  variant?: Variant;
+  size?: Size;
+}
+
+type LinkButtonProps = ComponentPropsWithRef<'a'> & Options & { href: string };
+type NativeButtonProps = ComponentPropsWithRef<'button'> & Options & { href?: undefined };
 
 export type ButtonProps = LinkButtonProps | NativeButtonProps;
 
+// `group` lets an icon inside nudge on hover (e.g. `group-hover:translate-x-[3px]`).
 const base =
-  'inline-flex h-12 items-center justify-center gap-2 rounded-full px-6 font-semibold whitespace-nowrap transition-colors duration-150 motion-reduce:transition-none disabled:cursor-not-allowed disabled:opacity-60';
+  'group inline-flex items-center justify-center gap-2.5 rounded-button font-semibold whitespace-nowrap transition-[transform,box-shadow,background-color,border-color,color] duration-200 ease-out hover:-translate-y-0.5 motion-reduce:transition-none motion-reduce:hover:translate-y-0 disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:translate-y-0';
 
-// Primary darkens 8% on hover; secondary fills with Graphite (DESIGN.md §6.4).
+// DESIGN.md §6.12: primary lifts and glows; secondary lifts and tints its border.
 const variants: Record<Variant, string> = {
-  primary: 'bg-signal text-on-signal hover:bg-[color-mix(in_srgb,var(--color-signal),black_8%)]',
-  secondary: 'border-[1.5px] border-graphite text-graphite hover:bg-graphite hover:text-fog',
+  primary: 'bg-primary text-primary-ink hover:shadow-glow',
+  secondary: 'border border-border-2 bg-surface text-text hover:border-primary-line',
+};
+
+const sizes: Record<Size, string> = {
+  md: 'h-12 px-[22px] text-[15.5px]',
+  sm: 'h-[38px] px-3.5 text-sm',
 };
 
 // Renders an <a> when given an href, otherwise a <button>.
 export function Button(props: ButtonProps) {
   if (props.href !== undefined) {
-    const { variant = 'primary', className = '', ...rest } = props;
-    return <a className={`${base} ${variants[variant]} ${className}`} {...rest} />;
+    const { variant = 'primary', size = 'md', className = '', ...rest } = props;
+    return <a className={`${base} ${variants[variant]} ${sizes[size]} ${className}`} {...rest} />;
   }
 
-  const { variant = 'primary', className = '', type = 'button', ...rest } = props;
-  return <button type={type} className={`${base} ${variants[variant]} ${className}`} {...rest} />;
+  const { variant = 'primary', size = 'md', className = '', type = 'button', ...rest } = props;
+  return (
+    <button
+      type={type}
+      className={`${base} ${variants[variant]} ${sizes[size]} ${className}`}
+      {...rest}
+    />
+  );
 }

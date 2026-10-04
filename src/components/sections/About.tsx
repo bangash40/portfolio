@@ -29,7 +29,10 @@ export function About() {
             </div>
           </div>
 
-          <ul className="grid gap-x-6 gap-y-10 sm:grid-cols-2 lg:col-span-5 lg:col-start-8">
+          <ul
+            id="skills"
+            className="grid scroll-mt-24 gap-x-6 gap-y-10 sm:grid-cols-2 lg:col-span-5 lg:col-start-8"
+          >
             {skills.map((group) => (
               <li key={group.title}>
                 <h3 className="font-body text-body font-semibold text-graphite">{group.title}</h3>

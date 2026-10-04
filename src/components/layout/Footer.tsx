@@ -26,8 +26,8 @@ export function Footer() {
           </li>
           <li>
             <a
-              href="#top"
-              onClick={(event) => handleAnchorClick(event, 'top')}
+              href="#home"
+              onClick={(event) => handleAnchorClick(event, 'home')}
               className={linkClass}
             >
               Back to top

@@ -36,7 +36,7 @@ export function Journey() {
   );
 
   return (
-    <section id="journey" aria-labelledby="journey-heading" className="py-20 lg:py-32">
+    <section id="experience" aria-labelledby="journey-heading" className="py-20 lg:py-32">
       <Container>
         <SectionHeading id="journey-heading">How I got here</SectionHeading>
 

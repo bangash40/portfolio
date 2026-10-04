@@ -52,6 +52,7 @@
   --color-error: #ff8a80;
   --color-code-keyword: #c4a7ff;
   --color-device: #060709;
+  --color-grid: rgb(237 238 240 / 0.045);
 
   /* v1 names, mapped onto the v2 palette until every component is rebuilt (Phase 11). */
   --color-fog: var(--color-bg);
@@ -135,6 +136,7 @@
   --color-error: #c62828;
   --color-code-keyword: #6d28d9;
   --color-device: #111318;
+  --color-grid: rgb(17 19 24 / 0.05);
   --shadow-float: 0 12px 24px -14px rgb(17 19 24 / 0.3);
   --shadow-glow: 0 0 0 1px rgb(63 79 224 / 0.2), 0 16px 36px -24px rgb(63 79 224 / 0.45);
 }
@@ -176,6 +178,15 @@
   [tabindex='-1']:focus {
     outline: none;
   }
+}
+
+/* Background grid (DESIGN.md §5): 64px lines that fade out radially. */
+@utility bg-grid {
+  background-image:
+    linear-gradient(var(--color-grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--color-grid) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: radial-gradient(ellipse 80% 70% at 60% 30%, #000 25%, transparent 75%);
 }
 
 /* Unknown paths: hide the prerendered home page until the 404 page renders (see main.tsx). */
@@ -253,34 +264,34 @@
   }
 }
 
-.booting #top {
+.booting #home {
   /* GSAP's power3.out */
   --ease-boot: cubic-bezier(0.215, 0.61, 0.355, 1);
 }
 
-.booting #top [data-phone-led] {
+.booting #home [data-phone-led] {
   animation: boot-led 200ms var(--ease-boot) 200ms both;
 }
 
-.booting #top [data-phone-monogram] {
+.booting #home [data-phone-monogram] {
   animation: boot-monogram 1250ms var(--ease-boot) both;
 }
 
-.booting #top [data-phone-power] {
+.booting #home [data-phone-power] {
   animation: boot-power 400ms var(--ease-boot) 1000ms both;
 }
 
-.booting #top [data-boot-line] {
+.booting #home [data-boot-line] {
   animation: boot-wipe 600ms var(--ease-boot) var(--boot-delay, 100ms) both;
 }
 
 /* Starts with the name wipe rather than after it, so the main text is visible early (LCP). */
-.booting #top [data-boot-fade] {
+.booting #home [data-boot-fade] {
   animation: boot-fade 300ms var(--ease-boot) 100ms both;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .booting #top * {
+  .booting #home * {
     animation: none !important;
   }
 }

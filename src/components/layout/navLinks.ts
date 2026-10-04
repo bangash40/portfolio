@@ -3,22 +3,31 @@ export interface NavLink {
   label: string;
 }
 
-// Section anchors in page order. Contact is rendered separately as the primary button.
+// Section anchors in page order (DESIGN.md §6.1).
 export const navLinks: NavLink[] = [
+  { id: 'home', label: 'Home' },
   { id: 'about', label: 'About' },
+  { id: 'skills', label: 'Skills' },
   { id: 'projects', label: 'Projects' },
-  { id: 'journey', label: 'Journey' },
-  { id: 'github', label: 'GitHub' },
+  { id: 'experience', label: 'Experience' },
+  { id: 'contact', label: 'Contact' },
 ];
 
-export const contactLink: NavLink = { id: 'contact', label: 'Contact' };
+// Every section the scroll spy tracks, in page order. GitHub has no nav link, but tracking it
+// stops "Experience" staying highlighted while the visitor reads the GitHub section.
+export const sectionIds = [
+  'home',
+  'about',
+  'skills',
+  'projects',
+  'experience',
+  'github',
+  'contact',
+];
 
-// Every section the scroll spy tracks, in page order.
-export const sectionIds = [...navLinks.map((link) => link.id), contactLink.id];
-
-// Active link: Signal color plus a 2px underline, so color is not the only cue (DESIGN.md §6.6).
+// Active link: text colour plus a 2px primary underline, so colour is not the only cue.
 export function navLinkStateClass(active: boolean) {
   return active
-    ? 'text-signal underline decoration-2 underline-offset-8'
-    : 'text-graphite hover:text-signal';
+    ? "text-text after:absolute after:inset-x-0 after:bottom-1.5 after:h-0.5 after:rounded-full after:bg-primary after:content-['']"
+    : 'text-muted hover:text-text';
 }

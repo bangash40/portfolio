@@ -3,17 +3,22 @@ import { useCallback, useEffect, useState } from 'react';
 import { content } from '../../data/content';
 import { handleAnchorClick, scrollToSection } from '../../hooks/useLenis';
 import { useScrollSpy } from '../../hooks/useScrollSpy';
+import { isFilled } from '../../lib/placeholders';
 import { Button } from '../ui/Button';
+import { GitHubIcon, LinkedInIcon } from '../ui/icons';
+import { IconLink } from '../ui/IconLink';
 import { ThemeToggle } from '../ui/ThemeToggle';
 import { Container } from './Container';
+import { Logo } from './Logo';
 import { MobileMenu } from './MobileMenu';
-import { contactLink, navLinkStateClass, navLinks, sectionIds } from './navLinks';
+import { navLinkStateClass, navLinks, sectionIds } from './navLinks';
 
-const SHRINK_AFTER_PX = 40;
+const ELEVATE_AFTER_PX = 24;
 const MENU_ID = 'mobile-menu';
+const { links, person } = content;
 
-// The header is fixed and 72px tall. After 40px of scroll it reads as 60px: the background
-// scales down and the row moves up 6px. Only transform and opacity animate (TRD.md §5).
+// Fixed 68px bar: transparent at the top, translucent with a border once the page scrolls
+// (DESIGN.md §6.1). The blur is only applied when visible; backdrop filters are slow to paint.
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -27,15 +32,15 @@ export function Navbar() {
   }, []);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > SHRINK_AFTER_PX);
+    const onScroll = () => setScrolled(window.scrollY > ELEVATE_AFTER_PX);
     onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  // The full-screen menu only exists below 768px; close it if the window grows past that.
+  // The full-screen menu only exists below 980px; close it if the window grows past that.
   useEffect(() => {
-    const desktop = window.matchMedia('(min-width: 768px)');
+    const desktop = window.matchMedia('(min-width: 980px)');
     const onChange = () => {
       if (desktop.matches) setMenuOpen(false);
     };
@@ -43,62 +48,57 @@ export function Navbar() {
     return () => desktop.removeEventListener('change', onChange);
   }, []);
 
-  const motion = 'transition duration-300 ease-out motion-reduce:transition-none';
-
   return (
     <>
-      <header className="pointer-events-none fixed inset-x-0 top-0 z-40 h-[72px]">
+      <header className="fixed inset-x-0 top-0 z-40 h-[68px]">
         <div
           aria-hidden="true"
-          className={`absolute inset-x-0 top-0 h-[72px] origin-top bg-fog/85 ${motion} ${
-            // The blur only matters once the bar is visible; skipping it at the top keeps the
-            // first paint cheap (backdrop filters are slow to draw without a GPU).
-            scrolled ? 'scale-y-[0.8334] opacity-100 backdrop-blur-[12px]' : 'opacity-0'
+          className={`absolute inset-0 border-b transition-opacity duration-300 motion-reduce:transition-none ${
+            scrolled
+              ? 'border-border bg-bg/75 opacity-100 backdrop-blur-[14px] backdrop-saturate-150'
+              : 'border-transparent opacity-0'
           }`}
         />
-        <div
-          aria-hidden="true"
-          className={`absolute inset-x-0 top-[71px] h-px bg-line ${motion} ${
-            scrolled ? '-translate-y-3 opacity-100' : 'opacity-0'
-          }`}
-        />
+        <Container className="relative flex h-full items-center justify-between gap-5">
+          <Logo onClick={(event) => handleAnchorClick(event, 'home')} />
 
-        <Container
-          className={`relative flex h-[72px] items-center justify-between gap-6 ${motion} ${
-            scrolled ? '-translate-y-1.5' : ''
-          }`}
-        >
-          <a
-            href="#top"
-            onClick={(event) => handleAnchorClick(event, 'top')}
-            className="pointer-events-auto inline-flex h-11 items-center font-display text-xl font-extrabold tracking-[-0.02em] text-graphite"
-          >
-            {content.person.shortName}
-          </a>
-
-          <nav aria-label="Main" className="pointer-events-auto flex items-center gap-2">
-            <ul className="hidden items-center gap-1 md:flex">
+          <nav aria-label="Main" className="hidden min-[980px]:block">
+            <ul className="flex items-center gap-6">
               {navLinks.map((link) => (
                 <li key={link.id}>
                   <a
                     href={`#${link.id}`}
                     onClick={(event) => handleAnchorClick(event, link.id)}
                     aria-current={activeId === link.id ? 'true' : undefined}
-                    className={`inline-flex h-11 items-center px-3 font-medium transition-colors duration-150 motion-reduce:transition-none ${navLinkStateClass(activeId === link.id)}`}
+                    className={`relative inline-flex min-h-11 items-center px-0.5 text-[14.5px] font-medium transition-colors duration-200 motion-reduce:transition-none ${navLinkStateClass(activeId === link.id)}`}
                   >
                     {link.label}
                   </a>
                 </li>
               ))}
             </ul>
-            <Button
-              href={`#${contactLink.id}`}
-              onClick={(event) => handleAnchorClick(event, contactLink.id)}
-              aria-current={activeId === contactLink.id ? 'true' : undefined}
-              className="ml-2 max-md:hidden"
-            >
-              {contactLink.label}
-            </Button>
+          </nav>
+
+          <div className="flex items-center gap-1.5">
+            <div className="hidden items-center gap-1 min-[980px]:flex">
+              <IconLink href={links.github} label="GitHub">
+                <GitHubIcon size={19} />
+              </IconLink>
+              {isFilled(links.linkedin) && (
+                <IconLink href={links.linkedin} label="LinkedIn">
+                  <LinkedInIcon size={19} />
+                </IconLink>
+              )}
+              <Button
+                href={person.resumeUrl}
+                download
+                variant="secondary"
+                size="sm"
+                className="mx-1.5"
+              >
+                Résumé
+              </Button>
+            </div>
             <ThemeToggle />
             <button
               type="button"
@@ -106,11 +106,11 @@ export function Navbar() {
               aria-label="Open menu"
               aria-expanded={menuOpen}
               aria-controls={MENU_ID}
-              className="inline-flex h-11 w-11 items-center justify-center rounded-full text-graphite transition-colors duration-150 hover:bg-line motion-reduce:transition-none md:hidden"
+              className="inline-flex size-11 items-center justify-center rounded-[11px] text-text min-[980px]:hidden"
             >
-              <Menu size={20} strokeWidth={1.75} aria-hidden="true" />
+              <Menu size={20} strokeWidth={1.9} aria-hidden="true" />
             </button>
-          </nav>
+          </div>
         </Container>
       </header>
       <MobileMenu
