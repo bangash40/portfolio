@@ -29,7 +29,7 @@ export function Contact() {
   return (
     <section id="contact" aria-labelledby="contact-heading" className="pt-10 pb-20 lg:pb-32">
       <Container>
-        <div className="relative overflow-hidden rounded-card border border-border bg-surface p-6 shadow-glow sm:p-10 min-[980px]:p-14">
+        <div className="scroll-rise relative overflow-hidden rounded-card border border-border bg-surface p-6 shadow-glow sm:p-10 min-[980px]:p-14">
           <div aria-hidden="true" className="bg-grid absolute inset-0" />
           <div className="relative grid items-start gap-12 min-[980px]:grid-cols-2">
             <div>

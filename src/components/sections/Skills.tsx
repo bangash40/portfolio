@@ -77,7 +77,7 @@ export function Skills() {
       <Container>
         <SectionHeader file="skills" id="skills-heading" copy={sections.skills} />
 
-        <div className="mt-10 grid items-center gap-10 min-[980px]:grid-cols-[minmax(0,7fr)_minmax(0,5fr)]">
+        <div className="scroll-rise mt-10 grid items-center gap-10 min-[980px]:grid-cols-[minmax(0,7fr)_minmax(0,5fr)]">
           <div className="relative min-[980px]:mx-auto min-[980px]:aspect-square min-[980px]:w-full min-[980px]:max-w-[560px]">
             {/* Rings and spokes (desktop only) */}
             <div aria-hidden="true" className="max-[979px]:hidden">

@@ -41,7 +41,7 @@ export function About() {
       <Container>
         <SectionHeader file="about" id="about-heading" copy={sections.about} />
 
-        <div className="mt-12 grid gap-6 min-[980px]:grid-cols-[minmax(0,5fr)_minmax(0,7fr)]">
+        <div className="scroll-rise mt-12 grid gap-6 min-[980px]:grid-cols-[minmax(0,5fr)_minmax(0,7fr)]">
           <div className="flex flex-col gap-[22px] rounded-card border border-border bg-surface p-6 sm:p-7">
             <div className="flex items-center gap-4">
               {person.avatar ? (

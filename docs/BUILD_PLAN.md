@@ -248,7 +248,7 @@ The owner approved the "Widget Tree" concept. `docs/DESIGN.md` v2 is the spec. S
   Restyled 404, new favicon, touch icon and OG image.
   Commit: `feat: restyle 404 page and share images`
 
-- [ ] **11.13 Cleanup**
+- [x] **11.13 Cleanup**
   Remove v1-only components, hooks, tokens and dependencies; scroll-driven section reveals.
   Commit: `refactor: remove pre-redesign code`
 

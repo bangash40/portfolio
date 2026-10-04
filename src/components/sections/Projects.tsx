@@ -22,7 +22,7 @@ const statuses: Record<ProjectStatus, { label: string; dot: string }> = {
 
 // Cards lift their border on hover; phones tilt (≤ 8°) and screenshots scale (DESIGN.md §6.7).
 const card =
-  'group/card overflow-hidden rounded-card border border-border bg-surface transition-[border-color,box-shadow] duration-300 hover:border-border-2 hover:shadow-float';
+  'scroll-rise group/card overflow-hidden rounded-card border border-border bg-surface transition-[border-color,box-shadow] duration-300 hover:border-border-2 hover:shadow-float';
 const tilt =
   'transition-transform duration-600 ease-out-soft motion-safe:group-hover/card:-translate-y-2 motion-safe:group-hover/card:rotate-x-4';
 

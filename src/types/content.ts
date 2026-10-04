@@ -26,7 +26,6 @@ export interface Project {
   architecture: string[]; // flow shown on featured cards, e.g. ['Flutter UI', 'Firebase Auth']
   links: { github?: string; demo?: string };
   screens: Screen[]; // 1–4; featured cards show the first two
-  tint: string; // low-opacity accent for placeholder screens
 }
 
 export type SkillTier = 'primary' | 'secondary';
@@ -51,17 +50,6 @@ export interface ExperienceEntry {
   kind: 'head' | 'work' | 'education';
 }
 
-export interface TimelineEntry {
-  id: string; // 7-char hash-like id, e.g. 'a3f9c21'
-  date: string; // 'YYYY-MM'
-  message: string;
-}
-
-export interface SkillGroup {
-  title: string;
-  items: string[];
-}
-
 /** A section's h2 and one-line lead (DESIGN.md §8). */
 export interface SectionCopy {
   title: string;
@@ -79,7 +67,6 @@ export interface SiteContent {
     headline: string; // hero h1, before the highlighted phrase
     headlineAccent: string; // highlighted end of the h1
     intro: string; // hero sentence
-    heroSentence: string;
     availability: string;
     bio: string[];
     avatar?: string;
@@ -104,9 +91,7 @@ export interface SiteContent {
   githubUsername: string; // 'bangash40'
   /** Flutter at the root, everything else as its children (DESIGN.md §6.6). */
   skillTree: { root: Skill; children: Skill[] };
-  skills: SkillGroup[];
   projects: Project[];
   experience: ExperienceEntry[]; // newest first
-  timeline: TimelineEntry[];
   site: { url: string; title: string; description: string };
 }

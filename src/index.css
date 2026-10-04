@@ -54,25 +54,10 @@
   --color-device: #060709;
   --color-grid: rgb(237 238 240 / 0.045);
 
-  /* v1 names, mapped onto the v2 palette until every component is rebuilt (Phase 11). */
-  --color-fog: var(--color-bg);
-  --color-paper: var(--color-surface);
-  --color-graphite: var(--color-text);
-  --color-slate: var(--color-muted);
-  --color-line: var(--color-border);
-  --color-signal: var(--color-primary);
-  --color-on-signal: var(--color-primary-ink);
-  --color-saffron: var(--color-ok);
-  --color-phone: var(--color-device);
-  --color-phone-rim: var(--color-border-2);
-  --color-phone-screen: #07090d;
-
   /* Fonts (DESIGN.md §3) */
   --font-sans: 'Geist', 'Geist Fallback', system-ui, -apple-system, 'Segoe UI', sans-serif;
   --font-mono:
     'JetBrains Mono', 'JetBrains Mono Fallback', ui-monospace, 'Cascadia Code', monospace;
-  --font-display: var(--font-sans);
-  --font-body: var(--font-sans);
 
   /* Type scale (DESIGN.md §3) */
   --text-display: clamp(2.4rem, 5.2vw, 3.65rem);
@@ -92,10 +77,6 @@
   --text-small--line-height: 1.5;
   --text-mono: 0.78rem;
   --text-mono--line-height: 1.6;
-  /* v1 hero size, used until the hero is rebuilt */
-  --text-hero: var(--text-display);
-  --text-hero--line-height: 1.04;
-  --text-hero--letter-spacing: -0.04em;
 
   /* Radius (DESIGN.md §4) */
   --radius-chip: 7px;
@@ -374,5 +355,25 @@
   .hero-node,
   .hero-particle {
     animation: none !important;
+  }
+}
+
+/* Sections rise once as they enter (DESIGN.md §7): a CSS scroll-driven animation, so no
+   JavaScript. Browsers without scroll timelines, and reduced motion, show everything at once.
+   The range is a fixed 200px, so blocks taller than the screen don't stay faded for long. */
+@keyframes scroll-rise {
+  from {
+    opacity: 0;
+    translate: 0 24px;
+  }
+}
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .scroll-rise {
+      animation: scroll-rise linear both;
+      animation-timeline: view();
+      animation-range: entry 0px entry 200px;
+    }
   }
 }

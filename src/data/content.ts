@@ -14,8 +14,6 @@ export const content: SiteContent = {
     headlineAccent: 'feel effortless.',
     intro:
       "I'm Farhan Ali Haider, a Flutter developer building cross-platform apps with Dart, Firebase and clean APIs — and the occasional website.",
-    heroSentence:
-      'I build mobile apps with Flutter and Firebase — and ship them one commit at a time.',
     // TODO(bangash): confirm availability text
     availability: 'Available for opportunities',
     // TODO(bangash): write a short intro for the profile card (one or two short paragraphs)
@@ -187,14 +185,6 @@ export const content: SiteContent = {
     ],
   },
 
-  // v1 skill groups; removed once the skills orbit replaces the About list (Phase 11).
-  skills: [
-    { title: 'Mobile', items: ['Flutter', 'Dart', 'Android'] },
-    { title: 'Backend & cloud', items: ['Firebase Auth', 'Cloud Firestore'] },
-    { title: 'Tools', items: ['Git', 'GitHub', 'VS Code / Android Studio'] },
-    { title: 'Web', items: ['React', 'TypeScript', 'Tailwind CSS'] },
-  ],
-
   projects: [
     {
       slug: 'intern-management-system',
@@ -224,7 +214,6 @@ export const content: SiteContent = {
           alt: 'Admin view of the Intern Management System',
         },
       ],
-      tint: '#2b59ff',
     },
     {
       slug: 'kheench',
@@ -245,7 +234,6 @@ export const content: SiteContent = {
       // TODO(bangash): confirm the repository
       links: { github: 'https://github.com/bangash40/kheench' },
       screens: [{ kind: 'placeholder', variant: 'kheench', alt: 'Kheench app screen' }],
-      tint: '#12a594',
     },
     {
       slug: 'arc-mini-player',
@@ -274,7 +262,6 @@ export const content: SiteContent = {
           alt: 'Floating mini player extension screen',
         },
       ],
-      tint: '#8e4ec6',
     },
     {
       slug: 'portfolio',
@@ -299,7 +286,6 @@ export const content: SiteContent = {
       screens: [
         { kind: 'placeholder', variant: 'portfolio', alt: 'This portfolio site on a phone' },
       ],
-      tint: '#e5484d',
     },
   ],
 
@@ -340,29 +326,10 @@ export const content: SiteContent = {
     },
   ],
 
-  // v1 journey timeline; removed once the experience section replaces it (Phase 11).
-  // TODO(bangash): real dates and education details; confirm each message and the order
-  timeline: [
-    { id: 'f4e028f', date: '2026-10', message: 'Launched this portfolio' },
-    {
-      id: 'c81d3a7',
-      date: 'TODO: YYYY-MM',
-      message: 'Started the Arc-style mini player for Chrome',
-    },
-    { id: '7be1d04', date: 'TODO: YYYY-MM', message: 'Began building Kheench' },
-    {
-      id: '5e2a9b0',
-      date: 'TODO: YYYY-MM',
-      message: 'Started building the Intern Management System',
-    },
-    { id: 'a3f9c21', date: 'TODO: YYYY-MM', message: 'Started internship at Internee.pk' },
-    { id: '19d04ce', date: 'TODO: YYYY-MM', message: 'TODO: Education (degree and institution)' },
-  ],
-
   site: {
     url: 'https://farhan-bangash.vercel.app',
     title: 'Farhan Ali Haider — Mobile App Developer',
     description:
-      'Farhan Ali Haider (Bangash) builds mobile apps with Flutter and Firebase. See his projects, journey and live GitHub activity.',
+      'Farhan Ali Haider (Bangash) builds mobile apps with Flutter and Firebase. See his projects, experience and live GitHub activity.',
   },
 };

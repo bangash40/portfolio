@@ -33,7 +33,7 @@ export function Experience() {
             {experience.map((entry) => (
               <li
                 key={entry.hash}
-                className="group grid grid-cols-[32px_minmax(0,1fr)] gap-4 sm:gap-[22px]"
+                className="scroll-rise group grid grid-cols-[32px_minmax(0,1fr)] gap-4 sm:gap-[22px]"
               >
                 <span
                   aria-hidden="true"

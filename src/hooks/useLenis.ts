@@ -5,8 +5,8 @@ import { useReducedMotion } from './useReducedMotion';
 let lenis: Lenis | null = null;
 
 // Smooth scrolling for the whole page. Call once, in App. Off when reduced motion is on.
-// Lenis and GSAP load after the first render, keeping them off the critical path; until then
-// scrolling is native.
+// Lenis loads after the first render, keeping it off the critical path; until then scrolling
+// is native. It runs its own requestAnimationFrame loop (autoRaf).
 export function useLenis() {
   const reducedMotion = useReducedMotion();
 
@@ -15,24 +15,15 @@ export function useLenis() {
     let cleanup: (() => void) | undefined;
     let cancelled = false;
 
-    Promise.all([import('lenis'), import('../lib/gsap')]).then(
-      ([{ default: LenisClass }, { gsap, ScrollTrigger }]) => {
-        if (cancelled) return;
-        const instance = new LenisClass();
-        lenis = instance;
-        instance.on('scroll', ScrollTrigger.update);
-        const tick = (time: number) => instance.raf(time * 1000);
-        gsap.ticker.add(tick);
-        gsap.ticker.lagSmoothing(0);
-
-        cleanup = () => {
-          gsap.ticker.remove(tick);
-          gsap.ticker.lagSmoothing(500, 33);
-          instance.destroy();
-          lenis = null;
-        };
-      },
-    );
+    import('lenis').then(({ default: LenisClass }) => {
+      if (cancelled) return;
+      const instance = new LenisClass({ autoRaf: true });
+      lenis = instance;
+      cleanup = () => {
+        instance.destroy();
+        lenis = null;
+      };
+    });
 
     return () => {
       cancelled = true;

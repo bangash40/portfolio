@@ -11,10 +11,10 @@ Technical requirements for the product described in `PRD.md` and the design in `
 | Build tool | **Vite** (latest) | Fast dev server, tiny production builds |
 | UI | **React 19 + TypeScript** (strict) | Component model, type safety |
 | Styling | **Tailwind CSS v4** via `@tailwindcss/vite` | Design tokens with `@theme`, no config file needed |
-| Animation | **GSAP** + `@gsap/react` (`useGSAP`), **ScrollTrigger** | Free incl. all plugins; best timeline + scroll control |
-| Smooth scroll | **Lenis** (`lenis` package) | Lightweight, works with ScrollTrigger |
+| Animation | **CSS** keyframes and scroll-driven animations (`animation-timeline: view()`) | No runtime cost; GSAP was removed in the v2 redesign |
+| Smooth scroll | **Lenis** (`lenis` package, `autoRaf`) | Lightweight; runs its own animation frame loop |
 | Icons | **lucide-react** | Tree-shakeable SVG icons |
-| Fonts | Google Fonts (Bricolage Grotesque, Instrument Sans) | Free |
+| Fonts | Google Fonts (Geist, JetBrains Mono) | Free |
 | Contact form | **Web3Forms** (free tier) | No backend; delivers to email |
 | GitHub data | **GitHub REST API** (unauthenticated) | Free; 60 requests/hour/IP, we cache |
 | Analytics | **Vercel Web Analytics** (`@vercel/analytics`) | Free on Hobby, cookie-free |
@@ -63,7 +63,7 @@ portfolio/
 │   ├── types/
 │   │   └── content.ts             # TypeScript types for content
 │   ├── lib/
-│   │   ├── gsap.ts                # registers plugins once
+│   │   ├── placeholders.ts        # isFilled() for TODO content
 │   │   ├── github.ts              # GitHub API client + cache
 │   │   └── contact.ts             # Web3Forms submit
 │   ├── hooks/
@@ -74,10 +74,12 @@ portfolio/
 │   │   └── useMediaQuery.ts
 │   ├── components/
 │   │   ├── layout/   Navbar.tsx, MobileMenu.tsx, Footer.tsx, SkipLink.tsx, Container.tsx
-│   │   ├── ui/       Button.tsx, Tag.tsx, ThemeToggle.tsx, SectionHeading.tsx, Skeleton.tsx
-│   │   ├── phone/    PhoneFrame.tsx, ScreenReel.tsx, PlaceholderScreen.tsx
-│   │   └── sections/ Hero.tsx, About.tsx, Projects.tsx, ProjectBlock.tsx,
-│   │                 Journey.tsx, GitHubActivity.tsx, Contact.tsx, ContactForm.tsx
+│   │   ├── ui/       Button.tsx, Chip.tsx, FileLabel.tsx, SectionHeader.tsx, IconLink.tsx,
+│   │   │             ThemeToggle.tsx, Skeleton.tsx, icons.tsx
+│   │   ├── phone/    PhoneFrame.tsx, TaskAppScreen.tsx, PlaceholderScreen.tsx
+│   │   └── sections/ Hero.tsx, HeroVisual.tsx, About.tsx, Skills.tsx, Projects.tsx,
+│   │                 Experience.tsx, GitHubActivity.tsx, Contact.tsx, ContactForm.tsx,
+│   │                 BelowFold.tsx
 │   └── pages/
 │       └── NotFound.tsx
 ├── index.html
@@ -121,17 +123,15 @@ Placeholder values start with `TODO:` and carry a `// TODO(bangash):` comment. P
 
 ## 5. Animation architecture
 
-- `src/lib/gsap.ts`: `gsap.registerPlugin(ScrollTrigger, useGSAP)`; export `gsap`, `ScrollTrigger`. Import from here only.
-- All GSAP animations use `useGSAP(() => {...}, { scope: ref })` so they auto-clean on unmount.
+- All motion is CSS (DESIGN.md §7). GSAP was removed in the v2 redesign (step 11.13): the hero, its ambient loops and the section reveals need no timeline or scroll library.
 - `useReducedMotion()` returns a boolean from `matchMedia('(prefers-reduced-motion: reduce)')`, reactive to change. Every animated component checks it first.
 - `useLenis()` (called once in `App`):
   - Skip entirely if reduced motion.
-  - Lenis and GSAP are dynamically imported after the first render, keeping them off the critical path; scrolling is native until they arrive.
-  - `const lenis = new Lenis()`; `lenis.on('scroll', ScrollTrigger.update)`; `gsap.ticker.add(t => lenis.raf(t * 1000))`; `gsap.ticker.lagSmoothing(0)`.
+  - Lenis is dynamically imported after the first render, keeping it off the critical path; scrolling is native until it arrives.
+  - `new Lenis({ autoRaf: true })`: Lenis drives its own requestAnimationFrame loop.
   - Expose `scrollTo(target)` for nav links (falls back to `element.scrollIntoView` when Lenis is off).
-- Projects pinning uses `ScrollTrigger.matchMedia` / `gsap.matchMedia()` with `(min-width: 1024px) and (prefers-reduced-motion: no-preference)`.
-- Boot sequence (DESIGN §7.1) is CSS keyframes in `index.css`, not a GSAP timeline (changed in step 10.3 for performance). An inline script in `index.html` adds `.booting` to `<html>` before the first paint, once per session (`sessionStorage.getItem('booted')`, try/catch), on the home page only and never with reduced motion. The animation therefore starts with the page instead of waiting for JavaScript; `Hero` only waits for it to finish before starting the screen reel.
-- Avoid GSAP tweens that read computed transforms during page load (they force layout); create them after the first paint or on first interaction.
+- Section reveals: the `.scroll-rise` class in `index.css` runs a CSS scroll-driven animation (`animation-timeline: view()`, range `entry 0px entry 200px`) inside `@supports` and `prefers-reduced-motion: no-preference`, so unsupported browsers and reduced motion show content at once.
+- Boot sequence (DESIGN §7.1) is CSS keyframes in `index.css`, not a GSAP timeline (changed in step 10.3 for performance). An inline script in `index.html` adds `.booting` to `<html>` before the first paint, once per session (`sessionStorage.getItem('booted')`, try/catch), on the home page only and never with reduced motion. The animation therefore starts with the page instead of waiting for JavaScript; `Hero` removes `.booting` once the boot animations finish.
 - Animate only `transform`, `opacity`, `clip-path`. Never animate layout properties.
 
 ---

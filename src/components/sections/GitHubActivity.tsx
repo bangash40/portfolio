@@ -74,7 +74,7 @@ export function GitHubActivity() {
     >
       <Container>
         <SectionHeader file="activity" id="github-heading" copy={sections.github} />
-        <div className="mt-11">
+        <div className="scroll-rise mt-11">
           {state.status === 'ready' ? (
             <GitHubPanel data={state.data} />
           ) : state.status === 'error' ? (
