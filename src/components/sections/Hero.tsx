@@ -106,7 +106,7 @@ export function Hero() {
             className="mt-9 flex flex-wrap items-center gap-x-[18px] gap-y-2 border-t border-border pt-6"
           >
             <span className="inline-flex items-center gap-2.5 font-mono text-[12.5px] text-text">
-              <span aria-hidden="true" className="hero-ping relative size-2 rounded-full bg-ok" />
+              <span aria-hidden="true" className="ping relative size-2 rounded-full bg-ok" />
               {person.availability}
             </span>
             {isFilled(person.location) && (

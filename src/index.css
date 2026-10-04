@@ -273,7 +273,7 @@
   }
 }
 
-@keyframes hero-ping {
+@keyframes ping-ring {
   0% {
     opacity: 0.8;
     transform: scale(0.5);
@@ -335,14 +335,14 @@
   animation: caret-blink 1s steps(1) infinite;
 }
 
-.hero-ping::after {
+.ping::after {
   content: '';
   position: absolute;
   inset: -4px;
   border-radius: 999px;
   border: 1.5px solid var(--color-ok);
   opacity: 0;
-  animation: hero-ping 2.2s ease-out infinite;
+  animation: ping-ring 2.2s ease-out infinite;
 }
 
 .hero-node {
@@ -370,7 +370,7 @@
   .hero-float-c,
   .hero-dash,
   .caret,
-  .hero-ping::after,
+  .ping::after,
   .hero-node,
   .hero-particle {
     animation: none !important;

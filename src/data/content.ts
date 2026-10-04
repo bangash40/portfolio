@@ -55,6 +55,15 @@ export const content: SiteContent = {
       title: 'Shipping in public.',
       lead: 'Pulled from the GitHub API on every visit.',
     },
+    contact: {
+      eyebrow: 'Have an idea for an app?',
+      title: "Let's build it.",
+      lead: 'Internships, freelance projects or a quick question — I usually reply within two days.',
+    },
+  },
+  footer: {
+    role: 'Flutter developer / mobile app developer',
+    tagline: 'Designed with curiosity, built with code — and a lot of hot reloads.',
   },
   links: {
     // TODO(bangash): real email address

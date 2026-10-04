@@ -1,58 +1,66 @@
-import { Briefcase, CodeXml, Mail, MessageCircle, type LucideIcon } from 'lucide-react';
 import { content } from '../../data/content';
 import { isFilled } from '../../lib/placeholders';
 import { Container } from '../layout/Container';
-import { Button } from '../ui/Button';
-import { SectionHeading } from '../ui/SectionHeading';
 import { ContactForm } from './ContactForm';
 
-const { links, person } = content;
+const { links, sections, githubUsername } = content;
+const copy = sections.contact;
 
-interface DirectLink {
+interface ContactRow {
   label: string;
+  value: string;
   href: string;
-  icon: LucideIcon;
 }
 
-const directLinks: DirectLink[] = [
-  isFilled(links.email) && { label: 'Email', href: `mailto:${links.email}`, icon: Mail },
-  { label: 'GitHub', href: links.github, icon: CodeXml },
-  isFilled(links.linkedin) && { label: 'LinkedIn', href: links.linkedin, icon: Briefcase },
-  isFilled(links.whatsapp) && { label: 'WhatsApp', href: links.whatsapp, icon: MessageCircle },
-].filter((link): link is DirectLink => !!link);
+// Only the ways to reach me that are set (DESIGN.md §6.10).
+const rows: ContactRow[] = [
+  isFilled(links.email) && { label: 'email', value: links.email, href: `mailto:${links.email}` },
+  { label: 'github', value: githubUsername, href: links.github },
+  isFilled(links.linkedin) && {
+    label: 'linkedin',
+    value: links.linkedin.replace(/^https?:\/\/(www\.)?/, ''),
+    href: links.linkedin,
+  },
+  isFilled(links.whatsapp) && { label: 'whatsapp', value: 'Message me', href: links.whatsapp },
+].filter((row): row is ContactRow => !!row);
 
 export function Contact() {
   return (
-    <section id="contact" aria-labelledby="contact-heading" className="py-20 lg:py-32">
+    <section id="contact" aria-labelledby="contact-heading" className="pt-10 pb-20 lg:pb-32">
       <Container>
-        <SectionHeading
-          id="contact-heading"
-          intro="Have an app idea, an internship opening, or a question? Send a message and I'll get back to you."
-        >
-          Let's build something
-        </SectionHeading>
-
-        <div className="grid gap-16 lg:grid-cols-12 lg:gap-6">
-          <div className="lg:col-span-5">
-            <ul className="flex flex-col gap-1">
-              {directLinks.map(({ label, href, icon: Icon }) => (
-                <li key={label}>
-                  <a
-                    href={href}
-                    className="inline-flex min-h-11 items-center gap-3 font-medium text-graphite underline-offset-4 transition-colors duration-150 hover:text-signal hover:underline motion-reduce:transition-none"
-                  >
-                    <Icon size={20} strokeWidth={1.75} aria-hidden="true" />
-                    {label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-            <Button variant="secondary" href={person.resumeUrl} download className="mt-8">
-              Download résumé
-            </Button>
-          </div>
-
-          <div className="lg:col-span-6 lg:col-start-7">
+        <div className="relative overflow-hidden rounded-card border border-border bg-surface p-6 shadow-glow sm:p-10 min-[980px]:p-14">
+          <div aria-hidden="true" className="bg-grid absolute inset-0" />
+          <div className="relative grid items-start gap-12 min-[980px]:grid-cols-2">
+            <div>
+              <span className="inline-flex items-center rounded-lg border border-border bg-surface px-2.5 py-1.5 font-mono text-[12.5px] text-muted">
+                lib/<span className="font-medium text-primary">contact</span>.dart
+              </span>
+              <p className="mt-[22px] text-[22px] text-muted">{copy.eyebrow}</p>
+              <h2
+                id="contact-heading"
+                className="mt-1 mb-[18px] text-[clamp(2.5rem,6vw,3.5rem)] leading-[1.02] font-semibold tracking-[-0.04em]"
+              >
+                {copy.title}
+              </h2>
+              <p className="mb-[30px] max-w-[42ch] text-muted">{copy.lead}</p>
+              <ul className="flex flex-col gap-1">
+                {rows.map((row) => (
+                  <li key={row.label}>
+                    <a
+                      href={row.href}
+                      className="group inline-flex min-h-11 items-center gap-3 break-all"
+                    >
+                      <span className="w-[76px] shrink-0 font-mono text-xs text-faint">
+                        {row.label}
+                      </span>
+                      <span className="font-medium transition-colors duration-200 group-hover:text-primary">
+                        {row.value}
+                      </span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
             <ContactForm />
           </div>
         </div>

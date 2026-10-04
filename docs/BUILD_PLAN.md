@@ -241,7 +241,7 @@ The owner approved the "Widget Tree" concept. `docs/DESIGN.md` v2 is the spec. S
 - [x] **11.10 GitHub activity**
   Commit: `feat: restyle github activity`
 
-- [ ] **11.11 Contact and footer**
+- [x] **11.11 Contact and footer**
   Commit: `feat: rebuild contact and footer`
 
 - [ ] **11.12 404 and share images**

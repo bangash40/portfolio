@@ -107,7 +107,7 @@ export function HeroVisual() {
             <span className="text-cyan">GET</span> /tasks
           </span>
           <span className="inline-flex items-center gap-1.5 text-ok">
-            <span className="hero-ping relative size-1.5 rounded-full bg-ok" />
+            <span className="ping relative size-1.5 rounded-full bg-ok" />
             200
           </span>
         </div>

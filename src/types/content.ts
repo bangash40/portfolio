@@ -97,7 +97,9 @@ export interface SiteContent {
     projects: SectionCopy;
     experience: SectionCopy;
     github: SectionCopy;
+    contact: SectionCopy & { eyebrow: string };
   };
+  footer: { role: string; tagline: string };
   links: { email: string; github: string; linkedin?: string; whatsapp?: string };
   githubUsername: string; // 'bangash40'
   /** Flutter at the root, everything else as its children (DESIGN.md §6.6). */
