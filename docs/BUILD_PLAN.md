@@ -264,6 +264,10 @@ The owner approved the "Widget Tree" concept. `docs/DESIGN.md` v2 is the spec. S
   Owner asked for content to be written on their behalf: skill levels, project problems and roles, personal projects since 2026 (first own repo, Aug 2026). Internee.pk removed everywhere.
   Commit: `feat: fill remaining placeholder content`
 
+- [x] **11.14c Restored-tab fix**
+  Tabs restored in the background showed an empty dark page below the hero: the prerendered sections sat in a hidden Suspense segment revealed only on requestAnimationFrame. Render them inline.
+  Commit: `fix: keep sections visible in restored tabs`
+
 - [ ] **11.15 README**
   Commit: `docs: update readme for the redesign`
 

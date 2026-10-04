@@ -11,6 +11,12 @@ const serverEntry = path.join(root, 'dist-ssr', 'entry-server.js');
 const { render } = await import(pathToFileURL(serverEntry).href);
 const appHtml = await render();
 
+// Content React streams as a hidden segment is only revealed on requestAnimationFrame, which
+// never runs in background tabs (see src/entry-server.tsx). Everything must be inline.
+if (appHtml.includes('<div hidden id="S:')) {
+  throw new Error('Prerendered HTML contains a hidden Suspense segment; render it inline.');
+}
+
 const template = await readFile(htmlPath, 'utf8');
 const placeholder = '<div id="root"></div>';
 if (!template.includes(placeholder)) {

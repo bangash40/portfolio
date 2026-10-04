@@ -204,6 +204,7 @@ Rules:
 - First hero screenshot `fetchpriority="high"`; all others lazy.
 - Images WebP, explicit `width`/`height` to prevent layout shift (CLS < 0.1).
 - The home page is prerendered at build time: `src/entry-server.tsx` renders `App` with `react-dom/static` and `scripts/prerender.mjs` injects the HTML into `dist/index.html`; `main.tsx` hydrates it. Content paints before any JavaScript runs: the HTML entry is `src/entry.ts`, which loads the stylesheets and imports `main.tsx` only after the first paint.
+- Every section must be inline in the prerendered HTML. React ships a suspended or large Suspense boundary as a hidden `<div>` revealed by an inline script on `requestAnimationFrame`, which never runs in background tabs: a tab the browser restored stayed blank below the hero. `entry-server.tsx` therefore renders twice (the first pass resolves the lazy imports) with `progressiveChunkSize: Infinity`, and `prerender.mjs` fails the build if a hidden segment appears.
 - Everything below the hero (and the footer) is one `React.lazy` chunk, so the first render and hydration only cover the navbar and hero.
 - Google Fonts load without blocking render (`media="print"` swap); metric-matched `@font-face` fallbacks (Arial with `size-adjust` and ascent/descent overrides measured from the font files) keep CLS at 0 when they swap in.
 - Fonts: only the weights listed in DESIGN.md.
