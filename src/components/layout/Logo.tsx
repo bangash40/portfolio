@@ -14,9 +14,11 @@ export function Logo({ onClick, showHandle = true }: LogoProps) {
       <span className="inline-flex size-8 shrink-0 items-center justify-center rounded-[9px] bg-primary text-primary-ink">
         <TreeGlyph size={18} />
       </span>
-      <span className="text-base font-bold tracking-[-0.01em]">{content.person.fullName}</span>
+      <span className="text-base font-bold tracking-[-0.01em] whitespace-nowrap">
+        {content.person.fullName}
+      </span>
       {showHandle && (
-        <span className="font-mono text-xs text-muted max-sm:hidden">
+        <span className="font-mono text-xs text-muted max-sm:hidden min-[980px]:max-[1179px]:hidden">
           @{content.githubUsername}
         </span>
       )}

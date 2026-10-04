@@ -207,51 +207,19 @@
     stroke 450ms ease !important;
 }
 
-/* Boot sequence, the one orchestrated moment (DESIGN.md §7.1). The inline script in index.html
-   adds .booting to <html> before the first paint, once per session and never with reduced
-   motion. Every end state equals the static styles, so removing the class later is seamless. */
-@keyframes boot-led {
+/* ---------- Hero motion (DESIGN.md §7) ---------- */
+
+/* Page-load reveal, once per session: the inline script in index.html adds .booting to <html>
+   before the first paint (never with reduced motion). End states equal the static styles, so
+   removing the class afterwards is seamless. Reveals start within 100ms to keep LCP early. */
+@keyframes boot-rise {
   from {
     opacity: 0;
+    transform: translateY(16px);
   }
   to {
     opacity: 1;
-  }
-}
-
-@keyframes boot-monogram {
-  /* 0–450ms hidden, 450–850ms fade in and scale 0.9 → 1, hold, 1000–1250ms fade out */
-  0%,
-  36% {
-    opacity: 0;
-    transform: scale(0.9);
-  }
-  68%,
-  80% {
-    opacity: 1;
-    transform: scale(1);
-  }
-  100% {
-    opacity: 0;
-    transform: scale(1);
-  }
-}
-
-@keyframes boot-power {
-  from {
-    opacity: 1;
-  }
-  to {
-    opacity: 0;
-  }
-}
-
-@keyframes boot-wipe {
-  from {
-    clip-path: inset(100% -10% -25% -10%);
-  }
-  to {
-    clip-path: inset(-25% -10% -25% -10%);
+    transform: none;
   }
 }
 
@@ -264,34 +232,147 @@
   }
 }
 
-.booting #home {
-  /* GSAP's power3.out */
-  --ease-boot: cubic-bezier(0.215, 0.61, 0.355, 1);
+.booting #home [data-reveal] {
+  animation: boot-rise 800ms var(--ease-out-soft) var(--reveal-delay, 0ms) both;
 }
 
-.booting #home [data-phone-led] {
-  animation: boot-led 200ms var(--ease-boot) 200ms both;
+.booting #home [data-code-line] {
+  animation: boot-fade 350ms ease var(--line-delay, 0ms) both;
 }
 
-.booting #home [data-phone-monogram] {
-  animation: boot-monogram 1250ms var(--ease-boot) both;
+/* Ambient loops: hero only, slow, transform and opacity only. */
+@keyframes hero-float-a {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-12px);
+  }
 }
 
-.booting #home [data-phone-power] {
-  animation: boot-power 400ms var(--ease-boot) 1000ms both;
+@keyframes hero-float-b {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(9px);
+  }
 }
 
-.booting #home [data-boot-line] {
-  animation: boot-wipe 600ms var(--ease-boot) var(--boot-delay, 100ms) both;
+@keyframes hero-dash {
+  to {
+    stroke-dashoffset: -22;
+  }
 }
 
-/* Starts with the name wipe rather than after it, so the main text is visible early (LCP). */
-.booting #home [data-boot-fade] {
-  animation: boot-fade 300ms var(--ease-boot) 100ms both;
+@keyframes hero-blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+@keyframes hero-ping {
+  0% {
+    opacity: 0.8;
+    transform: scale(0.5);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(2);
+  }
+}
+
+@keyframes hero-node {
+  0%,
+  100% {
+    opacity: 0.35;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes hero-particle {
+  0% {
+    transform: translate(0, 0);
+    opacity: 0;
+  }
+  10%,
+  90% {
+    opacity: 0.5;
+  }
+  100% {
+    transform: translate(60px, -220px);
+    opacity: 0;
+  }
+}
+
+.hero-float-a {
+  animation: hero-float-a 7s ease-in-out infinite;
+}
+
+.hero-float-b {
+  animation: hero-float-b 9s ease-in-out infinite;
+}
+
+.hero-float-c {
+  animation: hero-float-a 11s ease-in-out -4s infinite;
+}
+
+.hero-dash {
+  stroke-dasharray: 5 6;
+  animation: hero-dash 2.6s linear infinite;
+}
+
+.hero-caret {
+  display: inline-block;
+  width: 7px;
+  height: 14px;
+  vertical-align: -2px;
+  background: var(--color-primary);
+  animation: hero-blink 1s steps(1) infinite;
+}
+
+.hero-ping::after {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 999px;
+  border: 1.5px solid var(--color-ok);
+  opacity: 0;
+  animation: hero-ping 2.2s ease-out infinite;
+}
+
+.hero-node {
+  width: 5px;
+  height: 5px;
+  border-radius: 999px;
+  background: var(--color-primary-line);
+  box-shadow: 0 0 10px var(--color-primary-line);
+  animation: hero-node 5s ease-in-out infinite;
+}
+
+.hero-particle {
+  width: 3px;
+  height: 3px;
+  border-radius: 999px;
+  background: var(--color-primary);
+  opacity: 0;
+  animation: hero-particle 16s linear infinite;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .booting #home * {
+  .booting #home *,
+  .hero-float-a,
+  .hero-float-b,
+  .hero-float-c,
+  .hero-dash,
+  .hero-caret,
+  .hero-ping::after,
+  .hero-node,
+  .hero-particle {
     animation: none !important;
   }
 }

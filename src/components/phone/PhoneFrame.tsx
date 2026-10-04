@@ -1,61 +1,47 @@
 import type { ReactNode } from 'react';
 
 export type PhoneSize = 'lg' | 'sm';
-export type PhoneState = 'off' | 'booting' | 'on';
+export type PhoneState = 'off' | 'on';
 
 interface PhoneFrameProps {
   size?: PhoneSize;
   state?: PhoneState;
-  /** Describes what the screen currently shows (DESIGN.md §6.1). */
+  /** Describes what the screen currently shows (DESIGN.md §10). */
   label: string;
-  /** Letter shown at screen center during the boot sequence. */
-  monogram?: string;
   className?: string;
   children?: ReactNode;
 }
 
-// lg is the hero and pinned phone; sm is the per-project and 404 phone. The sm radii are the
-// lg ones (52px body, 42px screen) scaled down so the device keeps the same proportions.
-const sizes: Record<PhoneSize, { width: string; body: string; screen: string; led: string }> = {
+// lg is the hero phone; sm is used in project cards and on the 404 page. Body radius 46px,
+// screen 38px (DESIGN.md §4); sm scales them down so the device keeps its proportions.
+const sizes: Record<PhoneSize, { width: string; body: string; screen: string }> = {
   lg: {
-    // Also bounded by viewport height so the phone fits short laptop screens (hero and pinned).
-    width: 'w-[min(70vw,300px,max(180px,calc((100svh_-_160px)*0.48)))]',
-    body: 'rounded-phone p-[10px]',
+    // Also bounded by viewport height so the phone fits short laptop screens.
+    width: 'w-[min(72vw,280px,max(190px,calc((100svh_-_170px)*0.48)))]',
+    body: 'rounded-phone p-[9px]',
     screen: 'rounded-screen',
-    led: 'top-[3px] size-1',
   },
   sm: {
     width: 'w-[min(56vw,200px)]',
     body: 'rounded-[36px] p-[7px]',
-    screen: 'rounded-[29px]',
-    led: 'top-[2px] size-[3px]',
+    screen: 'rounded-[30px]',
   },
 };
 
-// The signature device: pure CSS, graphite body, dynamic island, side buttons, power LED,
-// 9:19.5 screen and a soft glass reflection. State sets static end points; the hero boot
-// sequence (CSS keyframes in index.css) animates between them through the data-phone-* hooks.
+// The device: near-black body with a thin rim, side buttons, dynamic island and a 9:19.5 screen.
 export function PhoneFrame({
   size = 'lg',
   state = 'on',
   label,
-  monogram,
   className = '',
   children,
 }: PhoneFrameProps) {
   const s = sizes[size];
-  const powered = state === 'on';
 
   return (
-    <div
-      role="img"
-      aria-label={label}
-      data-phone-state={state}
-      className={`relative ${s.width} ${className}`}
-    >
-      {/* The phone's soft, long shadow (DESIGN.md §6.1), pre-rendered by scripts/phone-shadow.html.
-          A live 80px box-shadow blur is very slow to paint without a GPU and delayed first paint.
-          Insets are percentages of the phone, so the shadow scales with every size. */}
+    <div role="img" aria-label={label} className={`relative ${s.width} ${className}`}>
+      {/* The long soft shadow, pre-rendered by scripts/phone-shadow.html: a live 80px blur is very
+          slow to paint without a GPU. Insets are percentages, so it scales with every size. */}
       <span
         aria-hidden="true"
         className="pointer-events-none absolute -inset-x-[20%] -top-[3.22%] -bottom-[16.26%] bg-[url(/phone-shadow.png)] bg-size-[100%_100%] bg-no-repeat"
@@ -64,77 +50,26 @@ export function PhoneFrame({
       {/* Side buttons: volume up and down on the left, power on the right */}
       <span
         aria-hidden="true"
-        className="absolute top-[20%] -left-[2px] h-[7%] w-[3px] rounded-l-sm bg-phone-rim"
+        className="absolute top-[20%] -left-[2px] h-[7%] w-[3px] rounded-l-sm bg-border-2"
       />
       <span
         aria-hidden="true"
-        className="absolute top-[29%] -left-[2px] h-[7%] w-[3px] rounded-l-sm bg-phone-rim"
+        className="absolute top-[29%] -left-[2px] h-[7%] w-[3px] rounded-l-sm bg-border-2"
       />
       <span
         aria-hidden="true"
-        className="absolute top-[24%] -right-[2px] h-[11%] w-[3px] rounded-r-sm bg-phone-rim"
+        className="absolute top-[24%] -right-[2px] h-[11%] w-[3px] rounded-r-sm bg-border-2"
       />
 
-      <div className={`relative bg-phone ring-1 ring-phone-rim ring-inset ${s.body}`}>
-        {/* Power LED: dim until the phone is on, then a saffron glow */}
-        <span
-          aria-hidden="true"
-          className={`absolute right-[30%] rounded-full bg-phone-rim ${s.led}`}
-        >
-          <span
-            data-phone-led
-            className={`absolute inset-0 rounded-full bg-saffron shadow-[0_0_6px_1px_var(--color-saffron)] ${
-              powered ? 'opacity-100' : 'opacity-0'
-            }`}
-          />
-        </span>
-
-        <div
-          data-phone-screen
-          className={`relative isolate aspect-[9/19.5] overflow-hidden bg-phone-screen ${s.screen}`}
-        >
+      <div className={`relative bg-device ring-1 ring-border-2 ring-inset ${s.body}`}>
+        <div className={`relative isolate aspect-[9/19.5] overflow-hidden bg-bg-2 ${s.screen}`}>
           {children}
-
-          {/* Black glass shown while the phone is off or booting */}
-          <div
-            data-phone-power
-            aria-hidden="true"
-            className={`absolute inset-0 z-10 flex items-center justify-center bg-phone-screen ${
-              powered ? 'opacity-0' : 'opacity-100'
-            }`}
-          >
-            {monogram && (
-              // SVG text scales with the screen without container query units, so the screen does not
-              // need to be a size container (cheaper layout while the boot animation runs).
-              <svg
-                data-phone-monogram
-                viewBox="0 0 100 100"
-                aria-hidden="true"
-                className="w-[30%] [transform:scale(0.9)] overflow-visible opacity-0"
-              >
-                <text
-                  x="50"
-                  y="50"
-                  textAnchor="middle"
-                  dominantBaseline="central"
-                  fill="white"
-                  className="font-display text-[100px] font-extrabold"
-                >
-                  {monogram}
-                </text>
-              </svg>
-            )}
-          </div>
-
+          {state === 'off' && (
+            <div aria-hidden="true" className="absolute inset-0 z-10 bg-device" />
+          )}
           <div
             aria-hidden="true"
-            className="absolute top-[2.4%] left-1/2 z-20 h-[3.4%] w-[31%] -translate-x-1/2 rounded-full bg-black"
-          />
-
-          {/* The only gradient on the site: a soft diagonal reflection at 6% white */}
-          <div
-            aria-hidden="true"
-            className="pointer-events-none absolute inset-0 z-30 bg-[linear-gradient(135deg,rgb(255_255_255/0.06)_0%,rgb(255_255_255/0)_55%)]"
+            className="absolute top-[2.4%] left-1/2 z-20 h-[3.6%] w-[31%] -translate-x-1/2 rounded-full bg-black"
           />
         </div>
       </div>

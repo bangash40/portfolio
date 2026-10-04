@@ -221,7 +221,7 @@ The owner approved the "Widget Tree" concept. `docs/DESIGN.md` v2 is the spec. S
 - [x] **11.4 Navbar, mobile menu and theme toggle**
   Commit: `feat: rebuild navbar, mobile menu and theme toggle`
 
-- [ ] **11.5 Hero**
+- [x] **11.5 Hero**
   Badge, headline, CTAs, meta row, the phone with code/API/git/breadcrumb cards and connection lines, background system, page-load reveal, credibility strip.
   Commit: `feat: rebuild hero with the engineering visual`
 

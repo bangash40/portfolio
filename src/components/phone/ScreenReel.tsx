@@ -13,8 +13,6 @@ interface ScreenReelProps {
   items: ReelItem[];
   size?: PhoneSize;
   state?: PhoneState;
-  /** Letter for the phone boot screen. */
-  monogram?: string;
   /** Keep the first screen while something else is happening (the hero boot sequence). */
   hold?: boolean;
   /** Load the first screen eagerly (hero only). */
@@ -42,7 +40,6 @@ export function ScreenReel({
   items,
   size = 'lg',
   state = 'on',
-  monogram,
   hold = false,
   priority = false,
   activeIndex,
@@ -89,12 +86,7 @@ export function ScreenReel({
         if (!event.currentTarget.contains(event.relatedTarget)) setFocused(false);
       }}
     >
-      <PhoneFrame
-        size={size}
-        state={state}
-        monogram={monogram}
-        label={items[current]?.screen.alt ?? ''}
-      >
+      <PhoneFrame size={size} state={state} label={items[current]?.screen.alt ?? ''}>
         {items.map((item, i) => {
           // The incoming screen fades and slides in on top of the outgoing one, which stays
           // opaque underneath so the black glass never shows through mid-crossfade.
