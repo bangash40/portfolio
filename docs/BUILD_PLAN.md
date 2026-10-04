@@ -214,7 +214,7 @@ The owner approved the "Widget Tree" concept. `docs/DESIGN.md` v2 is the spec. S
   New colour tokens for dark (default) and light, Geist + JetBrains Mono with metric-matched fallbacks, type scale, radii. Map the v1 token names onto the new palette so every existing component re-themes until it is rebuilt. Default theme dark; head script and `useTheme` updated.
   Commit: `style: add widget tree tokens, fonts and dark-first theme`
 
-- [ ] **11.3 Content model**
+- [x] **11.3 Content model**
   Extend types and `content.ts`: hero copy, About facts and terminal, skills with tiers and inspector data, project kind, key feature and architecture, experience entries. Placeholders for unknown facts. Update TRD §3.
   Commit: `feat: extend content model for the redesign`
 

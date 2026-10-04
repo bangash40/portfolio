@@ -64,14 +64,15 @@ function Accent({ className = '', strong = false }: { className?: string; strong
 }
 
 // Intern Management System: intern/admin switch and a list of interns.
-function ImsBody() {
+// Intern and admin sides share one layout; only the selected tab differs.
+function ImsBody({ admin = false }: { admin?: boolean }) {
+  const on = 'flex flex-1 items-center justify-center rounded-full bg-white';
+  const off = 'flex flex-1 items-center justify-center text-[#5b6475]';
   return (
     <div className="flex flex-col gap-[4cqw]">
       <div className="flex h-[10cqw] rounded-full bg-[#e7eaef] p-[1cqw] text-[3.6cqw] font-semibold">
-        <span className="flex flex-1 items-center justify-center rounded-full bg-white">
-          Intern
-        </span>
-        <span className="flex flex-1 items-center justify-center text-[#5b6475]">Admin</span>
+        <span className={admin ? off : on}>Intern</span>
+        <span className={admin ? on : off}>Admin</span>
       </div>
       <Bar className="mt-[2cqw] h-[2.4cqw] w-[30%]" />
       {[70, 55, 64, 48, 60].map((width) => (
@@ -181,8 +182,13 @@ function PortfolioBody() {
   );
 }
 
+function ImsAdminBody() {
+  return <ImsBody admin />;
+}
+
 const bodies: Record<Variant, ComponentType> = {
   ims: ImsBody,
+  'ims-admin': ImsAdminBody,
   kheench: KheenchBody,
   miniplayer: MiniPlayerBody,
   portfolio: PortfolioBody,

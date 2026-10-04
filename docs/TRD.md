@@ -93,56 +93,16 @@ portfolio/
 
 ## 3. Content model (`src/types/content.ts`)
 
-```ts
-export type Screen =
-  | { kind: 'image'; src: string; alt: string }
-  | { kind: 'placeholder'; variant: 'ims' | 'kheench' | 'miniplayer' | 'portfolio'; alt: string };
+`src/data/content.ts` exports one `content: SiteContent` object; it is the single source for every personal fact. The types file is the reference; the v2 shape:
 
-export type ProjectStatus = 'live' | 'completed' | 'in-progress' | 'planned';
+- `person`: name, short name, role; hero copy (`badge`, `headline`, `headlineAccent`, `intro`); `availability`; About facts (`bio`, `location`, `yearsExperience`, `openTo`, optional `avatar`); terminal lines (`focus`, `enjoys`, `mindset`); `resumeUrl`.
+- `links`: `email`, `github`, optional `linkedin` and `whatsapp`.
+- `skillTree`: `root` (Flutter) and `children`, each a `Skill` — `id`, `name`, `tier` (`primary` | `secondary`), `use`, `usedIn`, `level`.
+- `projects`: `Project` — slug, name, summary, problem, built, role, stack, status, `kind` (`mobile` | `web`), `featured`, `keyFeature`, `architecture` (flow labels), links, `screens` (image or designed placeholder; featured cards show the first two), `tint`.
+- `experience`: `ExperienceEntry` — hash, branch, role, organisation, duration, description, tech, `kind` (`head` | `work` | `education`), newest first.
+- `githubUsername`, `site` (url, title, description).
 
-export interface Project {
-  slug: string;
-  name: string;
-  summary: string;          // one line
-  problem: string;
-  built: string;            // what was built
-  role: string;
-  stack: string[];
-  status: ProjectStatus;
-  links: { github?: string; demo?: string };
-  screens: Screen[];        // 1–4
-  tint: string;             // low-opacity accent for placeholder screens
-}
-
-export interface TimelineEntry {
-  id: string;               // 7-char hash-like id, e.g. 'a3f9c21'
-  date: string;             // 'YYYY-MM'
-  message: string;
-}
-
-export interface SkillGroup { title: string; items: string[] }
-
-export interface SiteContent {
-  person: {
-    fullName: string;
-    shortName: string;      // 'Bangash'
-    role: string;
-    heroSentence: string;
-    availability: string;
-    bio: string[];
-    avatar?: string;
-    resumeUrl: string;
-  };
-  links: { email: string; github: string; linkedin?: string; whatsapp?: string };
-  githubUsername: string;   // 'bangash40'
-  skills: SkillGroup[];
-  projects: Project[];
-  timeline: TimelineEntry[];
-  site: { url: string; title: string; description: string };
-}
-```
-
-`src/data/content.ts` exports a `content: SiteContent` object. Every placeholder value is a string starting with `TODO:` and has a `// TODO(bangash):` comment above it. Components never contain personal text.
+Placeholder values start with `TODO:` and carry a `// TODO(bangash):` comment. Placeholder text shows as written; placeholder links are hidden. Components never contain personal text.
 
 ---
 

@@ -7,10 +7,15 @@ export const content: SiteContent = {
     fullName: 'Farhan Ali Haider',
     shortName: 'Bangash',
     role: 'Mobile app developer working with Flutter and Firebase',
+    badge: 'FLUTTER DEVELOPER • MOBILE ENGINEER',
+    headline: 'Mobile apps, engineered to',
+    headlineAccent: 'feel effortless.',
+    intro:
+      "I'm Farhan Ali Haider, a Flutter developer building cross-platform apps with Dart, Firebase and clean APIs — and the occasional website.",
     heroSentence:
       'I build mobile apps with Flutter and Firebase — and ship them one commit at a time.',
     // TODO(bangash): confirm availability text
-    availability: 'Available for internships and freelance work',
+    availability: 'Available for opportunities',
     // TODO(bangash): write real bio (2–3 short paragraphs)
     bio: [
       'TODO: Bio paragraph one. Who you are and what you build.',
@@ -20,6 +25,15 @@ export const content: SiteContent = {
     // TODO(bangash): add photo at public/images/avatar.webp, then set avatar: '/images/avatar.webp'
     // TODO(bangash): add résumé PDF at public/resume/Farhan-Ali-Haider-Resume.pdf
     resumeUrl: '/resume/Farhan-Ali-Haider-Resume.pdf',
+    // TODO(bangash): your city and country
+    location: 'TODO: your city',
+    // TODO(bangash): years of experience, e.g. '1+ years'
+    yearsExperience: 'TODO: years',
+    openTo: 'Internships · freelance',
+    focus: ['Flutter', 'Dart', 'Firebase', 'REST APIs', 'Automation'],
+    // TODO(bangash): confirm what you enjoy building
+    enjoys: 'Apps with clean, fast interfaces and real-time data — the kind people open every day.',
+    mindset: ['build', 'test', 'improve', 'ship'],
   },
 
   links: {
@@ -33,7 +47,118 @@ export const content: SiteContent = {
 
   githubUsername: 'bangash40',
 
-  // TODO(bangash): adjust skills list
+  // Flutter is the root; primary skills sit on the inner ring, secondary ones on the outer ring.
+  // TODO(bangash): set each "level" and confirm the "use" and "usedIn" lines
+  skillTree: {
+    root: {
+      id: 'flutter',
+      name: 'Flutter',
+      tier: 'primary',
+      use: 'My main framework — cross-platform mobile apps from one codebase.',
+      usedIn: 'Intern Management System, Kheench',
+      level: 'TODO: level',
+    },
+    children: [
+      {
+        id: 'dart',
+        name: 'Dart',
+        tier: 'primary',
+        use: 'The language behind every Flutter app I write.',
+        usedIn: 'Every Flutter project',
+        level: 'TODO: level',
+      },
+      {
+        id: 'firebase',
+        name: 'Firebase',
+        tier: 'primary',
+        use: 'Authentication and Cloud Firestore for sign-in and real-time data.',
+        usedIn: 'Intern Management System',
+        level: 'TODO: level',
+      },
+      {
+        id: 'rest',
+        name: 'REST APIs',
+        tier: 'primary',
+        use: 'Connecting apps to backend services and third-party data.',
+        usedIn: 'TODO: project',
+        level: 'TODO: level',
+      },
+      {
+        id: 'git',
+        name: 'Git',
+        tier: 'primary',
+        use: 'Version control with small, clean commits on every project.',
+        usedIn: 'All projects',
+        level: 'TODO: level',
+      },
+      {
+        id: 'github',
+        name: 'GitHub',
+        tier: 'primary',
+        use: 'Hosting and shipping code in public.',
+        usedIn: 'Every public project',
+        level: 'TODO: level',
+      },
+      {
+        id: 'python',
+        name: 'Python',
+        tier: 'secondary',
+        use: 'Scripting and automation.',
+        usedIn: 'TODO: project',
+        level: 'TODO: level',
+      },
+      {
+        id: 'postgres',
+        name: 'PostgreSQL',
+        tier: 'secondary',
+        use: 'Relational databases for backend work.',
+        usedIn: 'TODO: project',
+        level: 'TODO: level',
+      },
+      {
+        id: 'docker',
+        name: 'Docker',
+        tier: 'secondary',
+        use: 'Containerised services and local environments.',
+        usedIn: 'TODO: project',
+        level: 'TODO: level',
+      },
+      {
+        id: 'n8n',
+        name: 'n8n',
+        tier: 'secondary',
+        use: 'Workflow automation connecting apps and APIs.',
+        usedIn: 'TODO: project',
+        level: 'TODO: level',
+      },
+      {
+        id: 'wordpress',
+        name: 'WordPress',
+        tier: 'secondary',
+        use: 'Content-managed websites.',
+        usedIn: 'TODO: project',
+        level: 'TODO: level',
+      },
+      {
+        id: 'javascript',
+        name: 'JavaScript',
+        tier: 'secondary',
+        use: 'Web projects, including the Chrome mini-player extension.',
+        usedIn: 'Arc-style mini player',
+        level: 'TODO: level',
+      },
+      {
+        id: 'htmlcss',
+        name: 'HTML/CSS',
+        tier: 'secondary',
+        use: 'Accessible layouts for the web — including this portfolio.',
+        usedIn: 'This portfolio',
+        level: 'TODO: level',
+      },
+    ],
+  },
+
+  // v1 skill groups; removed once the skills orbit replaces the About list (Phase 11).
   skills: [
     { title: 'Mobile', items: ['Flutter', 'Dart', 'Android'] },
     { title: 'Backend & cloud', items: ['Firebase Auth', 'Cloud Firestore'] },
@@ -56,10 +181,19 @@ export const content: SiteContent = {
       stack: ['Flutter', 'Firebase Auth', 'Cloud Firestore'],
       // TODO(bangash): confirm status (completed or in progress)
       status: 'in-progress',
-      // TODO(bangash): add GitHub and demo links if public
-      links: {},
+      kind: 'mobile',
+      featured: true,
+      keyFeature: 'Separate intern and admin experiences in one app',
+      architecture: ['Flutter UI', 'Firebase Auth', 'Cloud Firestore'],
+      // TODO(bangash): confirm the repository and add a demo link if public
+      links: { github: 'https://github.com/bangash40/intern-management-system' },
       screens: [
-        { kind: 'placeholder', variant: 'ims', alt: 'Intern Management System app screen' },
+        { kind: 'placeholder', variant: 'ims', alt: 'Intern view of the Intern Management System' },
+        {
+          kind: 'placeholder',
+          variant: 'ims-admin',
+          alt: 'Admin view of the Intern Management System',
+        },
       ],
       tint: '#2b59ff',
     },
@@ -75,8 +209,12 @@ export const content: SiteContent = {
       role: 'TODO: Your role',
       stack: ['Flutter', 'yt-dlp'],
       status: 'in-progress',
-      // TODO(bangash): add GitHub link if public
-      links: {},
+      kind: 'mobile',
+      featured: true,
+      keyFeature: 'Lists every available quality and format before you download',
+      architecture: ['Flutter UI', 'yt-dlp'],
+      // TODO(bangash): confirm the repository
+      links: { github: 'https://github.com/bangash40/kheench' },
       screens: [{ kind: 'placeholder', variant: 'kheench', alt: 'Kheench app screen' }],
       tint: '#12a594',
     },
@@ -94,8 +232,12 @@ export const content: SiteContent = {
       stack: ['JavaScript', 'Chrome Extensions API'],
       // TODO(bangash): confirm status (planned or in progress)
       status: 'planned',
-      // TODO(bangash): add GitHub link if public
-      links: {},
+      kind: 'web',
+      featured: false,
+      keyFeature: 'Keeps the video playing in a floating window when you switch tabs',
+      architecture: [],
+      // TODO(bangash): confirm ArcPiP is this project's repository
+      links: { github: 'https://github.com/bangash40/ArcPiP' },
       screens: [
         {
           kind: 'placeholder',
@@ -117,6 +259,10 @@ export const content: SiteContent = {
       role: 'TODO: Your role',
       stack: ['React', 'TypeScript', 'Tailwind CSS', 'GSAP'],
       status: 'live',
+      kind: 'web',
+      featured: false,
+      keyFeature: 'Prerendered, accessible and fast, with a live GitHub section',
+      architecture: [],
       links: {
         github: 'https://github.com/bangash40/portfolio',
         demo: 'https://farhan-bangash.vercel.app',
@@ -128,7 +274,44 @@ export const content: SiteContent = {
     },
   ],
 
-  // Newest first.
+  // A git log, newest first (DESIGN.md §6.8).
+  // TODO(bangash): fill in roles, dates and education
+  experience: [
+    {
+      hash: 'HEAD',
+      branch: 'main',
+      role: 'Flutter developer',
+      organisation: 'Personal projects',
+      duration: 'TODO: start year — now',
+      description:
+        'Building Kheench and this portfolio, and planning a Chrome mini-player extension.',
+      tech: ['Flutter', 'Dart', 'React', 'TypeScript'],
+      kind: 'head',
+    },
+    {
+      hash: 'a3f9c21',
+      branch: 'internship',
+      role: 'TODO: your role',
+      organisation: 'Internee.pk',
+      duration: 'TODO: start — end',
+      description:
+        'Built the Intern Management System as an internship task: separate intern and admin sides on Firebase.',
+      tech: ['Flutter', 'Firebase Auth', 'Cloud Firestore'],
+      kind: 'work',
+    },
+    {
+      hash: '19d04ce',
+      branch: 'education',
+      role: 'TODO: degree',
+      organisation: 'TODO: institution',
+      duration: 'TODO: years',
+      description: 'TODO: what you studied and key achievements',
+      tech: [],
+      kind: 'education',
+    },
+  ],
+
+  // v1 journey timeline; removed once the experience section replaces it (Phase 11).
   // TODO(bangash): real dates and education details; confirm each message and the order
   timeline: [
     { id: 'f4e028f', date: '2026-10', message: 'Launched this portfolio' },
