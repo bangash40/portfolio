@@ -194,7 +194,7 @@ Steps 0.1 and 0.2 are committed locally; they are pushed together in step 0.3 on
   Check bundle size vs budget, image sizes, CLS, font loading; ask the owner to run Lighthouse (mobile) on the live URL and share scores; fix until ≥ 90 ×4.
   Commit: `perf: optimize bundle, images and loading`
 
-- [ ] **10.4 Final README**
+- [x] **10.4 Final README**
   README: live link, screenshot of the site, features, tech stack, local setup (`npm install`, `npm run dev`), how to edit content (`src/data/content.ts`), how to add a project, add screenshots, replace résumé, deployment notes, list of remaining `TODO(bangash)` items.
   Commit: `docs: complete readme`
 
