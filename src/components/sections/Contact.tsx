@@ -27,7 +27,11 @@ const rows: ContactRow[] = [
 
 export function Contact() {
   return (
-    <section id="contact" aria-labelledby="contact-heading" className="pt-10 pb-20 lg:pb-32">
+    <section
+      id="contact"
+      aria-labelledby="contact-heading"
+      className="defer-render pt-10 pb-20 lg:pb-32"
+    >
       <Container>
         <div className="scroll-rise relative overflow-hidden rounded-card border border-border bg-surface p-6 shadow-glow sm:p-10 min-[980px]:p-14">
           <div aria-hidden="true" className="bg-grid absolute inset-0" />
@@ -49,7 +53,7 @@ export function Contact() {
                       href={row.href}
                       className="group inline-flex min-h-11 items-center gap-3 break-all"
                     >
-                      <span className="w-[76px] shrink-0 font-mono text-xs text-faint">
+                      <span className="w-[76px] shrink-0 font-mono text-xs text-muted">
                         {row.label}
                       </span>
                       <span className="font-medium transition-colors duration-200 group-hover:text-primary">

@@ -72,7 +72,7 @@ export function Skills() {
     <section
       id="skills"
       aria-labelledby="skills-heading"
-      className="border-y border-border bg-bg-2 py-20 lg:py-32"
+      className="defer-render border-y border-border bg-bg-2 py-20 lg:py-32"
     >
       <Container>
         <SectionHeader file="skills" id="skills-heading" copy={sections.skills} />
@@ -145,7 +145,7 @@ export function Skills() {
           >
             <div className="flex items-center justify-between gap-3">
               <Chip hot={selected.tier === 'primary'}>{selected.tier}</Chip>
-              <span className="font-mono text-[11px] text-faint">skill.inspect()</span>
+              <span className="font-mono text-[11px] text-muted">skill.inspect()</span>
             </div>
             <h3 className="mt-[18px] mb-1.5 text-[32px] leading-tight font-semibold tracking-[-0.03em]">
               {selected.name}
@@ -153,19 +153,19 @@ export function Skills() {
             <p className="mb-[22px] text-muted">{selected.use}</p>
             <dl className="rounded-panel border border-border bg-surface-2 px-4 py-3.5 font-mono text-[12.5px] leading-[1.9]">
               <div className="flex justify-between gap-3">
-                <dt className="text-faint">level</dt>
+                <dt className="text-muted">level</dt>
                 <dd>{selected.level}</dd>
               </div>
               <div className="flex justify-between gap-3">
-                <dt className="text-faint">used in</dt>
+                <dt className="text-muted">used in</dt>
                 <dd className="text-right">{selected.usedIn}</dd>
               </div>
               <div className="flex justify-between gap-3">
-                <dt className="text-faint">weight</dt>
+                <dt className="text-muted">weight</dt>
                 <dd className="text-primary">{weight(selected)}</dd>
               </div>
             </dl>
-            <p className="mt-[18px] font-mono text-[11.5px] text-faint">
+            <p className="mt-[18px] font-mono text-[11.5px] text-muted">
               Primary: {[root, ...primary].map((skill) => skill.name).join(', ')} · Secondary:{' '}
               {secondary.map((skill) => skill.name).join(', ')}
             </p>

@@ -4,9 +4,13 @@ import { useReducedMotion } from './useReducedMotion';
 
 let lenis: Lenis | null = null;
 
+// The first sign of a visitor scrolling or navigating.
+const interactionEvents = ['wheel', 'touchstart', 'pointerdown', 'keydown'] as const;
+
 // Smooth scrolling for the whole page. Call once, in App. Off when reduced motion is on.
-// Lenis loads after the first render, keeping it off the critical path; until then scrolling
-// is native. It runs its own requestAnimationFrame loop (autoRaf).
+// Lenis loads on the first interaction: starting it measures the whole page, which is wasted
+// work during load for a visitor who hasn't scrolled yet. Until then scrolling is native.
+// It runs its own requestAnimationFrame loop (autoRaf).
 export function useLenis() {
   const reducedMotion = useReducedMotion();
 
@@ -15,21 +19,40 @@ export function useLenis() {
     let cleanup: (() => void) | undefined;
     let cancelled = false;
 
-    import('lenis').then(({ default: LenisClass }) => {
-      if (cancelled) return;
-      const instance = new LenisClass({ autoRaf: true });
-      lenis = instance;
-      cleanup = () => {
-        instance.destroy();
-        lenis = null;
-      };
-    });
+    const start = () => {
+      removeListeners();
+      import('lenis').then(({ default: LenisClass }) => {
+        if (cancelled) return;
+        const instance = new LenisClass({ autoRaf: true });
+        lenis = instance;
+        cleanup = () => {
+          instance.destroy();
+          lenis = null;
+        };
+      });
+    };
+    const removeListeners = () =>
+      interactionEvents.forEach((type) => window.removeEventListener(type, start));
+    interactionEvents.forEach((type) => window.addEventListener(type, start, { passive: true }));
 
     return () => {
       cancelled = true;
+      removeListeners();
       cleanup?.();
     };
   }, [reducedMotion]);
+}
+
+// Sections below the fold render lazily (content-visibility in index.css), so sections above a
+// target can still change height after a jump. Re-align each frame until the target stops moving.
+function settleOn(target: HTMLElement, align: () => void, framesLeft = 12) {
+  const before = target.getBoundingClientRect().top;
+  align();
+  requestAnimationFrame(() => {
+    if (framesLeft > 0 && target.getBoundingClientRect().top !== before) {
+      settleOn(target, align, framesLeft - 1);
+    }
+  });
 }
 
 // Scrolls to a section and moves focus there, as a native anchor jump would. Both Lenis and
@@ -39,9 +62,13 @@ export function scrollToSection(id: string) {
   if (!target) return;
 
   if (lenis) {
-    lenis.scrollTo(target, { force: true });
+    lenis.scrollTo(target, {
+      force: true,
+      onComplete: (instance) =>
+        settleOn(target, () => instance.scrollTo(target, { force: true, immediate: true })),
+    });
   } else {
-    target.scrollIntoView();
+    settleOn(target, () => target.scrollIntoView());
   }
 
   if (!target.hasAttribute('tabindex')) target.setAttribute('tabindex', '-1');

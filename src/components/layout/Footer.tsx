@@ -19,7 +19,7 @@ export function Footer() {
           <p className="font-semibold">
             {person.fullName} <span className="font-normal text-muted">— {footer.role}</span>
           </p>
-          <p className="mt-1 font-mono text-xs text-faint">
+          <p className="mt-1 font-mono text-xs text-muted">
             {footer.tagline} © {year}
           </p>
         </div>

@@ -252,7 +252,7 @@ The owner approved the "Widget Tree" concept. `docs/DESIGN.md` v2 is the spec. S
   Remove v1-only components, hooks, tokens and dependencies; scroll-driven section reveals.
   Commit: `refactor: remove pre-redesign code`
 
-- [ ] **11.14 Quality pass** 🛑
+- [x] **11.14 Quality pass** 🛑
   Accessibility (axe, keyboard), responsive widths, reduced motion, both themes; owner runs PageSpeed Insights (mobile) — fix until ≥ 90 ×4.
   Commit: `fix: polish widget tree redesign`
 

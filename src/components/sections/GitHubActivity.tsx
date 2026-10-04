@@ -70,7 +70,7 @@ export function GitHubActivity() {
       id="github"
       aria-labelledby="github-heading"
       aria-busy={state.status === 'loading'}
-      className="py-20 lg:py-32"
+      className="defer-render py-20 lg:py-32"
     >
       <Container>
         <SectionHeader file="activity" id="github-heading" copy={sections.github} />

@@ -125,17 +125,17 @@ function FeaturedProject({ project, flip }: { project: Project; flip: boolean })
         <p className="text-[17px] text-muted">{project.summary}</p>
         <dl className="grid gap-3 sm:grid-cols-2">
           <div className="rounded-panel border border-border bg-surface-2 px-4 py-3.5">
-            <dt className="font-mono text-[11px] text-faint">problem solved</dt>
+            <dt className="font-mono text-[11px] text-muted">problem solved</dt>
             <dd className="mt-1.5 text-[14.5px]">{project.problem}</dd>
           </div>
           <div className="rounded-panel border border-border bg-surface-2 px-4 py-3.5">
-            <dt className="font-mono text-[11px] text-faint">key feature</dt>
+            <dt className="font-mono text-[11px] text-muted">key feature</dt>
             <dd className="mt-1.5 text-[14.5px]">{project.keyFeature}</dd>
           </div>
         </dl>
         {project.architecture.length > 0 && (
           <div className="flex flex-wrap items-center gap-2 font-mono text-[11.5px] text-muted">
-            <span className="text-faint">architecture</span>
+            <span className="text-muted">architecture</span>
             <ol className="contents">
               {project.architecture.map((layer, index) => (
                 <li key={layer} className="inline-flex items-center gap-2">
@@ -156,10 +156,10 @@ function FeaturedProject({ project, flip }: { project: Project; flip: boolean })
           className="rounded-panel border border-border bg-surface-2 px-[18px] py-4 text-[14.5px] text-muted"
         >
           <p className="mb-1.5">
-            <span className="font-mono text-[11px] text-faint">role</span> — {project.role}
+            <span className="font-mono text-[11px] text-muted">role</span> — {project.role}
           </p>
           <p>
-            <span className="font-mono text-[11px] text-faint">what I built</span> — {project.built}
+            <span className="font-mono text-[11px] text-muted">what I built</span> — {project.built}
           </p>
         </div>
         <div className="mt-auto flex flex-wrap items-center gap-x-[18px] gap-y-2 border-t border-border pt-[18px]">
@@ -256,7 +256,11 @@ const accents = ['bg-cyan', 'bg-primary'];
 
 export function Projects() {
   return (
-    <section id="projects" aria-labelledby="projects-heading" className="py-20 lg:py-32">
+    <section
+      id="projects"
+      aria-labelledby="projects-heading"
+      className="defer-render py-20 lg:py-32"
+    >
       <Container>
         <SectionHeader file="projects" id="projects-heading" copy={sections.projects} />
 

@@ -27,7 +27,7 @@ function Command({ name, flag, children }: { name: string; flag?: string; childr
           ❯
         </span>{' '}
         {name}
-        {flag && <span className="text-faint"> {flag}</span>}
+        {flag && <span className="text-muted"> {flag}</span>}
       </p>
       <div className="mb-3.5 last:mb-0">{children}</div>
     </>
@@ -37,7 +37,7 @@ function Command({ name, flag, children }: { name: string; flag?: string; childr
 // Profile card and a terminal that answers a few questions about me (DESIGN.md §6.5).
 export function About() {
   return (
-    <section id="about" aria-labelledby="about-heading" className="py-20 lg:py-32">
+    <section id="about" aria-labelledby="about-heading" className="defer-render py-20 lg:py-32">
       <Container>
         <SectionHeader file="about" id="about-heading" copy={sections.about} />
 
@@ -79,7 +79,7 @@ export function About() {
                   key={fact.label}
                   className="rounded-panel border border-border bg-surface-2 p-3.5"
                 >
-                  <dt className="font-mono text-[11px] text-faint">{fact.label}</dt>
+                  <dt className="font-mono text-[11px] text-muted">{fact.label}</dt>
                   <dd className="mt-1 font-semibold">{fact.value}</dd>
                 </div>
               ))}

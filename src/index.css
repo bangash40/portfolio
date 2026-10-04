@@ -377,3 +377,10 @@
     }
   }
 }
+
+/* Sections below the hero skip layout and paint until they near the viewport, which halves the
+   work of the first render. "auto" remembers each section's real height once it has rendered. */
+.defer-render {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 1000px;
+}

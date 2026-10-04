@@ -127,9 +127,10 @@ Placeholder values start with `TODO:` and carry a `// TODO(bangash):` comment. P
 - `useReducedMotion()` returns a boolean from `matchMedia('(prefers-reduced-motion: reduce)')`, reactive to change. Every animated component checks it first.
 - `useLenis()` (called once in `App`):
   - Skip entirely if reduced motion.
-  - Lenis is dynamically imported after the first render, keeping it off the critical path; scrolling is native until it arrives.
+  - Lenis is dynamically imported on the first interaction (wheel, touch, pointer or key), keeping its start-up layout off the page load; scrolling is native until it arrives.
   - `new Lenis({ autoRaf: true })`: Lenis drives its own requestAnimationFrame loop.
   - Expose `scrollTo(target)` for nav links (falls back to `element.scrollIntoView` when Lenis is off).
+- Sections below the hero use `.defer-render` (`content-visibility: auto`, `contain-intrinsic-size: auto 1000px`) so the first render skips their layout. Because their heights are estimates until they render, `scrollToSection` re-aligns on the target for a few frames after each jump.
 - Section reveals: the `.scroll-rise` class in `index.css` runs a CSS scroll-driven animation (`animation-timeline: view()`, range `entry 0px entry 200px`) inside `@supports` and `prefers-reduced-motion: no-preference`, so unsupported browsers and reduced motion show content at once.
 - Boot sequence (DESIGN §7.1) is CSS keyframes in `index.css`, not a GSAP timeline (changed in step 10.3 for performance). An inline script in `index.html` adds `.booting` to `<html>` before the first paint, once per session (`sessionStorage.getItem('booted')`, try/catch), on the home page only and never with reduced motion. The animation therefore starts with the page instead of waiting for JavaScript; `Hero` removes `.booting` once the boot animations finish.
 - Animate only `transform`, `opacity`, `clip-path`. Never animate layout properties.

@@ -19,7 +19,7 @@ export function Experience() {
     <section
       id="experience"
       aria-labelledby="experience-heading"
-      className="border-y border-border bg-bg-2 py-20 lg:py-32"
+      className="defer-render border-y border-border bg-bg-2 py-20 lg:py-32"
     >
       <Container>
         <SectionHeader file="experience" id="experience-heading" copy={sections.experience} />
@@ -44,7 +44,7 @@ export function Experience() {
                 <div className="rounded-card border border-border bg-surface px-5 py-6 transition-[border-color,translate] duration-300 ease-out-soft group-hover:border-primary-line motion-safe:group-hover:translate-x-1 sm:px-[26px]">
                   <div className="mb-2.5 flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-xs">
                     <span className="text-primary">{entry.hash}</span>
-                    <span className="text-faint">{entry.branch}</span>
+                    <span className="text-muted">{entry.branch}</span>
                     <span className="ml-auto text-muted">{entry.duration}</span>
                   </div>
                   <h3 className="text-[21px] font-semibold tracking-[-0.02em]">
