@@ -1,6 +1,7 @@
 import { content } from '../../data/content';
 import { isFilled } from '../../lib/placeholders';
 import { Container } from '../layout/Container';
+import { FileLabel } from '../ui/FileLabel';
 import { ContactForm } from './ContactForm';
 
 const { links, sections, githubUsername } = content;
@@ -32,9 +33,7 @@ export function Contact() {
           <div aria-hidden="true" className="bg-grid absolute inset-0" />
           <div className="relative grid items-start gap-12 min-[980px]:grid-cols-2">
             <div>
-              <span className="inline-flex items-center rounded-lg border border-border bg-surface px-2.5 py-1.5 font-mono text-[12.5px] text-muted">
-                lib/<span className="font-medium text-primary">contact</span>.dart
-              </span>
+              <FileLabel name="contact" />
               <p className="mt-[22px] text-[22px] text-muted">{copy.eyebrow}</p>
               <h2
                 id="contact-heading"

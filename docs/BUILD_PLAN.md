@@ -244,7 +244,7 @@ The owner approved the "Widget Tree" concept. `docs/DESIGN.md` v2 is the spec. S
 - [x] **11.11 Contact and footer**
   Commit: `feat: rebuild contact and footer`
 
-- [ ] **11.12 404 and share images**
+- [x] **11.12 404 and share images**
   Restyled 404, new favicon, touch icon and OG image.
   Commit: `feat: restyle 404 page and share images`
 

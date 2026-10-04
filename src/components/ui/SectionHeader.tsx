@@ -1,4 +1,5 @@
 import type { SectionCopy } from '../../types/content';
+import { FileLabel } from './FileLabel';
 
 interface SectionHeaderProps {
   /** File name in the label, e.g. 'about' for `lib/about.dart`. */
@@ -12,9 +13,7 @@ interface SectionHeaderProps {
 export function SectionHeader({ file, id, copy }: SectionHeaderProps) {
   return (
     <div>
-      <span className="inline-flex items-center rounded-lg border border-border bg-surface px-2.5 py-1.5 font-mono text-[12.5px] text-muted">
-        lib/<span className="font-medium text-primary">{file}</span>.dart
-      </span>
+      <FileLabel name={file} />
       <h2 id={id} className="mt-5 mb-3.5 text-h2 font-semibold">
         {copy.title}
       </h2>
