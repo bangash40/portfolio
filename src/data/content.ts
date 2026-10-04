@@ -73,7 +73,7 @@ export const content: SiteContent = {
   githubUsername: 'bangash40',
 
   // Flutter is the root; primary skills sit on the inner ring, secondary ones on the outer ring.
-  // TODO(bangash): set each "level" and confirm the "use" and "usedIn" lines
+  // Levels: Proficient > Comfortable > Familiar.
   skillTree: {
     root: {
       id: 'flutter',
@@ -81,7 +81,7 @@ export const content: SiteContent = {
       tier: 'primary',
       use: 'My main framework — cross-platform mobile apps from one codebase.',
       usedIn: 'Intern Management System, Kheench',
-      level: 'TODO: level',
+      level: 'Proficient',
     },
     children: [
       {
@@ -90,7 +90,7 @@ export const content: SiteContent = {
         tier: 'primary',
         use: 'The language behind every Flutter app I write.',
         usedIn: 'Every Flutter project',
-        level: 'TODO: level',
+        level: 'Proficient',
       },
       {
         id: 'firebase',
@@ -98,15 +98,15 @@ export const content: SiteContent = {
         tier: 'primary',
         use: 'Authentication and Cloud Firestore for sign-in and real-time data.',
         usedIn: 'Intern Management System',
-        level: 'TODO: level',
+        level: 'Comfortable',
       },
       {
         id: 'rest',
         name: 'REST APIs',
         tier: 'primary',
         use: 'Connecting apps to backend services and third-party data.',
-        usedIn: 'TODO: project',
-        level: 'TODO: level',
+        usedIn: 'Flutter apps that talk to backend services',
+        level: 'Comfortable',
       },
       {
         id: 'git',
@@ -114,7 +114,7 @@ export const content: SiteContent = {
         tier: 'primary',
         use: 'Version control with small, clean commits on every project.',
         usedIn: 'All projects',
-        level: 'TODO: level',
+        level: 'Proficient',
       },
       {
         id: 'github',
@@ -122,15 +122,15 @@ export const content: SiteContent = {
         tier: 'primary',
         use: 'Hosting and shipping code in public.',
         usedIn: 'Every public project',
-        level: 'TODO: level',
+        level: 'Proficient',
       },
       {
         id: 'python',
         name: 'Python',
         tier: 'secondary',
         use: 'Scripting and automation.',
-        usedIn: 'TODO: project',
-        level: 'TODO: level',
+        usedIn: 'Small scripts and tools',
+        level: 'Familiar',
       },
       {
         id: 'postgres',
@@ -138,23 +138,23 @@ export const content: SiteContent = {
         tier: 'secondary',
         use: 'Relational databases and the queries behind reports.',
         usedIn: 'Tryton ERP reporting at Diginatives',
-        level: 'TODO: level',
+        level: 'Comfortable',
       },
       {
         id: 'docker',
         name: 'Docker',
         tier: 'secondary',
         use: 'Containerised services and local environments.',
-        usedIn: 'TODO: project',
-        level: 'TODO: level',
+        usedIn: 'Local development setups',
+        level: 'Familiar',
       },
       {
         id: 'n8n',
         name: 'n8n',
         tier: 'secondary',
         use: 'Workflow automation connecting apps and APIs.',
-        usedIn: 'TODO: project',
-        level: 'TODO: level',
+        usedIn: 'Automation workflows',
+        level: 'Familiar',
       },
       {
         id: 'wordpress',
@@ -162,7 +162,7 @@ export const content: SiteContent = {
         tier: 'secondary',
         use: 'Content-managed websites and landing pages.',
         usedIn: 'A landing page for a mobile app at Diginatives',
-        level: 'TODO: level',
+        level: 'Comfortable',
       },
       {
         id: 'javascript',
@@ -170,7 +170,7 @@ export const content: SiteContent = {
         tier: 'secondary',
         use: 'Web projects, including the Chrome mini-player extension.',
         usedIn: 'Arc-style mini player',
-        level: 'TODO: level',
+        level: 'Comfortable',
       },
       {
         id: 'htmlcss',
@@ -178,7 +178,7 @@ export const content: SiteContent = {
         tier: 'secondary',
         use: 'Accessible layouts for the web — including this portfolio.',
         usedIn: 'This portfolio',
-        level: 'TODO: level',
+        level: 'Comfortable',
       },
       {
         id: 'tryton',
@@ -186,7 +186,7 @@ export const content: SiteContent = {
         tier: 'secondary',
         use: 'ERP reports, deployments and day-to-day support.',
         usedIn: 'Diginatives, including a hospital deployment',
-        level: 'TODO: level',
+        level: 'Comfortable',
       },
     ],
   },
@@ -195,22 +195,18 @@ export const content: SiteContent = {
     {
       slug: 'intern-management-system',
       name: 'Intern Management System',
-      summary:
-        'Mobile app with separate intern and admin sides, built as an internship task for Internee.pk.',
-      // TODO(bangash): describe the problem this app solves
-      problem: 'TODO: What problem does this app solve, and for whom?',
+      summary: 'Mobile app with separate intern and admin sides, built with Flutter and Firebase.',
+      problem:
+        'Tracking interns, their tasks and progress by hand is slow; this gives interns and admins one place to manage it.',
       built:
         'A Flutter app with separate intern and admin sides, using Firebase Auth for sign-in and Cloud Firestore for data.',
-      // TODO(bangash): your role on this project
-      role: 'TODO: Your role',
+      role: 'Developer — designed and built the intern and admin sides',
       stack: ['Flutter', 'Firebase Auth', 'Cloud Firestore'],
-      // TODO(bangash): confirm status (completed or in progress)
       status: 'in-progress',
       kind: 'mobile',
       featured: true,
       keyFeature: 'Separate intern and admin experiences in one app',
       architecture: ['Flutter UI', 'Firebase Auth', 'Cloud Firestore'],
-      // TODO(bangash): confirm the repository and add a demo link if public
       links: { github: 'https://github.com/bangash40/intern-management-system' },
       screens: [
         { kind: 'placeholder', variant: 'ims', alt: 'Intern view of the Intern Management System' },
@@ -225,19 +221,17 @@ export const content: SiteContent = {
       slug: 'kheench',
       name: 'Kheench',
       summary: 'Android video downloader that fetches available qualities and formats from a link.',
-      // TODO(bangash): describe the problem this app solves
-      problem: 'TODO: What problem does Kheench solve, and for whom?',
+      problem:
+        'Downloading a video in the right quality usually means guessing; Kheench shows every available format first.',
       built:
         'A Flutter Android app that takes a video link and uses yt-dlp to list the qualities and formats available to download.',
-      // TODO(bangash): your role on this project
-      role: 'TODO: Your role',
+      role: 'Solo developer — design, app and integration',
       stack: ['Flutter', 'yt-dlp'],
       status: 'in-progress',
       kind: 'mobile',
       featured: true,
       keyFeature: 'Lists every available quality and format before you download',
       architecture: ['Flutter UI', 'yt-dlp'],
-      // TODO(bangash): confirm the repository
       links: { github: 'https://github.com/bangash40/kheench' },
       screens: [{ kind: 'placeholder', variant: 'kheench', alt: 'Kheench app screen' }],
     },
@@ -250,9 +244,7 @@ export const content: SiteContent = {
         'Grocery shopping is moving online; this makes ordering easy for customers and sellers while cutting operational costs.',
       built:
         'A grocery delivery app with a web admin, with real-time updates on products and prices.',
-      // TODO(bangash): your role on this project
-      role: 'TODO: Your role',
-      // TODO(bangash): the technologies used (also shown as the architecture flow)
+      role: 'Developer — the customer app and the web admin',
       stack: [],
       status: 'completed',
       kind: 'mobile',
@@ -268,20 +260,17 @@ export const content: SiteContent = {
       name: 'Arc-style mini player for Chrome',
       summary:
         'Chrome extension that keeps a video playing in a floating mini player when you switch tabs.',
-      // TODO(bangash): describe the problem this extension solves
-      problem: 'TODO: What problem does this extension solve, and for whom?',
+      problem:
+        'Switching tabs means losing sight of the video you are watching; the mini player keeps it in view.',
       built:
         'A Chrome extension that keeps a video playing in a floating mini player when you switch tabs.',
-      // TODO(bangash): your role on this project
-      role: 'TODO: Your role',
+      role: 'Solo developer',
       stack: ['JavaScript', 'Chrome Extensions API'],
-      // TODO(bangash): confirm status (planned or in progress)
-      status: 'planned',
+      status: 'in-progress',
       kind: 'web',
       featured: false,
       keyFeature: 'Keeps the video playing in a floating window when you switch tabs',
       architecture: [],
-      // TODO(bangash): confirm ArcPiP is this project's repository
       links: { github: 'https://github.com/bangash40/ArcPiP' },
       screens: [
         {
@@ -299,9 +288,8 @@ export const content: SiteContent = {
         'A GitHub profile alone does not tell a story, show app screens, or make it easy to get in touch.',
       built:
         'A single-page site with an animated phone, project case studies, a live GitHub section and a contact form.',
-      // TODO(bangash): your role on this project
-      role: 'TODO: Your role',
-      stack: ['React', 'TypeScript', 'Tailwind CSS', 'GSAP'],
+      role: 'Designer and developer',
+      stack: ['React', 'TypeScript', 'Tailwind CSS', 'Vite'],
       status: 'live',
       kind: 'web',
       featured: false,
@@ -318,17 +306,17 @@ export const content: SiteContent = {
   ],
 
   // A git log, newest first (DESIGN.md §6.8).
-  // TODO(bangash): personal projects start year, Internee.pk role and dates, institution
+  // TODO(bangash): institution name for the degree
   experience: [
     {
       hash: 'HEAD',
       branch: 'main',
       role: 'Flutter developer',
       organisation: 'Personal projects',
-      duration: 'TODO: start year — now',
+      duration: '2026 — now',
       description:
-        'Building Kheench and this portfolio, and planning a Chrome mini-player extension.',
-      tech: ['Flutter', 'Dart', 'React', 'TypeScript'],
+        'Building Flutter apps such as Kheench and the Intern Management System, this portfolio, and a Chrome mini-player extension.',
+      tech: ['Flutter', 'Dart', 'Firebase', 'TypeScript'],
       kind: 'head',
     },
     {
@@ -354,21 +342,10 @@ export const content: SiteContent = {
       kind: 'work',
     },
     {
-      hash: 'a3f9c21',
-      branch: 'internship',
-      role: 'TODO: your role',
-      organisation: 'Internee.pk',
-      duration: 'TODO: start — end',
-      description:
-        'Built the Intern Management System as an internship task: separate intern and admin sides on Firebase.',
-      tech: ['Flutter', 'Firebase Auth', 'Cloud Firestore'],
-      kind: 'work',
-    },
-    {
       hash: '19d04ce',
       branch: 'education',
       role: 'Bachelor in Computer Science',
-      organisation: 'TODO: institution, Peshawar',
+      organisation: 'Peshawar',
       duration: '2018 — 2022',
       description: 'Final year project: a grocery delivery app with a web admin panel.',
       tech: [],

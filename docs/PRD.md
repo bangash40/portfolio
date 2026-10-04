@@ -41,7 +41,7 @@ Recruiters, internship coordinators and clients judge a developer in under a min
 | Audience | What they want | What the site must do |
 |---|---|---|
 | Recruiters / HR | Quick skill check, CV | Clear role line, skills, résumé download |
-| Internship coordinators (e.g. Internee.pk) | Proof of work and progress | Project case studies, GitHub activity |
+| Internship coordinators | Proof of work and progress | Project case studies, GitHub activity |
 | Freelance clients | Can he build my app? | App screens, contact form |
 | Fellow developers | Code quality | GitHub links, tech stack per project |
 
@@ -81,7 +81,7 @@ Initial projects:
 
 | # | Project | Summary | Stack | Status |
 |---|---|---|---|---|
-| 1 | **Intern Management System** | Mobile app with separate intern and admin sides, built as an internship task for Internee.pk | Flutter, Firebase Auth, Cloud Firestore | Completed / in progress — `TODO(bangash)` |
+| 1 | **Intern Management System** | Mobile app with separate intern and admin sides, built with Flutter and Firebase | Flutter, Firebase Auth, Cloud Firestore | Completed / in progress — `TODO(bangash)` |
 | 2 | **Kheench** | Android video downloader that fetches available qualities and formats from a link | Flutter, yt-dlp | Personal project, in development |
 | 3 | **Arc-style mini player for Chrome** | Chrome extension that keeps a video playing in a floating mini player when you switch tabs | JavaScript, Chrome Extensions API | Planned / in progress |
 | 4 | **This portfolio** | The site you are on, built step by step in public | React, TypeScript, Tailwind, GSAP | Live |
@@ -93,7 +93,7 @@ New projects must be addable by editing only `src/data/content.ts`.
 
 ### 6.5 Journey (timeline)
 - A vertical timeline styled like a git commit history: each milestone is a "commit" with a short hash-like id, date and message.
-- Entries: education, internship at Internee.pk, each project start/launch.
+- Entries: education, work experience, each project start/launch.
 - `// TODO(bangash): real dates and education details`
 
 ### 6.6 GitHub (live)

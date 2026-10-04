@@ -260,6 +260,10 @@ The owner approved the "Widget Tree" concept. `docs/DESIGN.md` v2 is the spec. S
   Owner's CV (Jan 2026): résumé PDF, intro, location, email, LinkedIn, Diginatives roles, education, final year project (Grocery App with Web Admin), Tryton skill.
   Commit: `feat: add resume and cv details`
 
+- [x] **11.14b Fill placeholders**
+  Owner asked for content to be written on their behalf: skill levels, project problems and roles, personal projects since 2026 (first own repo, Aug 2026). Internee.pk removed everywhere.
+  Commit: `feat: fill remaining placeholder content`
+
 - [ ] **11.15 README**
   Commit: `docs: update readme for the redesign`
 

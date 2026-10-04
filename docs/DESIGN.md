@@ -171,7 +171,7 @@ Heading "Products, not exercises."
 - Hover: card border strengthens; phones tilt in 3D (≤ 8°) and lift; screenshots scale ≤ 1.03.
 
 ### 6.8 Experience — `lib/experience.dart`
-Heading "The commit history so far." A vertical git log, newest first: a commit node (primary for HEAD, cyan for the internship, neutral for education) on a line that fades down; each card shows hash, branch, duration, role · organisation, description, tech chips. Hover nudges the card 4 px right.
+Heading "The commit history so far." A vertical git log, newest first: a commit node (primary for HEAD, cyan for work, neutral for education) on a line that fades down; each card shows hash, branch, duration, role · organisation, description, tech chips. Hover nudges the card 4 px right.
 
 ### 6.9 GitHub — `lib/activity.dart`
 Heading "Shipping in public." Profile card (public repos, followers, language bar) and recent repositories, live from the GitHub API with skeletons and a fallback. No contribution graph until real data can be shown.

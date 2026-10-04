@@ -154,15 +154,15 @@ export function Skills() {
             <p className="mb-[22px] text-muted">{selected.use}</p>
             <dl className="rounded-panel border border-border bg-surface-2 px-4 py-3.5 font-mono text-[12.5px] leading-[1.9]">
               <div className="flex justify-between gap-3">
-                <dt className="text-muted">level</dt>
+                <dt className="shrink-0 text-muted">level</dt>
                 <dd>{selected.level}</dd>
               </div>
               <div className="flex justify-between gap-3">
-                <dt className="text-muted">used in</dt>
+                <dt className="shrink-0 text-muted">used in</dt>
                 <dd className="text-right">{selected.usedIn}</dd>
               </div>
               <div className="flex justify-between gap-3">
-                <dt className="text-muted">weight</dt>
+                <dt className="shrink-0 text-muted">weight</dt>
                 <dd className="text-primary">{weight(selected)}</dd>
               </div>
             </dl>
